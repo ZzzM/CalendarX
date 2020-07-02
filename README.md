@@ -1,6 +1,6 @@
 # 这是日历啊
 这是一个显示时间和日历的App，支持夜间模式、在线更新。
-- [下载地址](https://github.com/ZzzM/LunarCalendar/releases/download/1.2.3/default.zip)
+- [下载地址](https://github.com/ZzzM/LunarCalendar/releases/download/1.2.4/default.zip)
 - 运行环境：macOS 10.15.0 或以上
 - 在线更新：需要将解压好的App放至应用程序文件夹
 
