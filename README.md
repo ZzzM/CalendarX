@@ -1,6 +1,6 @@
 # 这是日历啊
 一款简洁的日历、时间显示工具。
-- [下载地址](https://github.com/ZzzM/LunarCalendar/releases/download/1.2.5/default.zip)
+- [下载地址](https://github.com/ZzzM/LunarCalendar/releases/download/1.2.6/calendar.zip)
 - 运行环境：macOS 10.15.0 或以上
 - 在线更新：需要将解压好的App放至应用程序文件夹
 
