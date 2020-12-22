@@ -16,16 +16,19 @@
 
 ## 时间
 *支持多种样式*
+
 <img src="previews/menu1.png">
 <img src="previews/menu2.png">
 
 
 ## 日历
 *左键弹出*
+
 <img src="previews/calendar1.png" height=309, width=300><img src="previews/calendar2.png" height=309, width=300>
 
 ## 设置
 *右键弹出*
+
 <img src="previews/settings.png" height=309, width=300>
 
 
