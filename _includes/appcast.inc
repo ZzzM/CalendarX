@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
     <channel>
         <title>{{ site.github.project_title }}</title>
-        <description>Most recent changes with links to updates.</description>
-        <language>en</language>
         {% for release in site.github.releases %}
             {% unless release.draft %}
                 {% unless release.prerelease and page.release_only %}
-                    {% if release.body contains '<!--' %}
+                    {% assign flag = '<?' %}
+                    {% if release.body contains flag %}
                     <item>
                         <title>{{ release.name }}</title>
-                        <description><![CDATA[{{ release.body | markdownify }}]]></description>
                         <pubDate>{{ release.published_at | date_to_rfc822 }}</pubDate>
-                        {% for asset in release.assets limit:1 %}
-                            {% assign arguments =  release.body | split:'<!--' | last | remove: '-->' |split:',' %}
-                            <enclosure
-                                url="{{ asset.browser_download_url }}"
-                                sparkle:version="{{ arguments.first | strip }}"
-                                sparkle:shortVersionString="{{ release.tag_name }}"
-                                sparkle:edSignature="{{ arguments.last | strip }}"
-                                length="{{ asset.size }}"
-                                type="application/octet-stream" />
-                        {% endfor %}
+                        
+                        {% assign body = release.body | split:flag %}
+                        {% assign description = body.first | strip %}
+                        <description xml:lang="en"><![CDATA[{{ description | markdownify }}]]></description>
+                        
+                        {% if body.size > 2 %}
+                        {% assign description_zh = body[1] | strip %}
+                        <description xml:lang="zh-Hans"><![CDATA[{{ description_zh | markdownify }}]]></description>
+                        {% endif %}
+                        
+                        {% assign enclosure = body.last | strip %}
+                        {{ enclosure }}
                     </item>
                     {% endif %}
                 {% endunless %}
