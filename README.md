@@ -1,39 +1,46 @@
-# 这是日历啊
-一款简洁的日历、时间显示工具。
-- [下载地址](https://github.com/ZzzM/LunarCalendar/releases/download/2.1.4/calendar.zip)
-- 运行环境：macOS 11.0 或以上
-- 在线更新：需要将解压好的App放至应用程序文件夹
+<h1>
+CalendarX</br>
+<a href="https://github.com/ZzzM/CalendarX/releases/latest"><img src="https://img.shields.io/github/v/release/ZzzM/CalendarX"></a>
+<a href="https://github.com/ZzzM/CalendarX/releases/latest"><img src="https://img.shields.io/github/release-date/ZzzM/CalendarX"></a>
+<a href="https://raw.githubusercontent.com/ZzzM/CalendarX/master/LICENSE"><img src="https://img.shields.io/github/license/ZzzM/CalendarX"></a>
+<a href="https://zzzm.github.io/2020/02/24/CalendarX/">
+<img src="https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-red">
+</a>
+</h1>
 
-# 记录
-| 版本 |  说明 |
-| ----  | ---- |
-| 2.1.4 | 优化部分动画<br>修复时间同步bug |
-| 2.1.3 | 更新设置界面<br>修复时间同步bug<br>修复日历显示bug<br>修复小组件显示bug |
-| 2.1.2 | 优化暗黑模式下显示效果 |
-| 2.1.1 | 界面调整<br>优化交互 |
-| 2.1.0 | 界面调整<br>优化交互|
-| 2.0.0 | 全新UI<br>更新2021年法定假日<br>支持 macOS Big Sur 小组件|
+A lightweight macOS App for displaying calendar and time 
 
+## Features
+- [x] Chinese statutory holidays and other festivals
+- [x] Multiple menubar styles
+- [x] Multiple tint
+- [x] Dark mode
+- [x] Localization (简体中文、English)
+- [x] SwiftUI / Async / Await
 
-# 预览
+## Compatibility
+- Requires **macOS 11.0** or later
 
-## 时间
-*支持多种样式*
+## Changelogs
+- [简体中文](changelogs/CHANGELOG_SC.md)
+- [English](changelogs/CHANGELOG.md)
 
-<img src="previews/menu1.png">
-<img src="previews/menu2.png">
+## Snapshots
+- Menubar - multiple styles
 
+<img src="assets/m1.png"> <img src="assets/m2.png"> <img src="assets/m3.png"> <img src="assets/m4.png"> <img src="assets/m5.png">
+  
+- Calendar - left click to show
 
-## 日历
-*左键弹出*
+<img src="assets/l1.png" width=250> <img src="assets/d1.png" width=250>
+<img src="assets/l2.png" width=250> <img src="assets/d2.png" width=250>
 
-<img src="previews/calendar1.png" height=309, width=300><img src="previews/calendar2.png" height=309, width=300>
+- Settings - right click to show
 
-## 设置
-*右键弹出*
+<img src="assets/l3.png" width=250> <img src="assets/d3.png" width=250>
 
-<img src="previews/settings.png" height=309, width=300>
-
-
-## 小组件
-<img src="previews/widget.png" height=661, width=300>
+## Dependencies
+- [Sparkle](https://github.com/sparkle-project/Sparkle)
+- [WrappingHStack](https://github.com/dkk/WrappingHStack)
+- [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
+- [Schedule](https://github.com/luoxiu/Schedule)

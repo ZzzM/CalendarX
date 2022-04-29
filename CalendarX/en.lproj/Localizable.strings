@@ -1,0 +1,28 @@
+/* 
+  File.strings
+  CalendarX
+
+  Created by zm on 2022/1/25.
+  
+*/
+"settings.title" = "Settings";
+"settings.menuBarStyle" = "Menubar Style";
+"settings.theme" = "Theme";
+"settings.tint" = "Tint";
+"settings.showSchedule" = "Show Schedule";
+"settings.startWeekOn" = "Start week on";
+"settings.launchAtLogin" = "Launch at login";
+"settings.version" = "Version";
+"settings.checkForUpdates" = "Check for updates";
+"settings.quitApp" = "Quit App";
+
+"menubarStyle.default" = "Default";
+
+"theme.system" = "System";
+"theme.dark" = "Dark";
+"theme.light" = "Light";
+
+"date.festivals" = "Festivals";
+"date.schedules" = "Schedules";
+"date.noFestivals" = "No festivals";
+"date.noSchedules" = "No schedules";

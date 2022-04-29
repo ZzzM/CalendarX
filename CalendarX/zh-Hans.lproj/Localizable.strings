@@ -1,0 +1,29 @@
+/* 
+  File.strings
+  CalendarX
+
+  Created by zm on 2022/1/25.
+  
+*/
+"settings.title" = "设置";
+"settings.menuBarStyle" = "菜单栏样式";
+"settings.theme" = "主题";
+"settings.tint" = "色调";
+"settings.showSchedule" = "显示日程";
+"settings.startWeekOn" = "星期开始于";
+"settings.launchAtLogin" = "开机启动";
+"settings.version" = "版本";
+"settings.checkForUpdates" = "检查更新";
+"settings.quitApp" = "退出应用";
+
+"menubarStyle.default" = "默认";
+
+"theme.system" = "系统";
+"theme.dark" = "深色";
+"theme.light" = "浅色";
+
+"date.festivals" = "节日";
+"date.schedules" = "日程";
+"date.noFestivals" = "无节日";
+"date.noSchedules" = "无日程";
+

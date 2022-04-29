@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CommitDate</key>
+	<string>CommitDate</string>
+	<key>CommitHash</key>
+	<string>CommitHash</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
+	<key>SUFeedURL</key>
+	<string>https://zzzm.github.io/CalendarX/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>IqmAL/4PBUY1LejXocSszpdeqxAMQXLi3ydovPOOvvs=</string>
+</dict>
+</plist>

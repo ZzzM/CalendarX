@@ -1,0 +1,78 @@
+[
+    {
+        "name": "Ruby",
+        "light": "BF263C",
+        "dark": "D8334A"
+    },
+    {
+        "name": "Bittersweet",
+        "light": "E9573F",
+        "dark": "FC6E51"
+    },
+    {
+        "name": "Grapefruit",
+        "light": "DA4453",
+        "dark": "ED5565"
+    },
+    
+    {
+        "name": "SunFlower",
+        "light": "F6BB42",
+        "dark": "FFCE54"
+    },
+    {
+        "name": "Straw",
+        "light": "E0C341",
+        "dark": "E8CE4D"
+    },
+    {
+        "name": "Grass",
+        "light": "8CC152",
+        "dark": "A0D468"
+    },
+    {
+        "name": "Navy",
+        "light": "0063B1",
+        "dark": "0078D7"
+    },
+    {
+        "name": "BlueJeans",
+        "light": "4A89DC",
+        "dark": "5D9DEC"
+    },
+    {
+        "name": "Aqua",
+        "light": "3BAFDA",
+        "dark": "4FC1E9"
+    },
+    {
+        "name": "Teal",
+        "light": "038387",
+        "dark": "00B7C3"
+    },
+    {
+        "name": "Mint",
+        "light": "37BC9B",
+        "dark": "48CFAD"
+    },
+    {
+        "name": "Desert",
+        "light": "7E735F",
+        "dark": "847545"
+    },
+    {
+        "name": "Plum",
+        "light": "6A50A7",
+        "dark": "8067B7"
+    },
+    {
+        "name": "Lavander",
+        "light": "967ADC",
+        "dark": "AC92EC"
+    },
+    {
+        "name": "PinkRose",
+        "light": "D770AD",
+        "dark": "EC87E0"
+    }
+]

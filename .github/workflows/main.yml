@@ -1,0 +1,55 @@
+name: Mars
+
+on:
+  push:
+    tags:
+      - '*'
+  
+  workflow_dispatch:
+
+env:
+  APP_NAME: CalendarX
+  SPARKLE_KEY: ${{ secrets.SPARKLE_KEY }}
+  BODY_PATH: BODY_PATH.md
+
+jobs:
+
+  Release:
+    runs-on: macos-12
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2.4.0
+
+    - name: Setup
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - run: |
+        echo "APP_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+    - name: Package
+      run: |
+        fastlane package
+
+    - name: Create
+      run: |
+        sh scripts/create_dmg.sh
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        body_path: ${{ env.BODY_PATH }}
+        files: ${{ env.APP_NAME }}.dmg
+ 
+    - name: Appcast
+      uses: actions/github-script@v6
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        github-token: ${{ secrets.PERSONAL_TOKEN }}
+        script: |
+          github.rest.repos.requestPagesBuild({
+            owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
