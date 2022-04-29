@@ -3,7 +3,7 @@ CalendarX</br>
 <a href="https://github.com/ZzzM/CalendarX/releases/latest"><img src="https://img.shields.io/github/v/release/ZzzM/CalendarX"></a>
 <a href="https://github.com/ZzzM/CalendarX/releases/latest"><img src="https://img.shields.io/github/release-date/ZzzM/CalendarX"></a>
 <a href="https://raw.githubusercontent.com/ZzzM/CalendarX/master/LICENSE"><img src="https://img.shields.io/github/license/ZzzM/CalendarX"></a>
-<a href="https://zzzm.github.io/2020/02/24/CalendarX/">
+<a href="https://zzzm.github.io/2022/04/29/calendarx/">
 <img src="https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-red">
 </a>
 </h1>
@@ -33,6 +33,7 @@ A lightweight macOS App for displaying calendar and time
 - Calendar - left click to show
 
 <img src="assets/l1.png" width=250> <img src="assets/d1.png" width=250>
+
 <img src="assets/l2.png" width=250> <img src="assets/d2.png" width=250>
 
 - Settings - right click to show
