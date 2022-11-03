@@ -83,6 +83,15 @@ extension Date {
         Calendar.gregorian.component(.day, from: self)
     }
 
+    var yesterday: Date {
+        adding(component: .day, value: -1)
+    }
+
+    var tomorrow: Date {
+        adding(component: .day, value: 1)
+    }
+
+
     mutating func lastMonth() {
         added(component: .month, value: -1)
     }
@@ -96,15 +105,20 @@ extension Date {
         return Calendar.gregorian.date(from: components) ?? self
     }
 
-    func endOfMonth() -> Date {
-        Calendar.gregorian.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) ?? self
-    }
-
-
-    var nextMinute: Date {
+    var after1min: Date {
         var components = Calendar.gregorian.dateComponents([.year, .month, .day, .hour, .minute], from: self)
         components.minute! += 1
         return Calendar.gregorian.date(from: components) ?? self
+    }
+
+    var after2sec: Date {
+        var components = Calendar.gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: self)
+        components.second! += 2
+        return Calendar.gregorian.date(from: components) ?? self
+    }
+
+    private func adding(_ calendar: Calendar = .gregorian, component: Calendar.Component, value: Int) -> Date {
+        calendar.date(byAdding: component, value: value, to: self) ?? self
     }
 
     private mutating func added(_ calendar: Calendar = .gregorian, component: Calendar.Component, value: Int) {
@@ -112,6 +126,7 @@ extension Date {
             self = date
         }
     }
+
 
 }
 

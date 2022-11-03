@@ -38,8 +38,9 @@ struct Event {
     }
 
     static func fetchEvents(with start: Date, end: Date) -> [XEvent] {
+
         guard isAuthorized else { return [] }
-        let predicate = store.predicateForEvents(withStart: start, end: end, calendars: .none)
+        let predicate = store.predicateForEvents(withStart: start.yesterday, end: end.tomorrow, calendars: .none)
         return store.events(matching: predicate)
     }
 }

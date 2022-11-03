@@ -35,7 +35,7 @@ struct DateView: View {
             }
         }
         
-        Text(day.lunarDate).font(.caption2).foregroundColor(.accentColor)
+        Text(day.lunarDate).font(.footnote).foregroundColor(.secondary)
     }
     
     
@@ -52,7 +52,7 @@ struct FestivalsView: View {
         
         Section(content: {
             if isExpanded, festivals.isNotEmpty {
-                WrappingHStack(festivals,spacing: .constant(5), lineSpacing: 5) {  festival in
+                WrappingHStack(festivals,spacing: .constant(8), lineSpacing: 8) {  festival in
                     ScacleTagButton(title: festival.l10nKey) {
                         NSWorkspace.searching(festival)
                     }
@@ -109,18 +109,20 @@ struct SchedulesView: View {
 
         HStack {
             event.color.width(5)
+
             VStack(alignment: .leading) {
-                Group {
-                    Text(L10n.timeline(from: event.startDate)) +
-                    Text(" - ") +
-                    Text(L10n.timeline(from: event.endDate))
-                }
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                Divider()
+
                 Text(event.title)
-                
-            }.padding(5)
+
+                Divider()
+
+                Text(L10n.timeline(from: event.startDate) +
+                     " - " +
+                     L10n.timeline(from: event.endDate))
+                .font(.footnote)
+
+            }
+            .padding(5)
             Spacer()
         }
         .background(event.color.opacity(0.1))
@@ -136,7 +138,6 @@ struct GroupEmptyRow: View {
             Text(title)
             Spacer()
         }
-        .font(.subheadline)
         .foregroundColor(.secondary)
     }
 }
@@ -150,7 +151,7 @@ struct GroupHeader<Label: View>: View {
     
     var body: some View {
         HStack() {
-            Text(title).font(.headline)
+            Text(title).font(.title3)
             Spacer()
             label()
         }

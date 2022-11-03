@@ -14,8 +14,10 @@ class MenuBarController {
     private let popover:  MenuBarPopover
 
     private lazy var task = Plan
-        .at(Date().nextMinute)
-        .concat(.every(1.minute))
+//        .at(Date().nextMinute)
+//        .concat(.every(1.minute))
+        .at(Date().after2sec)
+        .concat(.every(1.second))
         .do { [weak self] in
             guard let strong = self else { return }
             strong.updateTitle()
@@ -23,6 +25,7 @@ class MenuBarController {
 
     private lazy var menubarButton: NSStatusBarButton? = {
         guard let button = NSStatusItem.system.button else { return .none }
+        button.imagePosition = .imageOverlaps
         button.action = #selector(togglePopover)
         button.target = self
         button.sendAction(on: [.leftMouseDown, .rightMouseDown])
@@ -42,7 +45,11 @@ class MenuBarController {
     }
 
     private var title: String {
-        L10n.statusBarTitle()
+        switch style {
+        case .default: return Date().day.description
+        case .text: return Preference.shared.menuBarText
+        default: return L10n.dateString(from: Preference.shared.menuBarDateFormat)
+        }
     }
 
     private var icon: NSImage? {
@@ -53,7 +60,7 @@ class MenuBarController {
         self.popover = popover
         self.updateTitle()
         self.addObserver()
-        if !style.isDefault { _ = task }
+        if style.isDate { _ = task }
     }
 
     private func updateTitle() {
@@ -82,7 +89,7 @@ class MenuBarController {
     }
 
     private func updateTask() {
-        style.isDefault ? task.suspend() : task.resume()
+        style.isDate ? task.resume() : task.suspend()
     }
 
 }

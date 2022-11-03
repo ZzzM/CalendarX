@@ -9,6 +9,7 @@ import SwiftUI
 
 class MainViewModel: ObservableObject {
 
+
     @Published
     var date: Date
 

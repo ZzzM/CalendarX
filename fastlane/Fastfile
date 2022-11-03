@@ -36,9 +36,5 @@ platform :mac do
     sh "rm -vfr ~/Library/Developer/Xcode/Archives/*"
   end
 
-  lane :test do
-    time = Time.now
-    puts time.inspect
-  end
 
 end

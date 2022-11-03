@@ -48,8 +48,7 @@ extension NSStatusBarButton {
             if let _image = image {
                 _image.size = .init(width: 16, height: 16)
                 _image.isTemplate = true
-                self.attributedTitle =  NSAttributedString(string: title, attributes: [.baselineOffset: -1,
-                                                                                       .font: NSFont.systemFont(ofSize: 8.5)])
+                self.attributedTitle =  NSAttributedString(string: title, attributes: [.baselineOffset: -1,.font: NSFont.systemFont(ofSize: 8.5)])
             } else {
                 self.title = title
             }

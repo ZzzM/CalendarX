@@ -12,7 +12,7 @@ A lightweight macOS App for displaying calendar and time
 
 ## Features
 - [x] Chinese statutory holidays and other festivals
-- [x] Multiple menubar styles
+- [x] Custom menubar styles (default, text, date & time）
 - [x] Multiple tint
 - [x] Dark mode
 - [x] Localization (简体中文、English)
@@ -26,20 +26,21 @@ A lightweight macOS App for displaying calendar and time
 - [English](changelogs/CHANGELOG.md)
 
 ## Snapshots
-- Menubar - multiple styles
-
-<img src="assets/m1.png"> <img src="assets/m2.png"> <img src="assets/m3.png"> <img src="assets/m4.png"> <img src="assets/m5.png">
-  
 - Calendar - left click to show
 
-<img src="assets/l1.png" width=250> <img src="assets/d1.png" width=250>
+<img src="assets/ml01.png" width=250> <img src="assets/md01.png" width=250>
 
-<img src="assets/l2.png" width=250> <img src="assets/d2.png" width=250>
+<img src="assets/ml03.png" width=250> <img src="assets/md03.png" width=250>
 
 - Settings - right click to show
 
-<img src="assets/l3.png" width=250> <img src="assets/d3.png" width=250>
+<img src="assets/ml02.png" width=250> <img src="assets/md02.png" width=250>
 
+- Menubar - custom styles (default, text, date & time）
+
+<img src="assets/s01.png" width=250> <img src="assets/s02.png" width=250> 
+<img src="assets/s03.png" width=250> 
+  
 ## Dependencies
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
 - [WrappingHStack](https://github.com/dkk/WrappingHStack)

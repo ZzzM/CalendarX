@@ -7,6 +7,7 @@
 import SwiftUI
 
 enum Theme: String, CaseIterable {
+
     case system, light, dark
 
     var colorScheme: ColorScheme? {

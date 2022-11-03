@@ -17,6 +17,10 @@
 "settings.quitApp" = "退出应用";
 
 "menubarStyle.default" = "默认";
+"menubarStyle.text" = "文本";
+"menubarStyle.date" = "日期和时间";
+"menubarStyle.save" = "保存";
+"menubarStyle.tips" = "最大字符长度为30";
 
 "theme.system" = "系统";
 "theme.dark" = "深色";

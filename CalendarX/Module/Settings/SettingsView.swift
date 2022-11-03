@@ -11,8 +11,27 @@ import LaunchAtLogin
 
 struct SettingsView: View {
 
+
+    @State
+    private var isShown = false
+    
+
     var body: some View {
-        
+
+        ZStack {
+            if isShown {
+                MenuBarSettingsView(isShown: $isShown)
+                    .transition(.move(edge: .bottom))
+            }
+            settingsView()
+                .opacity(isShown ? 0:1)
+        }
+
+
+    }
+
+    func settingsView() -> some View {
+
         VStack(spacing: 10) {
 
             titleView()
@@ -21,17 +40,13 @@ struct SettingsView: View {
                 ThemeRow()
                 TintRow()
                 WeekdayRow()
-                MenuBarStyleRow()
+                MenuBarStyleRow(isShown: $isShown)
                 ScheduleRow()
                 LaunchRow()
-                VersionRow()
-            }.padding(.bottom, 5)
+            }.padding(.bottom, 3)
 
             Section {
-                HStack(spacing: 10) {
-                    ScacleCapsuleButton(title: L10n.Settings.checkForUpdates, foregroundColor: .white, backgroundColor: .accentColor, action: Updater.checkForUpdates)
-                    ScacleCapsuleButton(title: L10n.Settings.quitApp, foregroundColor: .white, backgroundColor: .secondary) { NSApp.terminate(.none) }
-                }
+                LastRow()
             }
 
         }
@@ -59,13 +74,13 @@ struct ThemeRow: View {
 
     var body: some View {
 
+
         SettingsPickerRow(title: L10n.Settings.theme,
                           items: Theme.allCases,
                           selection: pref.$theme) { Text($0.title) }
-
-//        SettingsPickerRow(title: "Language",
-//                          items: Language.allCases,
-//                          selection: pref.$language) { Text($0.rawValue) }
+        //        SettingsPickerRow(title: "Language",
+        //                          items: Language.allCases,
+        //                          selection: pref.$language) { Text($0.rawValue) }
     }
 
 }
@@ -75,8 +90,10 @@ struct TintRow: View {
 
     @EnvironmentObject
     private var pref: Preference
-    
+
+
     var body: some View {
+
         SettingsPickerRow(title: L10n.Settings.tint,
                           items: Tint.allCases,
                           isGrid: true,
@@ -100,14 +117,30 @@ struct WeekdayRow: View{
 }
 
 struct MenuBarStyleRow: View {
+
+
+    @Binding
+    var isShown: Bool
+
     @EnvironmentObject
     private var pref: Preference
 
+
     var body: some View {
-        SettingsPickerRow(title: L10n.Settings.menuBarStyle,
-                          items: MenuBarStyle.allCases,
-                          selection: pref.$menuBarStyle) { Text($0.title) }
-            .onChange(of: pref.menuBarStyle, notification: .titleStyleDidChanged)
+        HStack {
+            Text(L10n.Settings.menuBarStyle).font(.title3)
+            Spacer()
+            ScacleButton {
+                withAnimation() {
+                    isShown.toggle()
+                }
+            } label: {
+                HStack {
+                    Text(pref.menuBarStyle.title)
+                    Image.rightArrow
+                }.foregroundColor(.secondary)
+            }
+        }
     }
 }
 
@@ -128,7 +161,7 @@ struct ScheduleRow: View {
             pref.showSchedule = $0
         }
 
-        Toggle(isOn: showSchedule) { Text(L10n.Settings.showSchedule) }
+        Toggle(isOn: showSchedule) { Text(L10n.Settings.showSchedule).font(.title3) }
             .checkboxStyle()
 
     }
@@ -147,18 +180,26 @@ struct ScheduleRow: View {
 
 struct LaunchRow: View {
     var body: some View {
-        LaunchAtLogin.Toggle { Text(L10n.Settings.launchAtLogin) }
+        LaunchAtLogin.Toggle { Text(L10n.Settings.launchAtLogin).font(.title3) }
             .checkboxStyle()
     }
 }
 
-struct VersionRow: View {
+struct LastRow: View {
+
+
     var body: some View {
-        HStack {
-            Text(L10n.Settings.version)
-            Spacer()
-            Text("\(AppInfo.version) ( \(AppInfo.commitHash) )").font(.subheadline).foregroundColor(.secondary)
+        HStack(spacing: 10) {
+
+            ScacleCapsuleButton(title: L10n.Settings.quitApp, foregroundColor: .white, backgroundColor: .secondary) { NSApp.terminate(.none) }
+
+            ScacleCapsuleButton(title: L10n.Settings.checkForUpdates, foregroundColor: .white, backgroundColor: .accentColor, action: Updater.checkForUpdates)
+
         }
+
+        Text("\(AppInfo.version) ( \(AppInfo.commitHash) )")
+            .font(.footnote)
+            .foregroundColor(.secondary)
     }
 }
 
@@ -197,7 +238,7 @@ struct SettingsPickerRow<Item: Hashable, Label: View>: View {
     var body: some View {
 
         HStack {
-            Text(title)
+            Text(title).font(.title3)
             Spacer()
             ScacleButtonPicker(items: items,
                                tint: pref.color,
@@ -208,7 +249,7 @@ struct SettingsPickerRow<Item: Hashable, Label: View>: View {
                                isPresented: $isPresented,
                                label: {
                 HStack {
-                    itemLabel(selection).font(.subheadline).foregroundColor(.secondary)
+                    itemLabel(selection).foregroundColor(.secondary)
                     RotationArrow(isPresented: $isPresented)
                 }
             }, itemLabel: itemLabel)

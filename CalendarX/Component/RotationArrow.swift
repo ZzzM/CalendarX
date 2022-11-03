@@ -11,7 +11,6 @@ struct RotationArrow: View {
     var isPresented: Bool
     var body: some View {
         Image.rightArrow
-            .imageScale(.small)
             .foregroundColor(.secondary)
             .rotationEffect(.degrees(isPresented ? 90 : 0))
             .animation(.spring(), value: isPresented)

@@ -10,6 +10,7 @@ class Preference: ObservableObject {
 
     static let shared = Preference()
 
+
     @AppStorage(wrappedValue: .system, AppStorageKey.theme)
     var theme: Theme
 
@@ -27,6 +28,12 @@ class Preference: ObservableObject {
 
     @AppStorage(wrappedValue: .default, AppStorageKey.menuBarStyle)
     var menuBarStyle: MenuBarStyle
+
+    @AppStorage(wrappedValue: AppInfo.name, AppStorageKey.menuBarText)
+    var menuBarText: String
+
+    @AppStorage(wrappedValue: AppInfo.dateFormat, AppStorageKey.menuBarDateFormat)
+    var menuBarDateFormat: String
 
 }
 

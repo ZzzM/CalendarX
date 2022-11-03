@@ -38,6 +38,10 @@ struct L10n {
 
     enum MenubarStyle {
         static let `default` = "menubarStyle.default".l10nKey
+        static let text = "menubarStyle.text".l10nKey
+        static let date = "menubarStyle.date".l10nKey
+        static let tips = "menubarStyle.tips".l10nKey
+        static let save = "menubarStyle.save".l10nKey
     }
 
     enum Date {
@@ -70,25 +74,26 @@ struct L10n {
         return formatter.shortWeekdaySymbols[weekday.rawValue - 1]
     }
 
-    static func statusBarTitle(from date: XDate = XDate(), style: MenuBarStyle = Preference.shared.menuBarStyle) -> String {
+//    static func statusBarTitle() -> String {
+//
+//        let style = Preference.shared.menuBarStyle
+//        if .date == style {
+//            return dateString(from: Preference.shared.menuBarDateFormat)
+//        } else if .text == style {
+//            return Preference.shared.menuBarText
+//        } else {
+//            return XDate().day.description
+//        }
+//
+//    }
+
+
+    static func dateString(from dateFormat: String) -> String {
         formatter.locale = locale
-        if let dateFormat = statusBarFormat(from: style)  {
-            formatter.dateFormat = dateFormat
-            return formatter.string(from: date)
-        } else {
-            return date.day.description
-        }
+        formatter.dateFormat = dateFormat
+        return formatter.string(from: XDate())
     }
 
-    private static func statusBarFormat(from style: MenuBarStyle) -> String? {
-        switch style {
-        case .style1: return inChinese ? "M月d日 EE HH:mm" : "E, MMM d, HH:mm"
-        case .style2: return inChinese ? "M月d日 EE" : "E, MMM d"
-        case .style3: return inChinese ? "M月d日 HH:mm" : "MMM d, HH:mm"
-        case .style4: return inChinese ? "EE HH:mm" : "E, HH:mm"
-        default: return .none
-        }
-    }
 }
 
 

@@ -33,10 +33,12 @@ enum AppStorageKey {
     static let weekday = "\(AppInfo.name).storageKey.weekday"
     static let showSchedule = "\(AppInfo.name).storageKey.showSchedule"
     static let menuBarStyle = "\(AppInfo.name).storageKey.menuBarStyle"
+    static let menuBarText = "\(AppInfo.name).storageKey.menuBarText"
+    static let menuBarDateFormat = "\(AppInfo.name).storageKey.menuBarDateFormat"
 }
 
 extension NSImage {
-
+    
     static let menubarIcon = NSImage(named: "MenubarIcon")
 
 }
@@ -55,6 +57,7 @@ extension Image {
     static let rightArrow = Image(systemName: "chevron.right")
     static let circle = Image(systemName: "circle")
     static let link = Image(systemName: "link")
+    static let calendar = Image(nsImage: .menubarIcon!)
 }
 
 
@@ -72,7 +75,7 @@ extension Locale {
 
 extension Color {
 
-    static let background = Color(light: "F5F7FA", dark: "323133")
+    static let background = Color(light: "F7F7F7", dark: "2B2D2E")
     static let workdayBackground = Color(light: "E6E9ED", dark: "3C3B3D")
 
     static let primary = Color(light: "323133", dark: "F5F7FA")

@@ -70,10 +70,10 @@ struct CheckboxStyle: ToggleStyle {
 
             ZStack {
                 Capsule()
-                    .frame(width: 30, height: 15)
+                    .frame(width: 35, height: 20)
                     .foregroundColor(configuration.isOn ? .accentColor : .secondary)
                 Circle()
-                    .square(8)
+                    .square(10)
                     .foregroundColor(.white)
                     .offset(x: configuration.isOn ? offsetX : -offsetX)
             }
@@ -118,6 +118,7 @@ extension View {
         onChange(of: value) { _ in
             NotificationCenter.default.post(name: name, object: .none)
         }
+
     }
 
     func xTint(_ tint: Color) -> some View {

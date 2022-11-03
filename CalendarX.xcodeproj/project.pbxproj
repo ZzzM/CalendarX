@@ -29,6 +29,7 @@
 		98BE991827A0F75900306061 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE991727A0F75900306061 /* MainView.swift */; };
 		98BE991C27A1397500306061 /* Calendar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE991B27A1397500306061 /* Calendar+.swift */; };
 		98BE991E27A1415F00306061 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE991D27A1415F00306061 /* SettingsView.swift */; };
+		98C9BD0A290999F600F645AD /* MenuBarSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C9BD09290999F600F645AD /* MenuBarSettingsView.swift */; };
 		98CE8BDB27BBAA93009E5674 /* tiaoxiu.json in Resources */ = {isa = PBXBuildFile; fileRef = 98CE8BDA27BBAA93009E5674 /* tiaoxiu.json */; };
 		98CE8BE027BDEF1D009E5674 /* chuxi.json in Resources */ = {isa = PBXBuildFile; fileRef = 98CE8BDF27BDEF1D009E5674 /* chuxi.json */; };
 		98CE8BE427BDFA12009E5674 /* terms.json in Resources */ = {isa = PBXBuildFile; fileRef = 98CE8BE327BDFA12009E5674 /* terms.json */; };
@@ -78,6 +79,7 @@
 		98BE991727A0F75900306061 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		98BE991B27A1397500306061 /* Calendar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+.swift"; sourceTree = "<group>"; };
 		98BE991D27A1415F00306061 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		98C9BD09290999F600F645AD /* MenuBarSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarSettingsView.swift; sourceTree = "<group>"; };
 		98CE8BDA27BBAA93009E5674 /* tiaoxiu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tiaoxiu.json; sourceTree = "<group>"; };
 		98CE8BDF27BDEF1D009E5674 /* chuxi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chuxi.json; sourceTree = "<group>"; };
 		98CE8BE327BDFA12009E5674 /* terms.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = terms.json; sourceTree = "<group>"; };
@@ -140,7 +142,6 @@
 				98BE991527A0F6AB00306061 /* RootView.swift */,
 				98BE991727A0F75900306061 /* MainView.swift */,
 				98ED365427A288E500AF578A /* DateView.swift */,
-				98BE991D27A1415F00306061 /* SettingsView.swift */,
 			);
 			path = Calender;
 			sourceTree = "<group>";
@@ -169,6 +170,15 @@
 				98FEAB9E27F6F0EA0034EC1F /* MenuBarStyle.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		98C9BD0B29099A2C00F645AD /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				98BE991D27A1415F00306061 /* SettingsView.swift */,
+				98C9BD09290999F600F645AD /* MenuBarSettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		98CE8BDC27BBABF2009E5674 /* Resource */ = {
@@ -203,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				988A82CB279F8674000899B5 /* Calender */,
+				98C9BD0B29099A2C00F645AD /* Settings */,
 				98D2479227842CC500F2B278 /* MenuBar */,
 			);
 			path = Module;
@@ -308,7 +319,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1330;
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					98D573CD27571EB3001C2D8C = {
 						CreatedOnToolsVersion = 13.1;
@@ -397,6 +408,7 @@
 				982DABC627C33343002891A3 /* Bundle+.swift in Sources */,
 				98F4347727A24297009F18CC /* ScacleButton.swift in Sources */,
 				98BE991E27A1415F00306061 /* SettingsView.swift in Sources */,
+				98C9BD0A290999F600F645AD /* MenuBarSettingsView.swift in Sources */,
 				982DABC427C332E1002891A3 /* Date+.swift in Sources */,
 				98ED367427BB468700AF578A /* XDay.swift in Sources */,
 				988A82DE279FEC9D000899B5 /* Language.swift in Sources */,
@@ -481,6 +493,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -543,6 +556,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -573,6 +587,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CalendarX/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
@@ -604,6 +619,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CalendarX/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;

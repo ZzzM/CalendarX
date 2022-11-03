@@ -38,10 +38,11 @@ struct MainView: View {
             .equatable()
             .opacity(isShown ? 0:1)
             .height(.mainHeight)
+
         }
 
     }
-    
+
     private func header() -> some View {
 
         HStack {
@@ -199,6 +200,7 @@ struct CalendarView<Day: View, Header: View, Week: View>: View {
         calendar.firstWeekday = firstWeekday.rawValue
         let dates = calendar.generateDates(for: date)
         let events = Event.fetchEvents(with: dates.first!, end: dates.last!)
+
         return dates.map { date in
             XDay(date, events: events.filter{$0.startDate.isSameDay(as: date)})
         }

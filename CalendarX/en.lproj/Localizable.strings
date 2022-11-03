@@ -17,6 +17,10 @@
 "settings.quitApp" = "Quit App";
 
 "menubarStyle.default" = "Default";
+"menubarStyle.text" = "Text";
+"menubarStyle.date" = "Date & Time";
+"menubarStyle.save" = "Save";
+"menubarStyle.tips" = "The max character length is 30";
 
 "theme.system" = "System";
 "theme.dark" = "Dark";

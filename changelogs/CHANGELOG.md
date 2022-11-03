@@ -1,14 +1,28 @@
+## 2.2.1 - 2022-11-03
+
+### Added
+- Custom Menubar Style（default, text, date & time）
+
+### Changed
+- Settings UI
+
+### Fixed
+- Adaptation to macOS 13.0
+
+
+---
+
 ## 2.2.0 - 2022-04-29
 
+### Added
+- Enable launch at login
+ 
 ### Changed
 - New design
 - Updated App name to **CalenderX**
 - Updated App icon
 - Updated Chinese statutory holidays in 2022
   
-### Added
-- Enable launch at login
-
 
 ### Removed
 - Widget

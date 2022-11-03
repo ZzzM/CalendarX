@@ -69,6 +69,7 @@ struct XDay: Identifiable {
         stateDesc = state.description
         self.date = date
         self.events = events
+
     }
 }
 

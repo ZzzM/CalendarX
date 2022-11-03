@@ -32,9 +32,8 @@ struct ScacleTagButton: View {
     var body: some View {
         ScacleButton(action: action) {
             Text(title)
-                .font(.subheadline)
                 .padding(.horizontal, 5)
-                .padding(.vertical, 3)
+                .padding(.vertical, 5)
                 .background(Color.accentColor.opacity(0.1))
                 .foregroundColor(.accentColor)
                 .clipShape(Capsule())
