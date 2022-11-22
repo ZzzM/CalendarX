@@ -8,7 +8,7 @@ CalendarX</br>
 </a>
 </h1>
 
-A lightweight macOS App for displaying calendar and time 
+A lightweight macOS app for displaying calendar and time 
 
 ## Features
 - [x] Chinese statutory holidays and other festivals
