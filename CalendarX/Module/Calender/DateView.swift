@@ -10,34 +10,21 @@ import WrappingHStack
 
 struct DateView: View {
     
-    @Binding
-    var isShown: Bool
-    
     let day: XDay
     
     var body: some View {
         VStack(spacing: 10) {
-            titleView()
+            TitleView {
+                Text(day.date, style: .date)
+            } actions: {
+                ScacleImageButton(image: .close, action: Router.backMain)
+            }
+            Text(day.lunarDate).font(.footnote).foregroundColor(.secondary)
             FestivalsView(festivals: day.festivals)
             SchedulesView(events: day.events)
         }
     }
-    
-    @ViewBuilder
-    func titleView() -> some View {
-        HStack {
-            ScacleImageButton(image: .close, action: {}).hidden()
-            Spacer()
-            Text(day.date, style: .date).font(.title2)
-            Spacer()
-            ScacleImageButton(image: .close) {
-                withAnimation { isShown.toggle() }
-            }
-        }
-        
-        Text(day.lunarDate).font(.footnote).foregroundColor(.secondary)
-    }
-    
+
     
 }
 
@@ -134,11 +121,9 @@ struct SchedulesView: View {
 struct GroupEmptyRow: View {
     let title: LocalizedStringKey
     var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-        }
-        .foregroundColor(.secondary)
+        Text(title)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .foregroundColor(.secondary)
     }
 }
 

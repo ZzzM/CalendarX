@@ -52,12 +52,13 @@ extension Image {
     static let success = Image(systemName: "checkmark.circle.fill")
     static let download = Image(systemName: "arrow.down")
     static let close = Image(systemName: "xmark")
-    static let appLogo = Image("AppLogo", bundle: .main)
     static let leftArrow = Image(systemName: "chevron.left")
     static let rightArrow = Image(systemName: "chevron.right")
     static let circle = Image(systemName: "circle")
     static let link = Image(systemName: "link")
-    static let calendar = Image(nsImage: .menubarIcon!)
+    static let recommend = Image(systemName: "hand.thumbsup.fill")
+    static let gitHub = Image("GitHub").renderingMode(.template).resizable()
+    static let menubarIcon = Image("MenubarIcon").renderingMode(.template).resizable()
 }
 
 

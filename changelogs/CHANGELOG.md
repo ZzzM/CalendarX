@@ -1,3 +1,16 @@
+## 2.2.2 - 2022-12-09
+
+### Added
+- Chinese statutory holidays in 2023
+- App Recommendations
+
+### Changed
+
+- Settings UI
+- Transition animation
+
+---
+
 ## 2.2.1 - 2022-11-03
 
 ### Added
@@ -16,7 +29,7 @@
 
 ### Added
 - Enable launch at login
- 
+
 ### Changed
 - New design
 - Updated App name to **CalenderX**

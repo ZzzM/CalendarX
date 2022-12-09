@@ -1,0 +1,12 @@
+[
+    {
+        "name": "OnlySwitch",
+        "about": "⚙️ All-in-One menu bar app, hide 💻MacBook Pro's notch, dark mode, AirPods, Shortcuts",
+        "link": "https://github.com/jacklandrin/OnlySwitch"
+    },
+    {
+        "name": "HostsX",
+        "about": "A lightweight macOS app for updating local hosts",
+        "link": "https://github.com/ZzzM/HostsX"
+    }
+]

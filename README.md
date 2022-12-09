@@ -28,21 +28,19 @@ A lightweight macOS app for displaying calendar and time
 ## Snapshots
 - Calendar - left click to show
 
-<img src="assets/ml01.png" width=250> <img src="assets/md01.png" width=250>
+<img src="assets/cl01.png" width=250> <img src="assets/cd01.png" width=250>
 
-<img src="assets/ml03.png" width=250> <img src="assets/md03.png" width=250>
+<img src="assets/cl02.png" width=250> <img src="assets/cd02.png" width=250>
 
 - Settings - right click to show
 
-<img src="assets/ml02.png" width=250> <img src="assets/md02.png" width=250>
+<img src="assets/sl01.png" width=250> <img src="assets/sd01.png" width=250>
 
-- Menubar - custom styles (default, text, date & time）
+<img src="assets/sl02.png" width=250> <img src="assets/sd02.png" width=250> 
+<img src="assets/sl03.png" width=250> <img src="assets/sd03.png" width=250> 
 
-<img src="assets/s01.png" width=250> <img src="assets/s02.png" width=250> 
-<img src="assets/s03.png" width=250> 
-  
 ## Dependencies
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
 - [WrappingHStack](https://github.com/dkk/WrappingHStack)
 - [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
-- [Schedule](https://github.com/luoxiu/Schedule)
+- [Schedule](https://github.com/luoxiu/Schedule)  

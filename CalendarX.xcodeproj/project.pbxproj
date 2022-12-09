@@ -24,6 +24,9 @@
 		988A82E0279FEC9D000899B5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A82DC279FEC9D000899B5 /* Theme.swift */; };
 		988A82E1279FEC9D000899B5 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A82DD279FEC9D000899B5 /* AppInfo.swift */; };
 		988A82E3279FFB8A000899B5 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A82E2279FFB8A000899B5 /* Preference.swift */; };
+		98B5B6C929427A8A00114483 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5B6C829427A8A00114483 /* TitleView.swift */; };
+		98B5B6CB294289F900114483 /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5B6CA294289F900114483 /* RecommendationsView.swift */; };
+		98B5B6CD2942A6D800114483 /* apps.json in Resources */ = {isa = PBXBuildFile; fileRef = 98B5B6CC2942A6D800114483 /* apps.json */; };
 		98BE991427A0E08500306061 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 98BE991327A0E08500306061 /* Sparkle */; };
 		98BE991627A0F6AB00306061 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE991527A0F6AB00306061 /* RootView.swift */; };
 		98BE991827A0F75900306061 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE991727A0F75900306061 /* MainView.swift */; };
@@ -75,6 +78,9 @@
 		988A82DC279FEC9D000899B5 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		988A82DD279FEC9D000899B5 /* AppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		988A82E2279FFB8A000899B5 /* Preference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
+		98B5B6C829427A8A00114483 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		98B5B6CA294289F900114483 /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
+		98B5B6CC2942A6D800114483 /* apps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = apps.json; sourceTree = "<group>"; };
 		98BE991527A0F6AB00306061 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		98BE991727A0F75900306061 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		98BE991B27A1397500306061 /* Calendar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+.swift"; sourceTree = "<group>"; };
@@ -177,6 +183,7 @@
 			children = (
 				98BE991D27A1415F00306061 /* SettingsView.swift */,
 				98C9BD09290999F600F645AD /* MenuBarSettingsView.swift */,
+				98B5B6CA294289F900114483 /* RecommendationsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -184,6 +191,7 @@
 		98CE8BDC27BBABF2009E5674 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				98B5B6CC2942A6D800114483 /* apps.json */,
 				988530272818DB8A00FD98BC /* palette.json */,
 				98CE8BE327BDFA12009E5674 /* terms.json */,
 				98CE8BDA27BBAA93009E5674 /* tiaoxiu.json */,
@@ -280,6 +288,7 @@
 				98F4347627A24297009F18CC /* ScacleButton.swift */,
 				98ED365827A354CC00AF578A /* ScacleButtonPicker.swift */,
 				98CED54A27F3057100E0F758 /* RotationArrow.swift */,
+				98B5B6C829427A8A00114483 /* TitleView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -363,6 +372,7 @@
 				98CED54E27F43CF100E0F758 /* InfoPlist.strings in Resources */,
 				98CE8BE827BF43EB009E5674 /* solarPF.json in Resources */,
 				98CE8BEE27BF5105009E5674 /* solarAF.json in Resources */,
+				98B5B6CD2942A6D800114483 /* apps.json in Resources */,
 				982DABC027C32FC9002891A3 /* weekSF.json in Resources */,
 				98D573D627571EB6001C2D8C /* Assets.xcassets in Resources */,
 				98CE8BE027BDEF1D009E5674 /* chuxi.json in Resources */,
@@ -407,6 +417,7 @@
 				98BE991627A0F6AB00306061 /* RootView.swift in Sources */,
 				982DABC627C33343002891A3 /* Bundle+.swift in Sources */,
 				98F4347727A24297009F18CC /* ScacleButton.swift in Sources */,
+				98B5B6C929427A8A00114483 /* TitleView.swift in Sources */,
 				98BE991E27A1415F00306061 /* SettingsView.swift in Sources */,
 				98C9BD0A290999F600F645AD /* MenuBarSettingsView.swift in Sources */,
 				982DABC427C332E1002891A3 /* Date+.swift in Sources */,
@@ -431,6 +442,7 @@
 				98FEAB9F27F6F0EA0034EC1F /* MenuBarStyle.swift in Sources */,
 				98D247962784324700F2B278 /* MenuBarPopover.swift in Sources */,
 				98F4347427A23ABE009F18CC /* MainViewModel.swift in Sources */,
+				98B5B6CB294289F900114483 /* RecommendationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

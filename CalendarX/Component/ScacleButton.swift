@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ScacleButton<Label: View>: View {
     let action: VoidClosure
-
+    
     @ViewBuilder
     let label: () -> Label
     
@@ -46,18 +46,15 @@ struct ScacleCapsuleButton: View {
         foregroundColor: Color,
         backgroundColor: Color,
         action: VoidClosure
-
+    
     var body: some View {
         ScacleButton(action: action) {
-            HStack {
-                Spacer()
-                Text(title)
-                Spacer()
-            }
-            .padding(.vertical, 5)
-            .foregroundColor(foregroundColor)
-            .background(backgroundColor)
-            .clipShape(Capsule())
+            Text(title)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 5)
+                .foregroundColor(foregroundColor)
+                .background(backgroundColor)
+                .clipShape(Capsule())
         }
     }
 }

@@ -8,12 +8,7 @@
 import SwiftUI
 import Combine
 
-
-
 struct MenuBarSettingsView: View {
-
-    @Binding
-    var isShown: Bool
 
     @EnvironmentObject
     private var pref: Preference
@@ -43,8 +38,11 @@ struct MenuBarSettingsView: View {
     var body: some View {
         VStack(spacing: 10) {
 
-            titleView()
-
+            TitleView {
+                Text(L10n.Settings.menuBarStyle)
+            } actions: {
+                ScacleImageButton(image: .close, action: Router.backSettings)
+            }
 
             Picker(selection: $style) {
                 ForEach(MenuBarStyle.allCases, id: \.self) {
@@ -64,41 +62,25 @@ struct MenuBarSettingsView: View {
                 }
             }
             .frame(maxHeight: .infinity)
-
-
-            ScacleCapsuleButton(title: L10n.MenubarStyle.save, foregroundColor: .white, backgroundColor: disabled ? .secondary: .accentColor) {
-                withAnimation { isShown.toggle() }
-                save()
-            }
+            
+            
+            ScacleCapsuleButton(title: L10n.MenubarStyle.save,
+                                foregroundColor: .white,
+                                backgroundColor: disabled ? .secondary: .accentColor,
+                                action: save)
             .frame(width: .mainWidth/2)
             .disabled(disabled)
             .onChange(of: saved, notification: .titleStyleDidChanged)
-
+            
         }
         .focusable(false)
 
     }
 
-    func titleView() -> some View {
-        HStack {
-            ScacleImageButton(image: .close, action: {}).hidden()
-            Spacer()
-            Text(L10n.Settings.menuBarStyle).font(.title2)
-            Spacer()
-            ScacleImageButton(image: .close) {
-                withAnimation { isShown.toggle() }
-            }
-        }
-    }
-
-
     @ViewBuilder
     func defaultContent() -> some View {
 
-        Image.calendar
-            .renderingMode(.template)
-            .resizable()
-            .frame(width: 30, height: 30)
+        Image.menubarIcon.square(30)
 
         Text(Date().day.description)
             .font(.title3)
@@ -119,32 +101,31 @@ struct MenuBarSettingsView: View {
         pref.menuBarStyle = style
 
         saved.toggle()
+        
+        Router.backSettings()
     }
-
 
 }
 
 
 struct TextView: View {
 
-
     @Binding
     var text: String
-
 
     var body: some View {
         VStack {
 
             Text(text).font(.title3)
-
+            
             TextField(AppInfo.name, text: $text)
                 .textFieldStyle(.plain)
-                .padding(3)
-                .background(Capsule().stroke(Color.secondary))
                 .multilineTextAlignment(.center)
                 .onReceive(Just(text)) { _ in
                     text.limit()
                 }
+            
+            Divider().padding(.horizontal)
 
             Text(L10n.MenubarStyle.tips)
                 .font(.footnote)
@@ -156,10 +137,8 @@ struct TextView: View {
 
 struct DateFormatView: View {
 
-
     @Binding
     var dateFormat: String
-
 
     var body: some View {
         VStack {
@@ -168,12 +147,12 @@ struct DateFormatView: View {
 
             TextField(AppInfo.dateFormat, text: $dateFormat)
                 .textFieldStyle(.plain)
-                .padding(3)
-                .background(Capsule().stroke(Color.secondary))
                 .multilineTextAlignment(.center)
                 .onReceive(Just(dateFormat)) { _ in
                     dateFormat.limit()
                 }
+            
+            Divider().padding(.horizontal)
 
             Text(L10n.MenubarStyle.tips)
                 .font(.footnote)

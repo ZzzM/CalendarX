@@ -19,6 +19,7 @@ struct L10n {
 
     enum Settings {
         static let title = "settings.title".l10nKey
+        static let recommendations = "settings.recommendations".l10nKey
         static let menuBarStyle = "settings.menuBarStyle".l10nKey
         static let theme = "settings.theme".l10nKey
         static let tint = "settings.tint".l10nKey

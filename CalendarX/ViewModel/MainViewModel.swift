@@ -9,15 +9,10 @@ import SwiftUI
 
 class MainViewModel: ObservableObject {
 
-
-    @Published
-    var date: Date
-
     @Published
     var timestamp: TimeInterval
 
     init() {
-        date = Date()
         timestamp = Date().timeIntervalSince1970
         NotificationCenter.default
             .publisher(for: .EKEventStoreChanged)
@@ -28,11 +23,5 @@ class MainViewModel: ObservableObject {
             .map { _ in Date().timeIntervalSince1970 }
             .assign(to: &$timestamp)
     }
-
-    func nextMonth() { date.nextMonth() }
-
-    func lastMonth() { date.lastMonth() }
-
-    func today() { date = Date() }
 
 }

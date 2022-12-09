@@ -129,9 +129,19 @@ extension View {
         modifier(ColorSchemeModifier(colorScheme: colorScheme))
     }
     
+    
+    func fullScreenCover(_ backgroudColor: Color = .background) -> some View {
+        background(backgroudColor)
+            .transition(.move(edge: .bottom))
+            .zIndex(1)
+    }
+    
+    
     var hoverEffect: some View {
         modifier(HoverModifier())
     }
+    
+    
     
 }
 

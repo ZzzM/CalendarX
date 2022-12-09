@@ -6,6 +6,7 @@
   
 */
 "settings.title" = "Settings";
+"settings.recommendations" = "App Recommendations";
 "settings.menuBarStyle" = "Menubar Style";
 "settings.theme" = "Theme";
 "settings.tint" = "Tint";

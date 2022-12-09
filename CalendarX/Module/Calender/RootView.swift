@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct RootView: View {
     
     @StateObject
@@ -15,7 +14,10 @@ struct RootView: View {
 
     @StateObject
     private var router = Router.shared
-
+    
+    @State
+    private var date = Date()
+    
     var body: some View {
 
         ZStack {
@@ -32,8 +34,11 @@ struct RootView: View {
     @ViewBuilder
     private var content: some View {
         switch router.path {
-        case .main: MainView()
+        case .main: MainView(date: $date)
         case .settings: SettingsView()
+        case .date(let day): DateView(day: day).fullScreenCover()
+        case .recommendations: RecommendationsView().fullScreenCover()
+        case .menuBarSettings: MenuBarSettingsView().fullScreenCover()
         }
     }
 

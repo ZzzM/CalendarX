@@ -6,6 +6,7 @@
   
 */
 "settings.title" = "设置";
+"settings.recommendations" = "App 推荐";
 "settings.menuBarStyle" = "菜单栏样式";
 "settings.theme" = "主题";
 "settings.tint" = "色调";
