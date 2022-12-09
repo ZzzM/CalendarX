@@ -37,6 +37,7 @@ A lightweight macOS app for displaying calendar and time
 <img src="assets/sl01.png" width=250> <img src="assets/sd01.png" width=250>
 
 <img src="assets/sl02.png" width=250> <img src="assets/sd02.png" width=250> 
+
 <img src="assets/sl03.png" width=250> <img src="assets/sd03.png" width=250> 
 
 ## Dependencies
