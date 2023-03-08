@@ -1,5 +1,5 @@
 //
-//  GlobalMonitor.swift
+//  MonitorHelper.swift
 //  CalendarX
 //
 //  Created by zm on 2022/4/1.
@@ -7,9 +7,10 @@
 
 import AppKit
 
-class GlobalMonitor {
+class MonitorHelper {
+    
     private var monitor: Any?
-    private let mask: NSEvent.EventTypeMask
+    private var mask: NSEvent.EventTypeMask = []
     private let handler: (NSEvent?) -> Void
 
     init(mask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown],
@@ -17,9 +18,13 @@ class GlobalMonitor {
         self.mask = mask
         self.handler = handler
     }
+
+    deinit {
+        stop()
+    }
 }
 
-extension GlobalMonitor {
+extension MonitorHelper {
     func start() {
         monitor = NSEvent.addGlobalMonitorForEvents(matching: mask, handler: handler)
     }

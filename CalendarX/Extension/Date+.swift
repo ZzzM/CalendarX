@@ -7,22 +7,6 @@
 
 import Foundation
 
-
-extension Date {
-    var key: String {
-        String(format: "%02d%02d", month, day)
-    }
-
-    var lunarKey: String {
-        String(format: "%02d%02d", lunarMonth, lunarDay)
-    }
-
-    var weekKey: String {
-        String(format: "%02d%d%d", month, weekdayOrdinal, weekday)
-    }
-}
-
-
 extension Date {
     
     var isInvalidNextWeekday: Bool {
@@ -105,15 +89,15 @@ extension Date {
         return Calendar.gregorian.date(from: components) ?? self
     }
 
-    var after1min: Date {
+    var nextMin: Date {
         var components = Calendar.gregorian.dateComponents([.year, .month, .day, .hour, .minute], from: self)
         components.minute! += 1
         return Calendar.gregorian.date(from: components) ?? self
     }
 
-    var after2sec: Date {
+    var nextSec: Date {
         var components = Calendar.gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: self)
-        components.second! += 2
+        components.second! += 1
         return Calendar.gregorian.date(from: components) ?? self
     }
 
@@ -131,8 +115,17 @@ extension Date {
 }
 
 extension Date {
+    
     var lunarYear: Int {
         Calendar.chinese.component(.year, from: self)
+    }
+
+    var lunarMonthString: String {
+        Lunar.months[lunarMonth - 1]
+    }
+
+    var lunarDayString: String {
+        Lunar.days[lunarDay - 1]
     }
 
     var lunarMonth: Int {

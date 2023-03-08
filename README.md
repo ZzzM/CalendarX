@@ -1,5 +1,8 @@
-<h1>
-CalendarX</br>
+<h1 >
+<div style="display:flex; align-items:center; font-size:30px;">
+  <img src=CalendarX/Assets.xcassets/AppIcon.appiconset/icon_512x512.png width=80> 
+  CalendarX
+</div>
 <a href="https://github.com/ZzzM/CalendarX/releases/latest"><img src="https://img.shields.io/github/v/release/ZzzM/CalendarX"></a>
 <a href="https://github.com/ZzzM/CalendarX/releases/latest"><img src="https://img.shields.io/github/release-date/ZzzM/CalendarX"></a>
 <a href="https://raw.githubusercontent.com/ZzzM/CalendarX/master/LICENSE"><img src="https://img.shields.io/github/license/ZzzM/CalendarX"></a>
@@ -13,7 +16,6 @@ A lightweight macOS app for displaying calendar and time
 ## Features
 - [x] Chinese statutory holidays and other festivals
 - [x] Custom menubar styles (default, text, date & time）
-- [x] Multiple tint
 - [x] Dark mode
 - [x] Localization (简体中文、English)
 - [x] SwiftUI / Async / Await
@@ -40,7 +42,13 @@ A lightweight macOS app for displaying calendar and time
 
 <img src="assets/sl03.png" width=250> <img src="assets/sd03.png" width=250> 
 
+- Menubar Date&Time Style - drag and drop to edit
+
+<img src="assets/sl04.png" width=250> <img src="assets/sd04.png" width=250> 
+  
+
 ## Dependencies
+
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
 - [WrappingHStack](https://github.com/dkk/WrappingHStack)
 - [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)

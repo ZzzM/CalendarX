@@ -1,5 +1,5 @@
 //
-//  MenuBarPopover.swift
+//  MenubarPopover.swift
 //  CalendarX
 //
 //  Created by zm on 2022/1/4.
@@ -8,7 +8,7 @@
 import AppKit
 import SwiftUI
 
-class MenuBarPopover: NSPopover {
+class MenubarPopover: NSPopover {
 
     init<Content>(_ rootView: Content) where Content : View {
         super.init()
@@ -32,3 +32,4 @@ class MenuBarPopover: NSPopover {
     }
 
 }
+

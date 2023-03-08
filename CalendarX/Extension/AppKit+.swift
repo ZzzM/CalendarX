@@ -8,6 +8,31 @@
 
 import SwiftUI
 
+
+
+extension NSView {
+
+    static var nibName: String {
+        return String(describing: Self.self)
+    }
+
+    static func loadFromNib(in bundle: Bundle = Bundle.main) -> Self {
+        var topLevelArray: NSArray? = nil
+        bundle.loadNibNamed(NSNib.Name(nibName), owner: self, topLevelObjects: &topLevelArray)
+        let views = Array<Any>(topLevelArray!).filter { $0 is Self }
+        return views.last as! Self
+    }
+
+    var imageRepresentation: NSImage? {
+        guard let rep = bitmapImageRepForCachingDisplay(in: bounds) else { return .none }
+        cacheDisplay(in: bounds, to: rep)
+        let image = NSImage(size: bounds.size)
+        image.addRepresentation(rep)
+        image.isTemplate = true
+        return image
+    }
+}
+
 extension NSEvent {
     var isRightClicked: Bool {
         type == .rightMouseDown || modifierFlags.contains(.control)
@@ -31,34 +56,39 @@ extension NSWorkspace {
 
 extension NSRunningApplication {
     func quitSameApps() {
-        guard let id = bundleIdentifier else { return }
+        guard let bundleIdentifier else { return }
         let apps = NSRunningApplication
-            .runningApplications(withBundleIdentifier: id)
+            .runningApplications(withBundleIdentifier: bundleIdentifier)
             .filter{ $0 != self }
         apps.forEach{ $0.terminate() }
-    }
-}
-
-extension NSStatusBarButton {
-
-    
-    func setImage(_ image: NSImage?, title: String) {
-        DispatchQueue.main.async {
-            self.image = image
-            if let _image = image {
-                _image.size = .init(width: 16, height: 16)
-                _image.isTemplate = true
-                self.attributedTitle =  NSAttributedString(string: title, attributes: [.baselineOffset: -1,.font: NSFont.systemFont(ofSize: 8.5)])
-            } else {
-                self.title = title
-            }
-        }
     }
 }
 
 extension Array {
     var isNotEmpty: Bool { !isEmpty }
 }
+
+extension Array: RawRepresentable where Element: Codable {
+    
+    public init?(rawValue: String) {
+        guard let data = rawValue.data(using: .utf8),
+              let result = try? JSONDecoder().decode([Element].self, from: data)
+        else {
+            return nil
+        }
+        self = result
+    }
+
+    public var rawValue: String {
+        guard let data = try? JSONEncoder().encode(self),
+              let result = String(data: data, encoding: .utf8)
+        else {
+            return "[]"
+        }
+        return result
+    }
+}
+
 
 extension String {
     var urlEncoded: String {
@@ -73,7 +103,32 @@ extension String {
     var l10nKey: LocalizedStringKey {
         LocalizedStringKey(self)
     }
+    
+    func localized(_ bundle: Bundle = .main, args: CVarArg...) -> String {
+        String(format: NSLocalizedString(self, bundle: bundle, comment: "\(self)_comment"), arguments: args)
+    }
+    
+}
 
+extension String {
+    func toObject<T: Decodable>(_ type: T.Type) -> T? {
+        guard let data = data(using: .utf8) else { return .none }
+        return try? JSONDecoder().decode(type, from: data)
+    }
 }
 
 
+extension Binding where Value == String {
+    func max(_ limit: Int = 30) -> Self {
+        if self.wrappedValue.count > limit {
+            DispatchQueue.main.async {
+                self.wrappedValue = String(self.wrappedValue.dropLast())
+            }
+        }
+        return self
+    }
+}
+
+extension Locale {
+    var inChinese: Bool { identifier.contains("zh") }
+}

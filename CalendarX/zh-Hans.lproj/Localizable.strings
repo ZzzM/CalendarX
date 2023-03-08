@@ -6,29 +6,51 @@
   
 */
 "settings.title" = "设置";
+"settings.appearance" = "外观";
+"settings.calendar" = "日历";
+"settings.language" = "语言";
 "settings.recommendations" = "App 推荐";
-"settings.menuBarStyle" = "菜单栏样式";
-"settings.theme" = "主题";
-"settings.tint" = "色调";
-"settings.showSchedule" = "显示日程";
-"settings.startWeekOn" = "星期开始于";
+"settings.menubarStyle" = "菜单栏样式";
 "settings.launchAtLogin" = "开机启动";
+"settings.auto" = "自动检查更新";
 "settings.version" = "版本";
 "settings.checkForUpdates" = "检查更新";
-"settings.quitApp" = "退出应用";
+"settings.about" = "关于";
+
+"calendar.showLunar" = "显示阴历";
+"calendar.showHolidays" = "显示中国法定假日";
+"calendar.showEvents" = "显示日历事件";
+"calendar.startWeekOn" = "星期开始于";
+
+"appearance.tint" = "强调色";
+"appearance.hex" = "颜色十六进制编码";
+
+"alert.exit" = "退出";
+"alert.notifications" = "通知";
+"alert.calendars" = "日历";
+"alert.exitMessage" = "您确定要退出吗？";
+"alert.notificationsMessage" = "允许通知用以开启自动检查更新";
+"alert.calendarsMessage" = "允许访问日历以显示日历事件";
+"alert.no" = "否";
+"alert.yes" = "是";
+"alert.ok" = "好的";
 
 "menubarStyle.default" = "默认";
 "menubarStyle.text" = "文本";
 "menubarStyle.date" = "日期和时间";
 "menubarStyle.save" = "保存";
 "menubarStyle.tips" = "最大字符长度为30";
+"menubarStyle.use24" = "使用24小时格式";
+"menubarStyle.showSeconds" = "在时间中显示秒钟";
 
-"theme.system" = "系统";
-"theme.dark" = "深色";
+"theme.system" = "跟随系统";
+"theme.dark" = "深色模式";
 "theme.light" = "浅色";
 
-"date.festivals" = "节日";
-"date.schedules" = "日程";
-"date.noFestivals" = "无节日";
-"date.noSchedules" = "无日程";
+"date.allDay" = "全天";
+"date.events" = "日历事件";
+"date.noEvents" = "无日历事件";
+
+"updater.available" = "有新的更新可用 🎉";
+"updater.update" = "版本 %@ 现已可用";
 

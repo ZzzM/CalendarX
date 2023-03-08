@@ -1,3 +1,25 @@
+## 2.3.0 - 2023-03-08
+
+### Added
+- 自动检查更新
+- 外观设置
+- 日历设置
+- 语言设置
+- 提示弹窗
+- 关于
+
+### Fixed
+- [日历时间标识显示问题](https://github.com/ZzzM/CalendarX/issues/6)
+- [菜单栏文字显示问题](https://github.com/ZzzM/CalendarX/issues/4)
+- 计时器问题
+
+### Changed
+- 日期详情
+- 设置
+- 菜单栏样式设置
+- App 推荐
+
+---
 ## 2.2.2 - 2022-12-09
 
 ### Added
@@ -7,7 +29,6 @@
 ### Changed
 
 - 设置界面
-
 - 过渡动画
 
 ---

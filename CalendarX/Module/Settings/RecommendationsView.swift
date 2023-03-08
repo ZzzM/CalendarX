@@ -9,10 +9,10 @@ import SwiftUI
 
 struct RecommendationsView: View {
     
-    private let apps: [XApp] = Bundle.main.json2Object(from: "apps") ?? []
+    private let apps: [CalApp] = Bundle.main.json2Object(from: "apps") ?? []
     
     var body: some View {
-    
+        
         VStack {
             
             TitleView {
@@ -28,37 +28,44 @@ struct RecommendationsView: View {
                 }
                 
             }
-  
+            
         }
-    
+        
     }
 }
 
 struct AppView: View {
     
-    let app: XApp
+    let app: CalApp
     
     var body: some View {
         HStack {
-            Image(app.name).resizable().square(60)
+            Image(app.name).resizable().sideLength(60)
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
                     Text(app.name)
+                    Spacer()
                     ScacleButton {
                         NSWorkspace.open(app.link)
                     } label: {
-                        Image.gitHub.square(15)
+                        Image.gitHub.sideLength(15).foregroundColor(.secondary)
                     }
                 }
-                Text(app.about).font(.footnote).foregroundColor(.secondary).lineLimit(2)
+                Text(app.about).font(.caption2).foregroundColor(.secondary).lineLimit(2)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(5)
+        .background(Color.card)
+        .cornerRadius(5)
+        .shadow(radius: 1, x: 1, y: 1)
+        .padding(.horizontal, 3)
+    
+        
         
     }
 }
 
-struct XApp: Decodable, Identifiable {
+struct CalApp: Decodable, Identifiable {
     var id: String { name }
     let name: String, about: String, link: String
 }

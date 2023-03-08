@@ -7,11 +7,18 @@
 
 import SwiftUI
 
+
 @main
 struct CalendarXApp: App {
 
     @NSApplicationDelegateAdaptor(CalendarXDelegate.self)
     private var delegate
+    
+    init() {
+        LaunchHelper.migrateIfNeeded()
+        EventHelper.start()
+        Updater.start()
+    }
 
     var body: some Scene {
         Settings {
@@ -22,13 +29,20 @@ struct CalendarXApp: App {
 
 class CalendarXDelegate: NSObject & NSApplicationDelegate {
 
-    lazy var popover = MenuBarPopover(RootView())
-    lazy var controller =  MenuBarController(popover)
+    lazy var rootView = RootView()
+    lazy var popover = MenubarPopover(rootView)
+    lazy var controller =  MenubarController(popover)
+    
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        NSRunningApplication
+            .runningApplications(withBundleIdentifier: AppInfo.identifier)
+            .filter { $0.isFinishedLaunching }
+            .forEach { $0.terminate() }
+    }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         _ = controller
     }
 
 }
-
 

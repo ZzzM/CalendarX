@@ -22,10 +22,9 @@ struct AppInfo {
     private static subscript(key: AppInfoKey) -> String {
         Bundle.main.infoDictionary?[key.rawValue] as? String ?? "none"
     }
-
-    static let dateFormat = "yyyy-MM-dd HH:mm:ss"
     static let name = Self[.name]
     static let version = Self[.version]
+    static let identifier = Self[.identifier]
     static let commitHash = Self[.commitHash]
     static let commitDate = Self[.commitHash]
 }

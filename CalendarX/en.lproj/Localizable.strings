@@ -6,28 +6,50 @@
   
 */
 "settings.title" = "Settings";
+"settings.appearance" = "Appearance";
+"settings.calendar" = "Calendar";
+"settings.language" = "Language";
 "settings.recommendations" = "App Recommendations";
-"settings.menuBarStyle" = "Menubar Style";
-"settings.theme" = "Theme";
-"settings.tint" = "Tint";
-"settings.showSchedule" = "Show Schedule";
-"settings.startWeekOn" = "Start week on";
+"settings.menubarStyle" = "Menubar style";
 "settings.launchAtLogin" = "Launch at login";
+"settings.auto" = "Automatically checks for updates";
 "settings.version" = "Version";
 "settings.checkForUpdates" = "Check for updates";
-"settings.quitApp" = "Quit App";
+"settings.about" = "About";
+
+"calendar.showLunar" = "Show lunar calendar";
+"calendar.showHolidays" = "Show Chinese statutory holidays";
+"calendar.showEvents" = "Display calendar events";
+"calendar.startWeekOn" = "Start week on";
+
+"appearance.tint" = "Accent color";
+"appearance.hex" = "Color hex code";
+
+"alert.exit" = "Exit";
+"alert.notifications" = "Notifications";
+"alert.calendars" = "Calendars";
+"alert.exitMessage" = "Are you sure you want to exit？";
+"alert.notificationsMessage" = "Allow notifications to enable automatic update checks.";
+"alert.calendarsMessage" = "Allow access to calendars for displaying calendar events.";
+"alert.no" = "No";
+"alert.yes" = "Yes";
+"alert.ok" = "OK";
 
 "menubarStyle.default" = "Default";
 "menubarStyle.text" = "Text";
-"menubarStyle.date" = "Date & Time";
+"menubarStyle.date" = "Date&Time";
 "menubarStyle.save" = "Save";
 "menubarStyle.tips" = "The max character length is 30";
+"menubarStyle.use24" = "Use a 24-hour clock";
+"menubarStyle.showSeconds" = "Display the time with seconds";
 
-"theme.system" = "System";
-"theme.dark" = "Dark";
+"theme.system" = "Follow system";
+"theme.dark" = "Dark mode";
 "theme.light" = "Light";
 
-"date.festivals" = "Festivals";
-"date.schedules" = "Schedules";
-"date.noFestivals" = "No festivals";
-"date.noSchedules" = "No schedules";
+"date.allDay" = "All Day";
+"date.events" = "Calendar events";
+"date.noEvents" = "No calendar events";
+
+"updater.available" = "A new update is available 🎉";
+"updater.update" = "Version %@ is now available";

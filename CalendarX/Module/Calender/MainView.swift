@@ -9,38 +9,34 @@ import SwiftUI
 
 
 struct MainView: View {
-    
-    private let weekday = Preference.shared.weekday
-    
-    private let showSchedule = Preference.shared.showSchedule
-    
-    @StateObject
-    private var viewModel = MainViewModel()
 
-    @Binding
-    var date: Date
-
+    @ObservedObject
+    var viewModel: MainViewModel
+    
     var body: some View {
         
-        CalendarView(date: date,
-                     firstWeekday: weekday,
-                     timestamp: viewModel.timestamp,
+        CalendarView(date: viewModel.date,
+                     firstWeekday: viewModel.weekday,
+                     interval: viewModel.interval,
                      header: header,
                      weekView: weekView,
                      dayView: dayView)
         .equatable()
-        .height(.mainHeight)
+        .frame(height: .mainHeight)
         
     }
     
     private func header() -> some View {
         
         HStack {
-            MonthYearPicker(date: $date)
+            MonthYearPicker(date: $viewModel.date, colorScheme: viewModel.colorScheme, tint: viewModel.tint)
             Spacer()
-            ScacleImageButton(image: .leftArrow, action: { date.lastMonth() }).width(.buttonWidth)
-            ScacleImageButton(image: .circle, action: { date = Date() }).width(.buttonWidth)
-            ScacleImageButton(image: .rightArrow, action: { date.nextMonth() }).width(.buttonWidth)
+            ScacleImageButton(image: .leftArrow,  action: viewModel.lastMonth)
+                .frame(width: .buttonWidth)
+            ScacleImageButton(image: .circle, action: viewModel.reset)
+                .frame(width: .buttonWidth)
+            ScacleImageButton(image: .rightArrow, action: viewModel.nextMonth)
+                .frame(width: .buttonWidth)
         }
         
         
@@ -49,10 +45,16 @@ struct MainView: View {
     private func weekView(date: Date) -> some View {
         Text(L10n.shortWeekday(from: date))
             .foregroundColor(date.inWeekend ? .secondary : .primary)
-            .square(30)
+            .sideLength(30)
     }
     
-    private func dayView(inSameMonth: Bool, day: XDay) -> some View {
+    @ViewBuilder
+    private func dayView(inSameMonth: Bool, day: CalDay) -> some View {
+        
+        let showHolidays = !day.inNormal && viewModel.showHolidays,
+            showEvents = day.events.isNotEmpty && viewModel.showEvents,
+            defaultColor: Color = day.inWeekend ? .secondary : .primary
+        
         ScacleButton {
             Router.toDate(day)
         } label: {
@@ -63,39 +65,37 @@ struct MainView: View {
                         .stroke(Color.accentColor, lineWidth: 1)
                 }
                 
-                if day.inWorking {
-                    Color.workdayBackground.cornerRadius(4)
+                if showHolidays {
+                    (day.onHoliday ? Color.tagBackground : Color.workdayBackground)
+                        .cornerRadius(4)
                     Text(day.stateDesc)
-                        .font(.system(size: 6)).offset(x: -14, y: -14)
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 7).bold().monospacedDigit())
+                        .offset(x: -14, y: -14)
+                        .foregroundColor(day.onHoliday ? .accentColor: .secondary)
                 }
-                if day.onHoliday {
-                    Color.accentColor.opacity(0.1).cornerRadius(4)
-                    Text(day.stateDesc)
-                        .font(.system(size: 6)).offset(x: -14, y: -14)
-                        .foregroundColor(.accentColor)
-                }
-                
-                if day.events.isNotEmpty, showSchedule {
+
+                if showEvents {
                     Circle()
-                        .square(5)
+                        .size(width: 5, height: 5)
                         .foregroundColor(.accentColor)
                         .offset(x: 32, y: 3)
                 }
                 
                 VStack {
                     Text(day.title)
-                        .font(.title3)
-                        .foregroundColor(day.onHoliday ? .accentColor: day.inWeekend ? .secondary : .primary)
-                    Text(day.subtitle)
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
+                        .font(.title3.monospacedDigit())
+                        .foregroundColor(showHolidays ? day.onHoliday ? .accentColor: defaultColor : defaultColor)
+                    if viewModel.showLunar {
+                        Text(day.subtitle)
+                            .font(.caption2.weight(.regular))
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
             }
         }
         .opacity(inSameMonth ? 1:0.3)
-        .square(40)
+        .sideLength(40)
         
     }
 }
@@ -104,19 +104,16 @@ struct MonthYearPicker: View {
     
     @Binding
     var date: Date
-    
-    private let pref = Preference.shared
+
+    let colorScheme: ColorScheme?, tint: Color
     
     @State
     private var isPresentedOfMonth = false
     
     @State
     private var isPresentedOfYear = false
-    
-    
+
     var body: some View {
-        
-        let colorScheme = pref.colorScheme, tint = pref.color
         
         ScacleButtonPicker(items: Array(Solar.minMonth...Solar.maxMonth),
                            tint: tint,
@@ -143,20 +140,20 @@ struct MonthYearPicker: View {
 
 struct CalendarView<Day: View, Header: View, Week: View>: View {
     
-    private let date: Date, firstWeekday: XWeekday, timestamp: TimeInterval
+    private let date: Date, firstWeekday: CalWeekday, interval: TimeInterval
     
-    private let dayView: (Bool, XDay) -> Day, header: () -> Header, weekView: (Date) -> Week
+    private let dayView: (Bool, CalDay) -> Day, header: () -> Header, weekView: (Date) -> Week
     
     init(date: Date,
-         firstWeekday: XWeekday,
-         timestamp: TimeInterval,
+         firstWeekday: CalWeekday,
+         interval: TimeInterval,
          @ViewBuilder header: @escaping () -> Header,
          @ViewBuilder weekView: @escaping (Date) -> Week,
-         @ViewBuilder dayView: @escaping (Bool, XDay) -> Day
+         @ViewBuilder dayView: @escaping (Bool, CalDay) -> Day
     ) {
         self.date = date
         self.firstWeekday = firstWeekday
-        self.timestamp = timestamp
+        self.interval = interval
         self.dayView = dayView
         self.header = header
         self.weekView = weekView
@@ -182,22 +179,22 @@ struct CalendarView<Day: View, Header: View, Week: View>: View {
         
     }
     
-    private func makeDays() -> [XDay]  {
+    private func makeDays() -> [CalDay]  {
         var calendar = Calendar.gregorian
         calendar.firstWeekday = firstWeekday.rawValue
         let dates = calendar.generateDates(for: date)
-        let events = Event.fetchEvents(with: dates.first!, end: dates.last!)
+        let events = EventHelper.fetchEvents(with: dates.first!, end: dates.last!)
         
         return dates.map { date in
-            XDay(date, events: events.filter{$0.startDate.isSameDay(as: date)})
+            CalDay(date, events: events.filter{$0.startDate.isSameDay(as: date)})
         }
     }
 }
 
 extension CalendarView: Equatable {
     static func == (lhs: CalendarView<Day, Header, Week>, rhs: CalendarView<Day, Header, Week>) -> Bool {
-        lhs.firstWeekday == rhs.firstWeekday &&
-        lhs.date == rhs.date &&
-        lhs.timestamp == rhs.timestamp
+        lhs.date.year == rhs.date.year &&
+        lhs.date.month == rhs.date.month &&
+        lhs.interval == rhs.interval
     }
 }

@@ -16,9 +16,10 @@ struct TitleView<Title: View, Content: View>: View {
     
     var body: some View {
         ZStack {
-            title().font(.title2)
+            title()
+                .font(.title2)
             HStack(content: actions)
-            .frame(maxWidth: .infinity, alignment: .trailing)
+                .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 }

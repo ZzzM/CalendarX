@@ -21,47 +21,60 @@ extension CGFloat {
     static let buttonWidth: CGFloat = 35
 }
 
-
-extension NSStatusItem {
-    static let system = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+extension UserDefaults {
+    static let group = UserDefaults(suiteName: "group.\(AppInfo.identifier)")
 }
+
 
 enum AppStorageKey {
-    static let theme = "\(AppInfo.name).storageKey.theme"
-    static let tint = "\(AppInfo.name).storageKey.tint"
-    static let language = "\(AppInfo.name).storageKey.language"
-    static let weekday = "\(AppInfo.name).storageKey.weekday"
-    static let showSchedule = "\(AppInfo.name).storageKey.showSchedule"
-    static let menuBarStyle = "\(AppInfo.name).storageKey.menuBarStyle"
-    static let menuBarText = "\(AppInfo.name).storageKey.menuBarText"
-    static let menuBarDateFormat = "\(AppInfo.name).storageKey.menuBarDateFormat"
+    static let theme = generate("theme")
+    static let tint = generate("tint")
+    static let language = generate("language")
+    private static func generate(_ key: String) -> String { "\(AppInfo.name).app.\(key)" }
 }
 
-extension NSImage {
-    
-    static let menubarIcon = NSImage(named: "MenubarIcon")
+enum MenubarStorageKey {
+    static let style = generate("style")
+    static let text = generate("text")
+    static let use24h = generate("use24h")
+    static let showSeconds = generate("showSeconds")
+    static let shownTypes = generate("shownTypes")
+    static let hiddenTypes = generate("hiddenTypes")
+    private static func generate(_ key: String) -> String { "\(AppInfo.name).menubar.\(key)" }
+}
 
+enum CalendarStorageKey {
+    static let weekday = generate("weekday")
+    static let showEvents = generate("showEvents")
+    static let showLunar = generate("showLunar")
+    static let showHolidays = generate("showHolidays")
+    private static func generate(_ key: String) -> String { "\(AppInfo.name).calendar.\(key)" }
+}
+
+extension NSFont {
+    static let statusItem = NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+    static let statusIcon = NSFont.monospacedDigitSystemFont(ofSize: 8.5, weight: .regular)
 }
 extension Image {
 
-    static let globe = Image(systemName: "globe")
-    static let palette = Image(systemName: "paintpalette.fill")
+    static let power = Image(systemName: "power")
     static let settings = Image(systemName: "gearshape.fill")
     static let warning = Image(systemName: "exclamationmark.circle.fill")
     static let failure = Image(systemName: "xmark.circle.fill")
     static let success = Image(systemName: "checkmark.circle.fill")
-    static let download = Image(systemName: "arrow.down")
     static let close = Image(systemName: "xmark")
+    static let clock = Image(systemName: "clock.fill")
     static let leftArrow = Image(systemName: "chevron.left")
     static let rightArrow = Image(systemName: "chevron.right")
     static let circle = Image(systemName: "circle")
-    static let link = Image(systemName: "link")
     static let recommend = Image(systemName: "hand.thumbsup.fill")
     static let gitHub = Image("GitHub").renderingMode(.template).resizable()
-    static let menubarIcon = Image("MenubarIcon").renderingMode(.template).resizable()
+    static let calendar = Image("Calendar").renderingMode(.template).resizable()
 }
 
-
+extension NSImage {
+    static let calendar = NSImage(named: "Calendar")!
+}
 
 extension Calendar {
     static let gregorian = Calendar(identifier: .gregorian)
@@ -69,34 +82,50 @@ extension Calendar {
 }
 
 extension Locale {
-    static let en = Locale(identifier: "en")
-    static let zh = Locale(identifier: "zh")
+    static let en = Locale(identifier: "en_US")
+    static let zh = Locale(identifier: "zh_CN")
+    static let posix = Locale(identifier: "en_US_POSIX")
 }
 
 
+
 extension Color {
-
-    static let background = Color(light: "F7F7F7", dark: "2B2D2E")
-    static let workdayBackground = Color(light: "E6E9ED", dark: "3C3B3D")
-
-    static let primary = Color(light: "323133", dark: "F5F7FA")
-    static let secondary = Color(light: "808080", dark: "B3B3B3")
+    
+    static let background = Color(light: "FEF9EF", dark: "323232")
+    static let card = Color(light: "F6F6EE", dark: "393939")
+    static let primary = Color(light: "555555", dark: "EEEEEE")
+    static let secondary = Color(light: "8f8f8f", dark: "777777")
+    
+    static let workdayBackground = Color.secondary.opacity(0.16)
+    static let tagBackground = Color.accentColor.opacity(0.12)
+    static let disable = Color.secondary.opacity(0.6)
 
 }
 
 extension NSNotification.Name {
-    static let  leftClicked = NSNotification.Name("leftClicked")
-    static let  rightClicked = NSNotification.Name("rightClicked")
     static let  titleStyleDidChanged = NSNotification.Name("titleStyleDidChanged")
 }
 
 
-struct XLink {
+struct CalLink {
     static let gitHub = "https://github.com/ZzzM/CalendarX"
 }
 
 struct Privacy {
     static let calendars = "com.apple.preference.security?Privacy_Calendars"
+    static let notifications = "com.apple.preference.notifications"
+}
+
+struct Appearance {
+    
+    static let tint = palettes[0][0]
+    
+    static let palettes = [
+        ["C72C41", "E97777", "EE4540"], ["4C3575", "5B4B8A", "7858A6"], ["205295", "42C2FF", "2C74B3"],
+        ["A1B57D", "519872", "A4B494"], ["AA2B1D", "CC561E", "F07B3F"], ["876445", "CA965C", "847545"],
+        ["F1CA89", "A1CAE2", "B25068"], ["704F4F", "AD8B73", "A77979"], ["00A8CC", "1F8A70", "A61F69"],
+        ["03C988", "007880", "E0C341"], ["4A89DC", "D770AD", "1363DF"], ["CD4DCC", "59CE8F", "6D67E4"]
+    ]
 }
 
 struct Lunar {
@@ -154,38 +183,14 @@ struct Lunar {
         "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"
     ]
 
-    static let festivals = Bundle.main.json2Festival(from: "lunarPF")
-
-    static let chuxi = Bundle.main.json2Festival(from: "chuxi")
-
 }
 
 struct Solar {
-    
-    static let tiaoxiu: [String: [String: XDayState]] = Bundle.main.json2KeyValue(from: "tiaoxiu")
-    static let terms = Bundle.main.json2AllFestivals(from: "terms")
 
     static let daysInWeek =  7
     static let minYear =  1900, maxYear = 2100
     static let minMonth = 1, maxMonth = 12
     static let minDates = 35, maxDates = 42
-    
-    static let termNames = [
-        "立春", "雨水", "惊蛰", "春分", "清明", "谷雨",
-        "立夏", "小满", "芒种", "夏至", "小暑", "大暑",
-        "立秋", "处暑", "白露", "秋分", "寒露", "霜降",
-        "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"
-    ]
-
-    static let allFestivals = Bundle.main.json2AllFestivals(from: "solarAF")
-
-    static let allWeekFestivals = Bundle.main.json2AllFestivals(from: "weekAF")
-
-    static let festivals = Bundle.main.json2Festival(from: "solarPF")
-
-    static let weekFestivals = Bundle.main.json2Festival(from: "weekPF")
-
-    static let weekSpecialFestivals = Bundle.main.json2Festival(from: "weekSF")
 
 }
 

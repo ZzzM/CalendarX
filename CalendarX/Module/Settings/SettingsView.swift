@@ -6,214 +6,145 @@
 //
 
 import SwiftUI
-import LaunchAtLogin
-
+import Combine
 
 struct SettingsView: View {
     
+    @ObservedObject
+    var viewModel: SettingsViewModel
+
     var body: some View {
         
-        VStack(spacing: 10) {
+        VStack(spacing: 15) {
             
-            TitleView { Text( L10n.Settings.title) } actions: {}
-            
-            Section {
-                ThemeRow()
-                TintRow()
-                WeekdayRow()
-                MenuBarStyleRow()
-                ScheduleRow()
-                LaunchRow()
-                RecommendationsRow()
-            }.padding(.bottom, 3)
-            
-            Section {
-                LastRow()
+            TitleView { Text( L10n.Settings.title) } actions: {
+                ScacleImageButton(image: .power, action: viewModel.exit)
             }
+
+            Section {
+                appearanceRow
+                calendarRow
+                languageRow
+                memubarRow
+                autoRow
+                launchRow
+                recommendRow
+                aboutRow
+            }
+
             
         }
-        .height(.mainHeight)
-        
-        
-    }
+        .frame(height: .mainHeight, alignment: .top)
 
-}
-
-
-struct ThemeRow: View {
-    
-    @EnvironmentObject
-    private var pref: Preference
-    
-    var body: some View {
-        
-        
-        SettingsPickerRow(title: L10n.Settings.theme,
-                          items: Theme.allCases,
-                          selection: pref.$theme) { Text($0.title) }
-        //        SettingsPickerRow(title: "Language",
-        //                          items: Language.allCases,
-        //                          selection: pref.$language) { Text($0.rawValue) }
     }
     
 }
 
+extension SettingsView {
+    
+    var appearanceRow: some View {
+        SettingsRow(title: L10n.Settings.appearance, detail: {}, action: Router.toAppearanceSettings)
+    }
+    
+    var calendarRow: some View {
+        SettingsRow(title:  L10n.Settings.calendar, detail: {}, action: Router.toCalendarSettings)
+    }
+    
+    var languageRow: some View {
+        SettingsPickerRow(title: L10n.Settings.language,
+                          items: Language.allCases, width: 60,
+                          selection:  $viewModel.language) { Text($0.title) }
+    }
+    
+    var memubarRow: some View {
+        SettingsRow(title: L10n.Settings.menubarStyle,
+                    detail: {Text(viewModel.menubarStyle.title) },
+                    action: Router.toMenubarSettings)
+    }
+    
+    var launchRow: some View {
+        CalToggle { Text(L10n.Settings.launchAtLogin).font(.title3) }
+            .checkboxStyle()
+    }
 
-struct TintRow: View {
     
-    @EnvironmentObject
-    private var pref: Preference
-    
-    
-    var body: some View {
+    @ViewBuilder
+    var autoRow: some View {
         
-        SettingsPickerRow(title: L10n.Settings.tint,
-                          items: Tint.allCases,
-                          isGrid: true,
-                          selection: pref.$tint) {
-            Circle().square(15).foregroundColor(Tint[$0])
-        }
-    }
-    
-}
+        let isOn = Binding(get: viewModel.getNotificationStatut, set:  viewModel.setNotificationStatut)
 
-struct WeekdayRow: View{
-    
-    @EnvironmentObject
-    private var pref: Preference
-    
-    var body: some View {
-        SettingsPickerRow(title: L10n.Settings.startWeekOn,
-                          items: XWeekday.allCases,
-                          selection: pref.$weekday) { Text($0.description) }
-    }
-}
-
-struct MenuBarStyleRow: View {
-    
-    @EnvironmentObject
-    private var pref: Preference
-    
-    var body: some View {
-        SettingsCommonRow(title: L10n.Settings.menuBarStyle,
-                          detail: pref.menuBarStyle.title,
-                          action: Router.toMenuBarSettings)
-    }
-    
-}
-
-struct RecommendationsRow: View {
-
-    var body: some View {
-        SettingsCommonRow(title: L10n.Settings.recommendations, detail: .none,
-                          action: Router.toRecommendations)
-    }
-    
-}
-
-struct ScheduleRow: View {
-    
-    @EnvironmentObject
-    private var pref: Preference
-    
-    @State
-    private var isAuthorized = Event.isAuthorized
-    
-    var body: some View {
-        
-        let showSchedule = Binding {
-            isAuthorized ? pref.showSchedule : false
-        } set: {
-            requestAccessToEvent()
-            pref.showSchedule = $0
-        }
-        
-        Toggle(isOn: showSchedule) { Text(L10n.Settings.showSchedule).font(.title3) }
+        Toggle(isOn: isOn) { Text(L10n.Settings.auto).font(.title3) }
             .checkboxStyle()
         
     }
     
-    func requestAccessToEvent() {
-        if Event.isDenied {
-            NSWorkspace.openPreference(Privacy.calendars)
-        } else {
-            Task() {
-                isAuthorized = await Event.requestAccess()
-            }
-        }
+    var recommendRow: some View {
+        SettingsRow(title: L10n.Settings.recommendations, detail: {}, action: Router.toRecommendations)
+    }
+    
+    var aboutRow: some View {
+        SettingsRow(title: L10n.Settings.about, detail: {}, action: Router.toAbout)
     }
     
 }
 
-struct LaunchRow: View {
-    var body: some View {
-        LaunchAtLogin.Toggle { Text(L10n.Settings.launchAtLogin).font(.title3) }
-            .checkboxStyle()
+
+extension SettingsView {
+    
+    var versionRow: some View {
+        Group {
+            Text(L10n.Settings.version) + Text(Updater.version)
+        }
+        .font(.footnote)
+        .foregroundColor(.accentColor)
     }
 }
 
-struct LastRow: View {
+struct SettingsRow<Content: View>: View {
     
+    let title: LocalizedStringKey, showArrow: Bool
     
-    var body: some View {
-        HStack(spacing: 10) {
-            
-            ScacleCapsuleButton(title: L10n.Settings.quitApp, foregroundColor: .white, backgroundColor: .secondary) { NSApp.terminate(.none) }
-            
-            ScacleCapsuleButton(title: L10n.Settings.checkForUpdates, foregroundColor: .white, backgroundColor: .accentColor, action: Updater.checkForUpdates)
-            
-        }
-        
-        
-        HStack {
-            Text("\(AppInfo.version) ( \(AppInfo.commitHash) )")
-                .font(.footnote)
-                .foregroundColor(.secondary)
-            
-            ScacleButton {
-                NSWorkspace.open(XLink.gitHub)
-            } label: {
-                Image.gitHub.square(11)
-            }
-        }
-        
-        
+    @ViewBuilder
+    let detail: () -> Content
+    
+    let action: VoidClosure
+    
+    init(title: LocalizedStringKey,
+         showArrow: Bool = true,
+         @ViewBuilder detail: @escaping () -> Content,
+         action: @escaping VoidClosure) {
+        self.title = title
+        self.showArrow = showArrow
+        self.detail = detail
+        self.action = action
     }
-}
-
-
-struct SettingsCommonRow: View {
-    
-    let title: LocalizedStringKey, detail: LocalizedStringKey?, action: VoidClosure
     
     var body: some View {
         
         HStack {
-            Text(title).font(.title3)
+            Text(title)
+                .font(.title3)
             Spacer()
-        
+            
             Group {
-                if let detail = detail {
-                    Text(detail)
+                detail()
+                if showArrow {
+                    Image.rightArrow
                 }
-                Image.rightArrow
+                
             }
             .foregroundColor(.secondary)
             
         }
         .contentShape(Rectangle())
         .onTapGesture(perform: action)
- 
+        
     }
 }
 
 struct SettingsPickerRow<Item: Hashable, Label: View>: View {
     
-    let title: LocalizedStringKey
-    
-    let items: [Item]
-    
-    let isGrid: Bool
+    let title: LocalizedStringKey, items: [Item], width: CGFloat
     
     @Binding
     var selection: Item
@@ -224,17 +155,16 @@ struct SettingsPickerRow<Item: Hashable, Label: View>: View {
     @State
     private var isPresented = false
     
-    @EnvironmentObject
-    private var pref: Preference
+    private let pref = Preference.shared
     
     init(title: LocalizedStringKey,
          items: [Item],
-         isGrid: Bool = false,
+         width: CGFloat = .popoverWidth,
          selection: Binding<Item>,
          @ViewBuilder itemLabel:  @escaping (Item) -> Label) {
         self.title = title
         self.items = items
-        self.isGrid = isGrid
+        self.width = width
         self._selection = selection
         self.itemLabel = itemLabel
     }
@@ -246,7 +176,7 @@ struct SettingsPickerRow<Item: Hashable, Label: View>: View {
             Spacer()
             ScacleButtonPicker(items: items,
                                tint: pref.color,
-                               isGrid: isGrid,
+                               width: width,
                                locale: pref.locale,
                                colorScheme: pref.colorScheme,
                                selection: $selection,

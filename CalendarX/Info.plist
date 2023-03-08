@@ -6,8 +6,6 @@
 	<string>CommitDate</string>
 	<key>CommitHash</key>
 	<string>CommitHash</string>
-	<key>LSUIElement</key>
-	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

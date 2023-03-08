@@ -26,8 +26,8 @@ struct ColorSchemeModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         
-        if let _colorScheme = colorScheme {
-            content.colorScheme(_colorScheme)
+        if let colorScheme {
+            content.colorScheme(colorScheme)
         } else {
             content
         }
@@ -71,9 +71,9 @@ struct CheckboxStyle: ToggleStyle {
             ZStack {
                 Capsule()
                     .frame(width: 35, height: 20)
-                    .foregroundColor(configuration.isOn ? .accentColor : .secondary)
+                    .foregroundColor(configuration.isOn ? .accentColor : .disable)
                 Circle()
-                    .square(10)
+                    .diameter(10)
                     .foregroundColor(.white)
                     .offset(x: configuration.isOn ? offsetX : -offsetX)
             }
@@ -98,19 +98,6 @@ extension View  {
     }
 }
 
-extension View {
-
-    func square(_ length: CGFloat) -> some View {
-        frame(width: length, height: length)
-    }
-    func height(_ length: CGFloat) -> some View {
-        frame(height: length)
-    }
-    func width(_ length: CGFloat) -> some View {
-        frame(width: length)
-    }
-}
-
 
 extension View {
 
@@ -121,11 +108,11 @@ extension View {
 
     }
 
-    func xTint(_ tint: Color) -> some View {
+    func envTint(_ tint: Color) -> some View {
         modifier(TintModifier(tint: tint))
     }
 
-    func xColorScheme(_ colorScheme: ColorScheme?) -> some View {
+    func envColorScheme(_ colorScheme: ColorScheme?) -> some View {
         modifier(ColorSchemeModifier(colorScheme: colorScheme))
     }
     
@@ -141,8 +128,21 @@ extension View {
         modifier(HoverModifier())
     }
     
-    
-    
+
 }
+
+
+extension View {
+    func sideLength(_ width: CGFloat) -> some View {
+        frame(width: width, height: width)
+    }
+}
+
+extension Circle {
+    func diameter(_ width: CGFloat) -> some View {
+        frame(width: width, height: width)
+    }
+}
+
 
 

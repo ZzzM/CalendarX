@@ -15,15 +15,24 @@ struct ScacleButton<Label: View>: View {
     let label: () -> Label
     
     var body: some View {
-        Button(action: action, label: label).scaleStyle()
+        Button(action: action, label: label)
+            .scaleStyle()
     }
 }
 
 
 struct ScacleImageButton: View {
-    let image: Image, action: VoidClosure
+    private let image: Image,  scale: Image.Scale, color: Color, action: VoidClosure
+    
+    init(image: Image, scale: Image.Scale = .medium, color: Color = .secondary, action: @escaping VoidClosure) {
+        self.image = image
+        self.scale = scale
+        self.color = color
+        self.action = action
+    }
+    
     var body: some View {
-        ScacleButton(action: action, label: { image.foregroundColor(.secondary) })
+        ScacleButton(action: action, label: { image.imageScale(scale).foregroundColor(color) })
     }
 }
 
@@ -34,7 +43,7 @@ struct ScacleTagButton: View {
             Text(title)
                 .padding(.horizontal, 5)
                 .padding(.vertical, 5)
-                .background(Color.accentColor.opacity(0.1))
+                .background(Color.tagBackground)
                 .foregroundColor(.accentColor)
                 .clipShape(Capsule())
         }
@@ -52,8 +61,8 @@ struct ScacleCapsuleButton: View {
             Text(title)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 5)
-                .foregroundColor(foregroundColor)
                 .background(backgroundColor)
+                .foregroundColor(foregroundColor)
                 .clipShape(Capsule())
         }
     }

@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-enum Theme: String, CaseIterable {
+enum Theme: Int, CaseIterable {
 
     case system, light, dark
 

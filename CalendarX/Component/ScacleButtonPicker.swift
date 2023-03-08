@@ -19,11 +19,11 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
 
     private let label: () -> Label, itemLabel: (Item) -> ItemLabel
 
-    private let tint: Color, isGrid: Bool, arrowEdge: Edge, locale: Locale, colorScheme: ColorScheme?
+    private let tint: Color, width: CGFloat, arrowEdge: Edge, locale: Locale, colorScheme: ColorScheme?
 
     init(items: [Item],
          tint: Color,
-         isGrid: Bool = false,
+         width: CGFloat = .popoverWidth,
          arrowEdge: Edge = .bottom,
          locale: Locale = .current,
          colorScheme: ColorScheme? = .none,
@@ -33,7 +33,7 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
          @ViewBuilder itemLabel:  @escaping (Item) -> ItemLabel) {
         self.items = items
         self.tint = tint
-        self.isGrid = isGrid
+        self.width = width
         self.arrowEdge = arrowEdge
         self.locale = locale
         self.colorScheme = colorScheme
@@ -60,30 +60,7 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
 
     @ViewBuilder
     func popoverContent() -> some View {
-        if isGrid {
-            gridView()
-        } else {
-            listView()
-        }
-    }
-
-    func gridView() -> some View {
-        LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
-            ForEach(items, id: \.self) { item in
-                Button {
-                    selection = item
-                    isPresented.toggle()
-                } label: {
-                    itemLabel(item)
-                }
-                .buttonStyle(.plain)
-            }
-        }
-        .padding(5)
-    }
-
-    func listView() -> some View {
-        ScrollViewReader { proxy in
+        ScrollViewReader { reader in
             ScrollView {
                 LazyVStack {
                     ForEach(items, id: \.self) { item in
@@ -93,15 +70,18 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
                         } label: {
                             itemLabel(item)
                                 .foregroundColor(item == selection ? tint:.primary)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.1)
                         }
                         .id(item)
                         .buttonStyle(.plain)
-                        .frame(minWidth: .popoverWidth, idealHeight: .popoverRowHeight)
+                        .frame(minWidth: width, idealHeight: .popoverRowHeight)
                     }
-                }.padding(5)
+                }
+                .padding(5)
             }
             .frame(height: min(CGFloat(items.count + 1) * .popoverRowHeight + 10, .popoverHeight))
-            .onAppear { proxy.scrollTo(selection) }
+            .onAppear { reader.scrollTo(selection) }
         }
     }
 

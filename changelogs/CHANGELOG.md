@@ -1,3 +1,27 @@
+## 2.3.0 - 2023-03-08
+
+### Added
+- Automatically checks for updates
+- Appearance settings
+- Calendar settings
+- Language settings
+- Prompt dialog
+- About
+
+### Fixed
+- [Calendar event badge display issue](https://github.com/ZzzM/CalendarX/issues/6)
+- [Menubar text display issue](https://github.com/ZzzM/CalendarX/issues/4)
+- Timer issue
+
+### Changed
+- Date detail
+- Settings
+- Menubar style settings
+- App Recommendations
+
+
+---
+
 ## 2.2.2 - 2022-12-09
 
 ### Added
@@ -5,8 +29,7 @@
 - App Recommendations
 
 ### Changed
-
-- Settings UI
+- Settings
 - Transition animation
 
 ---
@@ -14,10 +37,10 @@
 ## 2.2.1 - 2022-11-03
 
 ### Added
-- Custom Menubar Style（default, text, date & time）
+- Custom menubar style（default, text, date&time）
 
 ### Changed
-- Settings UI
+- Settings
 
 ### Fixed
 - Adaptation to macOS 13.0
@@ -32,11 +55,10 @@
 
 ### Changed
 - New design
-- Updated App name to **CalenderX**
-- Updated App icon
-- Updated Chinese statutory holidays in 2022
+- App name
+- App icon
+- Chinese statutory holidays in 2022
   
-
 ### Removed
 - Widget
 
@@ -55,7 +77,7 @@
 ## 2.1.3 - 2021-01-12
 
 ### Changed
-- Updated Settings UI
+- Settings
 
 ### Fixed
 - Time not synchronized 
@@ -101,7 +123,7 @@
 ## 1.2.7 - 2020-11-04
 
 ### Changed
-- Updated App icon
+- App icon
 
 ### Fixed
 - Calendar event time error bugs

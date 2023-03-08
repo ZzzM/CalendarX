@@ -8,9 +8,12 @@
 import SwiftUI
 import WrappingHStack
 
+
 struct DateView: View {
     
-    let day: XDay
+    let day: CalDay
+    
+    private var showEvents: Bool { CalendarPreference.shared.showEvents }
     
     var body: some View {
         VStack(spacing: 10) {
@@ -19,12 +22,12 @@ struct DateView: View {
             } actions: {
                 ScacleImageButton(image: .close, action: Router.backMain)
             }
-            Text(day.lunarDate).font(.footnote).foregroundColor(.secondary)
+            Text(day.lunarDate).font(.footnote).foregroundColor(.accentColor)
             FestivalsView(festivals: day.festivals)
-            SchedulesView(events: day.events)
+            EventsView(events: day.events, showEvents: showEvents)
         }
     }
-
+    
     
 }
 
@@ -32,113 +35,75 @@ struct FestivalsView: View {
     
     let festivals: [String]
     
-    @State
-    private var isExpanded = true
-    
     var body: some View {
-        
-        Section(content: {
-            if isExpanded, festivals.isNotEmpty {
-                WrappingHStack(festivals,spacing: .constant(8), lineSpacing: 8) {  festival in
-                    ScacleTagButton(title: festival.l10nKey) {
-                        NSWorkspace.searching(festival)
-                    }
-                }.transition(.opacity)
-            } else if festivals.isEmpty {
-                GroupEmptyRow(title: L10n.Date.noFestivals)
-            }
-
-        }, header: header)
-    }
-    
-    func header() -> some View {
-        GroupHeader(title: L10n.Date.festivals) {
-            if festivals.isNotEmpty {
-                ScacleButton {
-                    withAnimation {
-                        isExpanded.toggle()
-                    }
-                } label: {
-                    RotationArrow(isPresented: $isExpanded)
+        if festivals.isNotEmpty {
+            WrappingHStack(festivals, spacing: .constant(8), lineSpacing: 8) {  festival in
+                ScacleTagButton(title: festival.l10nKey) {
+                    NSWorkspace.searching(festival)
                 }
             }
         }
     }
+
 }
 
 
-struct SchedulesView: View {
+struct EventsView: View {
     
-    let events: [XEvent]
-
+    let events: [CalEvent], showEvents: Bool
+    
     var body: some View {
-
-        let hideSchedule = !Preference.shared.showSchedule
-
+        
         Section {
             ScrollView {
                 LazyVStack {
-                    if events.isEmpty || hideSchedule  {
-                        GroupEmptyRow(title: L10n.Date.noSchedules)
+                    if events.isEmpty || !showEvents  {
+                        RowTitleView(title: L10n.Date.noEvents, font: .none)
                     } else {
                         ForEach(events, id: \.eventIdentifier) { eventView($0) }
                     }
                 }
             }
         } header: {
-            GroupHeader(title: L10n.Date.schedules, label: {})
+            RowTitleView(title: L10n.Date.events, font: .title3)
         }
-
+        
     }
-
+    
     @ViewBuilder
-    func eventView(_ event: XEvent) -> some View {
+    func eventView(_ event: CalEvent) -> some View {
 
-        HStack {
-            event.color.width(5)
-
-            VStack(alignment: .leading) {
-
-                Text(event.title)
-
-                Divider()
-
-                Text(L10n.timeline(from: event.startDate) +
-                     " - " +
-                     L10n.timeline(from: event.endDate))
-                .font(.footnote)
-
+        VStack(alignment: .leading, spacing: 5) {
+              
+            HStack {
+                
+                Image.clock.foregroundColor(event.color)
+                
+                if event.isAllDay {
+                    Text(L10n.Date.allDay)
+                } else {
+                    Text(L10n.timeline(from: event.startDate))
+                    Text("-")
+                    Text(L10n.timeline(from: event.endDate))
+                }
+                
             }
-            .padding(5)
-            Spacer()
-        }
-        .background(event.color.opacity(0.1))
-        .cornerRadius(4)
-    }
-
-}
-
-struct GroupEmptyRow: View {
-    let title: LocalizedStringKey
-    var body: some View {
-        Text(title)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .font(.caption2)
             .foregroundColor(.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Text(event.title).foregroundColor(.primary)
+
+        }
+        .padding(5)
+        .background(Color.card)
+        .cornerRadius(5)
+        .shadow(radius: 1, x: 1, y: 1)
+        .padding(.horizontal, 3)
+        
+
+
     }
+    
 }
 
-struct GroupHeader<Label: View>: View {
-    
-    let title: LocalizedStringKey
-    
-    @ViewBuilder
-    let label: () -> Label
-    
-    var body: some View {
-        HStack() {
-            Text(title).font(.title3)
-            Spacer()
-            label()
-        }
-    }
-}

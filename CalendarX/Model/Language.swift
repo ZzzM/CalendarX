@@ -7,17 +7,26 @@
 
 import SwiftUI
 
-enum Language: String, CaseIterable {
-    case system, chinese, english
+enum Language: Int, CaseIterable {
+    
+    case system, zh_CN, en_US
     
     var locale: Locale {
         switch self {
-        case .chinese: return .zh
-        case .english: return .en
-        default: return .current
+        case .zh_CN: return .zh
+        case .en_US: return .en
+        default: return Locale.current
         }
     }
-
+    
+    var title: LocalizedStringKey {
+        switch self {
+        case .zh_CN: return L10n.Language.zh_CN
+        case .en_US: return L10n.Language.en_US
+        default: return L10n.Language.system
+        }
+    }
+    
 }
 
 

@@ -6,69 +6,51 @@
 //
 
 import SwiftUI
-//
-//class Router: ObservableObject {
-//
-//}
-
-
 
 class Router: ObservableObject {
 
     static let shared = Router()
 
     enum Path {
-        case main, date(XDay), settings, recommendations, menuBarSettings
+        case main, date(CalDay), settings,
+             recommendations, menubarSettings, appearanceSettings, calendarSettings, about
     }
 
     @Published
     var path = Path.main
     
-    private func to(_ path: Path) {
-        self.path = path
-    }
 
-}
-
-extension Router {
-    
-    static func toMain() {
-        shared.to(.main)
-    }
-    
-    static func backMain() {
-        withAnimation {
-            toMain()
+    private static func to(_ path: Path, animated: Bool = true) {
+        if animated {
+            withAnimation { shared.path = path }
+        } else {
+            shared.path = path
         }
     }
-    
-    static func toDate(_ day: XDay) {
-        withAnimation {
-            shared.to(.date(day))
-        }
+
+    static func to(_ isRightClicked: Bool) {
+        to(isRightClicked ? .settings : .main, animated: false)
     }
 }
 
 extension Router {
-    static func toSettings() {
-        shared.to(.settings)
-    }
+
+    static func backMain() { to(.main) }
+
+    static func toDate(_ day: CalDay) { to(.date(day)) }
+}
+
+extension Router {
     
-    static func backSettings() {
-        withAnimation {
-            toSettings()
-        }
-    }
+    static func backSettings() { to(.settings) }
     
-    static func toRecommendations() {
-        withAnimation {
-            shared.to(.recommendations)
-        }
-    }
+    static func toRecommendations() { to(.recommendations) }
+
+    static func toMenubarSettings() { to(.menubarSettings) }
     
-    static func toMenuBarSettings() {
-        withAnimation {
-            shared.to(.menuBarSettings)
-        }
-    }
+    static func toAppearanceSettings() { to(.appearanceSettings) }
+
+    static func toCalendarSettings() { to(.calendarSettings) }
+    
+    static func toAbout() { to(.about) }
 }
