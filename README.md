@@ -1,8 +1,6 @@
 <h1 >
-<div style="display:flex; align-items:center; font-size:30px;">
-  <img src=CalendarX/Assets.xcassets/AppIcon.appiconset/icon_512x512.png width=80> 
-  CalendarX
-</div>
+<img src=CalendarX/Assets.xcassets/AppIcon.appiconset/icon_512x512.png width=80>
+<p>CalendarX</p>
 <a href="https://github.com/ZzzM/CalendarX/releases/latest"><img src="https://img.shields.io/github/v/release/ZzzM/CalendarX"></a>
 <a href="https://github.com/ZzzM/CalendarX/releases/latest"><img src="https://img.shields.io/github/release-date/ZzzM/CalendarX"></a>
 <a href="https://raw.githubusercontent.com/ZzzM/CalendarX/master/LICENSE"><img src="https://img.shields.io/github/license/ZzzM/CalendarX"></a>
