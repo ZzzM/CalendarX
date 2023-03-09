@@ -1,3 +1,11 @@
+## 2.3.1 - 2023-03-09
+
+### Fixed
+- Unable to set up automatic update check
+- Unable to set up launch at login
+
+---
+
 ## 2.3.0 - 2023-03-08
 
 ### Added
