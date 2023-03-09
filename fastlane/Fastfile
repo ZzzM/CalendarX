@@ -3,29 +3,56 @@ default_platform(:mac)
 platform :mac do
   
   lane :package do
-    setup
+    setup(name: ENV["APP_NAME"], version: ENV["APP_VERSION"])
     build
     clean
+  end
 
+  lane :test do |options|
+    setup(name: options[:name], version: options[:version])
+    build
+    clean
   end
   
-  
-  private_lane :setup do
-    app_name = ENV["APP_NAME"]
+  lane :release do |options|
+
+    name = options[:name]
+    repo = options[:repo]
+    tag = options[:tag]
+    token = options[:token]
+
+    github_release = set_github_release(
+      repository_name: repo,
+      api_token: token,
+      name: tag,
+      tag_name: tag,
+      description: (File.read("../TEST.md") rescue "No changelog provided"),
+      upload_assets: ["#{name}.dmg"])
+  end
+
+  lane :show do
+    msg = File.read("../TEST.md")
+    UI.message msg
+  end
+
+  private_lane :setup do |options| 
+
+    name = options[:name]
+    version = options[:version]
+
     commit = last_git_commit
     date = Time.now.utc.localtime("+08:00").strftime("%Y.%m.%d %k:%M")  
-    version = ENV["APP_VERSION"]
-    path = "#{app_name}/Info.plist"
+    path = "#{name}/Info.plist"
     
-    increment_version_number_in_xcodeproj(version_number: version, scheme: app_name)
-    increment_build_number_in_xcodeproj(build_number: version, scheme: app_name)
+    increment_version_number_in_xcodeproj(version_number: version, scheme: name)
+    increment_build_number_in_xcodeproj(build_number: version, scheme: name)
     set_info_plist_value(path: path, key: "CommitHash", value: commit[:abbreviated_commit_hash])
     set_info_plist_value(path: path, key: "CommitDate", value: date)
-
+  
   end
 
-
   private_lane :build do 
+    
     build_app(
       clean: true,
       silent: true,

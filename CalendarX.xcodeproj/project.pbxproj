@@ -116,7 +116,6 @@
 		988A82E2279FFB8A000899B5 /* Preference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
 		98AB002229A565E8006C6FC7 /* LaunchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchHelper.swift; sourceTree = "<group>"; };
 		98AB002429A5670D006C6FC7 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
-		98AB002829A9AD9D006C6FC7 /* LetsMove.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LetsMove.framework; path = "../../Library/Developer/Xcode/DerivedData/LetsMove-ejnlhuwjbufqlvdpzoaailxizupy/Build/Products/Debug/LetsMove.framework"; sourceTree = "<group>"; };
 		98B5B6C829427A8A00114483 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		98B5B6CA294289F900114483 /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
 		98B5B6CC2942A6D800114483 /* apps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = apps.json; sourceTree = "<group>"; };
@@ -221,14 +220,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		98AB002729A9AD9C006C6FC7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				98AB002829A9AD9D006C6FC7 /* LetsMove.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		98C9BD0B29099A2C00F645AD /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,7 +288,6 @@
 			children = (
 				98D573D027571EB3001C2D8C /* CalendarX */,
 				98D573CF27571EB3001C2D8C /* Products */,
-				98AB002729A9AD9C006C6FC7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
