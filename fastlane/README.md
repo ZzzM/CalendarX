@@ -23,6 +23,30 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### mac test
+
+```sh
+[bundle exec] fastlane mac test
+```
+
+
+
+### mac release
+
+```sh
+[bundle exec] fastlane mac release
+```
+
+
+
+### mac show
+
+```sh
+[bundle exec] fastlane mac show
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
