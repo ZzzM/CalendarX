@@ -5,7 +5,7 @@
         {% for release in site.github.releases %}
             {% unless release.draft %}
                 {% unless release.prerelease and page.release_only %}
-                    {% assign flag = '<?' %}
+                    {% assign flag = '<!--' %}
                     {% if release.body contains flag %}
                     <item>
                         <title>{{ release.name }}</title>
@@ -14,12 +14,12 @@
                         {% assign body = release.body | split:flag %}
                         {% assign description = body.first | strip %}
                         <description xml:lang="en"><![CDATA[{{ description | markdownify }}]]></description>
-                        
+
                         {% if body.size > 2 %}
                         {% assign description_zh = body[1] | strip %}
                         <description xml:lang="zh-Hans"><![CDATA[{{ description_zh | markdownify }}]]></description>
                         {% endif %}
-                        
+
                         {% assign enclosure = body.last | strip %}
                         {{ enclosure }}
                     </item>
