@@ -6,7 +6,7 @@
 //
 import LaunchAtLogin
 
-typealias CalToggle = LaunchAtLogin.Toggle
+typealias AppToggle = LaunchAtLogin.Toggle
 
 struct LaunchHelper {
     static func migrateIfNeeded() {

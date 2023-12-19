@@ -9,31 +9,35 @@ import SwiftUI
 import Combine
 
 struct AlertView: View {
-    
+
     @ObservedObject
     var alert: AlertAction
-    
+
     var body: some View {
-        
-        Color.black
-            .opacity(alert.isPresented ? 0.5: 0)
-            .onTapGesture(perform: alert.dismiss)
-        
-        if alert.isPresented {
-            VStack {
-                Text(alert.title).bold().padding(.vertical, 5).foregroundColor(.accentColor)
-                Text(alert.message).multilineTextAlignment(.center)
-                HStack {
-                    ScacleCapsuleButton(title: alert.no, foregroundColor: .white, backgroundColor: .secondary, action: alert.dismiss)
+
+
+        ZStack(alignment: .bottom) {
+
+            Color.black
+                .opacity(alert.isPresented ? 0.5: 0)
+                .onTapGesture(perform: alert.dismiss)
+
+
+            if alert.isPresented {
+                VStack {
+
+                    alert.image.font(.largeTitle).appForeground(.accentColor)
+                    Text(alert.message).font(.title3).multilineTextAlignment(.center).padding(.vertical, 5)
+
                     ScacleCapsuleButton(title: alert.yes, foregroundColor: .white, backgroundColor: .accentColor, action: alert.action)
+                    ScacleCapsuleButton(title: alert.no, foregroundColor: .white, backgroundColor: .appSecondary, action: alert.dismiss)
+
                 }
-                .font(.caption2)
+                .padding()
+                .background(Color.card.clipShape(.rect(cornerRadius: 5)))
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .padding()
             }
-            .padding()
-            .frame(width: .mainWidth/2, alignment: .top)
-            .background(RoundedRectangle(cornerRadius: 5).foregroundColor(.card).shadow(radius: 1, x: 1, y: 1))
-            .transition(.move(edge: .bottom ).combined(with: .opacity))
         }
-        
     }
 }

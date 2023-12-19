@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CalendarXShared
 
 struct RootView: View {
 
@@ -21,20 +22,20 @@ struct RootView: View {
     @StateObject
     private var settingsVM = SettingsViewModel()
     
+
     var body: some View {
 
         ZStack {
-            Color.background.padding(.top, -15)
+            Color.appBackground.padding(.top, -15)
             content.padding()
             AlertView(alert: alert).zIndex(1)
         }
-        .foregroundColor(.primary)
+        .appForeground(.appPrimary)
         .environment(\.locale, settingsVM.locale)
         .envTint(settingsVM.color)
         .envColorScheme(settingsVM.colorScheme)
         .onChange(of: settingsVM.locale, notification: NSLocale.currentLocaleDidChangeNotification)
-        
-        
+
     }
 
     @ViewBuilder
@@ -42,7 +43,7 @@ struct RootView: View {
         switch router.path {
         case .main: MainView(viewModel: mainVM)
         case .settings: SettingsView(viewModel: settingsVM)
-        case .date(let day): DateView(day: day).fullScreenCover()
+        case .date(let appDate): DateView(appDate: appDate).fullScreenCover()
         case .recommendations: RecommendationsView().fullScreenCover()
         case .menubarSettings: MenubarSettingsView().fullScreenCover()
         case .appearanceSettings: AppearanceSettingsView(viewModel: settingsVM).fullScreenCover()
@@ -51,7 +52,6 @@ struct RootView: View {
         }
     }
 
- 
-}
 
+}
 

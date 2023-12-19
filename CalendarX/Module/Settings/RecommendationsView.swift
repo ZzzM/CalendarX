@@ -6,20 +6,24 @@
 //
 
 import SwiftUI
+import CalendarXShared
 
 struct RecommendationsView: View {
-    
-    private let apps: [CalApp] = Bundle.main.json2Object(from: "apps") ?? []
-    
+
+    private let apps = Bundle.apps
+
     var body: some View {
         
         VStack {
             
             TitleView {
                 Text(L10n.Settings.recommendations)
-            } actions: {
-                ScacleImageButton(image: .close, action: Router.backSettings)
+            } leftItems: {
+                ScacleImageButton(image: .backward, action: Router.backSettings)
+            } rightItems: {
+                EmptyView()
             }
+
             
             ScrollView {
                 
@@ -36,8 +40,8 @@ struct RecommendationsView: View {
 
 struct AppView: View {
     
-    let app: CalApp
-    
+    let app: AppInfo
+
     var body: some View {
         HStack {
             Image(app.name).resizable().sideLength(60)
@@ -48,15 +52,18 @@ struct AppView: View {
                     ScacleButton {
                         NSWorkspace.open(app.link)
                     } label: {
-                        Image.gitHub.sideLength(15).foregroundColor(.secondary)
+                        Image.gitHub.sideLength(15)
+                            .appForeground(.appSecondary)
                     }
+                    .hoverEffect
+
                 }
-                Text(app.about).font(.caption2).foregroundColor(.secondary).lineLimit(2)
+                Text(app.about).font(.caption2).appForeground(.appSecondary).lineLimit(2)
             }
         }
         .padding(5)
         .background(Color.card)
-        .cornerRadius(5)
+        .clipShape(.rect(cornerRadius: 5))
         .shadow(radius: 1, x: 1, y: 1)
         .padding(.horizontal, 3)
     
@@ -65,7 +72,3 @@ struct AppView: View {
     }
 }
 
-struct CalApp: Decodable, Identifiable {
-    var id: String { name }
-    let name: String, about: String, link: String
-}

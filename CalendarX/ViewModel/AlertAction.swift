@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import Combine
+import CalendarXShared
 
 class AlertAction: ObservableObject {
 
@@ -16,6 +17,7 @@ class AlertAction: ObservableObject {
     
     var title: LocalizedStringKey = "",
         message: LocalizedStringKey = "",
+        image: Image = .info,
         no: LocalizedStringKey = L10n.Alert.no,
         yes: LocalizedStringKey = L10n.Alert.yes,
         action: VoidClosure = {}
@@ -27,13 +29,13 @@ class AlertAction: ObservableObject {
             .publisher(for: NSPopover.didCloseNotification)
             .sink{  [weak self] _ in
                 guard let self else { return }
-                self.dismiss()
+                dismiss()
             }
             .store(in: &cancellables)
     }
     
     static func exit() {
-        shared.title = L10n.Alert.exit
+        shared.image = .info
         shared.message = L10n.Alert.exitMessage
         shared.yes = L10n.Alert.yes
         shared.action = { NSApp.terminate(.none) }
@@ -41,7 +43,7 @@ class AlertAction: ObservableObject {
     }
     
     static func enableNotifications() {
-        shared.title = L10n.Alert.notifications
+        shared.image = .privacy
         shared.message = L10n.Alert.notificationsMessage
         shared.yes = L10n.Alert.ok
         shared.action = { NSWorkspace.openPreference(Privacy.notifications); shared.dismiss() }
@@ -50,7 +52,7 @@ class AlertAction: ObservableObject {
     }
     
     static func enableCalendars() {
-        shared.title = L10n.Alert.calendars
+        shared.image = .privacy
         shared.message = L10n.Alert.calendarsMessage
         shared.yes = L10n.Alert.ok
         shared.action = { NSWorkspace.openPreference(Privacy.calendars); shared.dismiss() }
@@ -58,14 +60,18 @@ class AlertAction: ObservableObject {
     }
     
     func dismiss() {
-        withAnimation {
-            isPresented = false
+        Task { @MainActor in
+            withAnimation {
+                isPresented = false
+            }
         }
     }
     
     private func show() {
-        withAnimation {
-            isPresented = true
+        Task { @MainActor in
+            withAnimation {
+                isPresented = true
+            }
         }
     }
     

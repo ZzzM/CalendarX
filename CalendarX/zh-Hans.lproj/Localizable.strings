@@ -22,7 +22,7 @@
 "calendar.showEvents" = "显示日历事件";
 "calendar.startWeekOn" = "星期开始于";
 
-"appearance.tint" = "强调色";
+"appearance.tint" = "色彩";
 "appearance.hex" = "颜色十六进制编码";
 
 "alert.exit" = "退出";

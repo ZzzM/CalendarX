@@ -1,3 +1,17 @@
+## 2.3.2 - 2023-12-19
+
+### Added
+- Calendar Widget
+- Chinese statutory holidays in 2024
+
+### Fixed
+- Menu bar date style drag and drop editing issue
+
+### Changed
+- Transition animations
+- Alert View
+
+---
 ## 2.3.1 - 2023-03-09
 
 ### Fixed

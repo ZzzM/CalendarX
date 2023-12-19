@@ -6,13 +6,15 @@
 //
 
 
-import Cocoa
 import Schedule
+import SwiftUI
+import CalendarXShared
 
 class MenubarItemController {
-    
-    typealias Task = Cocoa.Task
-    
+
+
+    typealias Task = SwiftUI.Task
+
     private let item: NSStatusBarButton?
     
     private let pref = MenubarPreference.shared
@@ -64,7 +66,7 @@ class MenubarItemController {
     private func resumeTask() {
         task = plan.do { [weak self] in
             guard let self else { return }
-            self.updateItem()
+            updateItem()
         }
     }
     
@@ -95,7 +97,7 @@ extension MenubarItemController {
         }  else if style == .text {
             title = pref.text
         } else {
-            title = L10n.dateItemTitle(pref)
+            title = pref.dateItemTitle
         }
         return NSAttributedString(string:  title, attributes: attributes)
     }

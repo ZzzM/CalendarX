@@ -5,9 +5,9 @@
 //  Created by zm on 2023/2/17.
 //
 
-import AppKit
 import SwiftUI
 import Combine
+import CalendarXShared
 
 class SettingsViewModel: ObservableObject {
     
@@ -68,14 +68,17 @@ class SettingsViewModel: ObservableObject {
             .sink{  [weak self] _ in
                 guard let self else { return }
                 if Updater.isAuthorized { return }
-                guard self.automaticallyChecksForUpdates else { return }
-                self.automaticallyChecksForUpdates = false
+                guard automaticallyChecksForUpdates else { return }
+                automaticallyChecksForUpdates = false
             }
             .store(in: &cancellables)
      
     }
 
-    func exit() { AlertAction.exit() }
+    func exit() {
+       AlertAction.exit()
+        //NSApp.terminate(.none)
+    }
     
     func openPreference() { }
 }

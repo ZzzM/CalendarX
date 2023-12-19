@@ -7,6 +7,8 @@
 
 import AppKit
 import Combine
+import CalendarXShared
+import WidgetKit
 
 class MenubarController {
     
@@ -20,8 +22,8 @@ class MenubarController {
     
     private lazy var monitor = MonitorHelper { [weak self] _ in
         guard let self else { return }
-        guard self.popover.isShown else { return }
-        self.closePopover()
+        guard popover.isShown else { return }
+        closePopover()
     }
     
     private var cancellables: Set<AnyCancellable> = []
@@ -42,8 +44,8 @@ extension MenubarController {
             .publisher(for: .titleStyleDidChanged)
             .sink { [weak self] _ in
                 guard let self else { return }
-                self.itemController.updateItem()
-                self.itemController.updateTask()
+                itemController.updateItem()
+                itemController.updateTask()
             }
             .store(in: &cancellables)
     
@@ -51,7 +53,7 @@ extension MenubarController {
             .publisher(for: .NSCalendarDayChanged)
             .sink{ [weak self] _ in
                 guard let self else { return }
-                self.itemController.updateItem()
+                itemController.updateItem()
             }
             .store(in: &cancellables)
         
@@ -59,7 +61,7 @@ extension MenubarController {
             .publisher(for: NSLocale.currentLocaleDidChangeNotification)
             .sink{ [weak self] _ in
                 guard let self else { return }
-                self.itemController.updateItem()
+                itemController.updateItem()
             }
             .store(in: &cancellables)
         
@@ -67,8 +69,15 @@ extension MenubarController {
             .publisher(for: .NSSystemClockDidChange)
             .sink{ [weak self] _ in
                 guard let self else { return }
-                self.itemController.updateItem()
-                self.itemController.updateTask()
+                itemController.updateItem()
+                itemController.updateTask()
+            }
+            .store(in: &cancellables)
+
+        NotificationCenter.default
+            .publisher(for: .EKEventStoreChanged)
+            .sink { _ in
+                WidgetCenter.shared.reloadAllTimelines()
             }
             .store(in: &cancellables)
 

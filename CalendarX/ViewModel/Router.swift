@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import CalendarXShared
 
 class Router: ObservableObject {
 
     static let shared = Router()
 
     enum Path {
-        case main, date(CalDay), settings,
+        case main, date(AppDate), settings,
              recommendations, menubarSettings, appearanceSettings, calendarSettings, about
     }
 
@@ -37,7 +38,7 @@ extension Router {
 
     static func backMain() { to(.main) }
 
-    static func toDate(_ day: CalDay) { to(.date(day)) }
+    static func toDate(_ appDate: AppDate) { to(.date(appDate)) }
 }
 
 extension Router {

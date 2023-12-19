@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CalendarXShared
 
 struct SettingsView: View {
     
@@ -16,9 +17,15 @@ struct SettingsView: View {
     var body: some View {
         
         VStack(spacing: 15) {
-            
-            TitleView { Text( L10n.Settings.title) } actions: {
-                ScacleImageButton(image: .power, action: viewModel.exit)
+
+            TitleView {
+                Text( L10n.Settings.title).onTapGesture {
+                    Router.backMain()
+                }
+            } leftItems: {
+                EmptyView()
+            } rightItems: {
+                ScacleImageButton(image: .quit, action: viewModel.exit)
             }
 
             Section {
@@ -37,7 +44,7 @@ struct SettingsView: View {
         .frame(height: .mainHeight, alignment: .top)
 
     }
-    
+
 }
 
 extension SettingsView {
@@ -49,13 +56,13 @@ extension SettingsView {
     var calendarRow: some View {
         SettingsRow(title:  L10n.Settings.calendar, detail: {}, action: Router.toCalendarSettings)
     }
-    
+
     var languageRow: some View {
         SettingsPickerRow(title: L10n.Settings.language,
-                          items: Language.allCases, width: 60,
-                          selection:  $viewModel.language) { Text($0.title) }
+                           items: Language.allCases, width: 70,
+                           selection:  $viewModel.language) { Text($0.title) }
     }
-    
+
     var memubarRow: some View {
         SettingsRow(title: L10n.Settings.menubarStyle,
                     detail: {Text(viewModel.menubarStyle.title) },
@@ -63,7 +70,7 @@ extension SettingsView {
     }
     
     var launchRow: some View {
-        CalToggle { Text(L10n.Settings.launchAtLogin).font(.title3) }
+        AppToggle { Text(L10n.Settings.launchAtLogin).font(.title3) }
             .checkboxStyle()
     }
 
@@ -96,7 +103,7 @@ extension SettingsView {
             Text(L10n.Settings.version) + Text(Updater.version)
         }
         .font(.footnote)
-        .foregroundColor(.accentColor)
+        .appForeground(.accentColor)
     }
 }
 
@@ -129,14 +136,13 @@ struct SettingsRow<Content: View>: View {
             Group {
                 detail()
                 if showArrow {
-                    Image.rightArrow
+                    Image.rightArrow.font(.title3)
                 }
-                
             }
-            .foregroundColor(.secondary)
-            
+            .appForeground(.appSecondary)
+
         }
-        .contentShape(Rectangle())
+        .contentShape(.rect)
         .onTapGesture(perform: action)
         
     }
@@ -183,7 +189,7 @@ struct SettingsPickerRow<Item: Hashable, Label: View>: View {
                                isPresented: $isPresented,
                                label: {
                 HStack {
-                    itemLabel(selection).foregroundColor(.secondary)
+                    itemLabel(selection).appForeground(.appSecondary)
                     RotationArrow(isPresented: $isPresented)
                 }
             }, itemLabel: itemLabel)

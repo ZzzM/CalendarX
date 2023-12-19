@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CalendarXShared
 
 
 struct MenubarSettingsView: View {
@@ -17,17 +18,26 @@ struct MenubarSettingsView: View {
     var body: some View {
         
         VStack(spacing: 10) {
-            
+
             TitleView {
                 Text(L10n.Settings.menubarStyle)
-            } actions: {
-                ScacleImageButton(image: .close, action: Router.backSettings)
+            } leftItems: {
+                ScacleImageButton(image: .backward, action: Router.backSettings)
+            } rightItems: {
+                if viewModel.canSave {
+                    ScacleImageButton(image: .save, action: viewModel.save)
+                }
             }
-            
-            SegmentedPicker(tabs: MenubarStyle.allCases, selection: $viewModel.style) {
-                Text($0.title)
+
+            Picker(selection: $viewModel.style) {
+                ForEach(MenubarStyle.allCases, id: \.self) {
+                    Text($0.title)
+                }
+            } label: {
+                EmptyView()
             }
-            
+            .pickerStyle(.segmented)
+
             ZStack {
                 switch viewModel.style {
                 case .default: DefaultStyleView()
@@ -36,15 +46,6 @@ struct MenubarSettingsView: View {
                 }
             }
             .frame(maxHeight: .infinity)
-            
-            
-            ScacleCapsuleButton(title: L10n.MenubarStyle.save,
-                                foregroundColor: .white,
-                                backgroundColor: viewModel.disabled ? .disable: .accentColor,
-                                action: viewModel.save)
-            .frame(width: .mainWidth/2)
-            .disabled(viewModel.disabled)
-            
             
         }
         .focusable(false)
@@ -56,8 +57,7 @@ struct MenubarSettingsView: View {
 
 struct DefaultStyleView: View {
     var body: some View {
-        Image.calendar.sideLength(30)
-        
+        Image.calendar.sideLength(40)
         Text(Date().day.description)
             .font(.title3)
             .offset(y: 5)
@@ -72,20 +72,22 @@ struct TextStyleView: View {
     
     var body: some View {
         VStack {
-            
-            Text(text).font(.title3).frame(height: 30)
-            
-            TextField(AppInfo.name, text: $text.max())
+
+            Text(text)
+                .font(.title3)
+                .frame(height: 30)
+                .padding()
+
+            TextField(AppBundle.name, text: $text.max())
                 .textFieldStyle(.plain)
                 .multilineTextAlignment(.center)
-            
-            
+
             Divider().padding(.horizontal)
             
             Text(L10n.MenubarStyle.tips)
                 .font(.footnote)
-                .foregroundColor(.secondary)
-            
+                .appForeground(.appSecondary)
+
         }
     }
 }
@@ -101,71 +103,68 @@ struct DateStyleView: View {
             
             Text(viewModel.dateTitle)
                 .font(.title3)
-                .padding(.vertical, 5)
-            
+                .padding(.vertical)
+
             ScrollView {
     
-                gridView(tags: viewModel.shownTags,
-                         background: .tagBackground,
+                gridView(types: viewModel.shownTypes,
+                         background: Color.tagBackground,
                          onTapGesture: viewModel.shownTagTapped,
                          onDrop: viewModel.onDrop)
                 
-                gridView(tags: viewModel.hiddenTags,
+                gridView(types: viewModel.hiddenTypes,
                          background: .disable,
                          onTapGesture: viewModel.hiddenTagTapped)
                 
                 Toggle(isOn: $viewModel.use24h) { Text(L10n.MenubarStyle.use24).font(.title3) }
                     .checkboxStyle()
-                    .padding(.top, 5)
-                
+                    .padding(.top)
+
                 Toggle(isOn: $viewModel.showSeconds) { Text(L10n.MenubarStyle.showSeconds).font(.title3) }
                     .checkboxStyle()
                 
             }
             
-            
-            
+
         }
     }
-    
-    private func gridView(tags:  [DTTag],
+    private func gridView(types:  [DTType],
                           background: Color,
-                          onTapGesture: @escaping (DTTag) -> Void,
-                          onDrop: ((NSItemProvider?,  Int) -> Bool)? = .none) -> some View {
-        
+                          onTapGesture: @escaping (DTType) -> Void,
+                          onDrop: ((NSItemProvider?,  DTType) -> Bool)? = .none) -> some View {
+
         LazyVGrid(columns: .init(repeating: .init(), count: 4)) {
-            ForEach(tags, id: \.element) { tag in
-                
+            ForEach(types, id: \.self) { type in
                 if onDrop != nil {
-                    tagView(tag, foregroundColor: .accentColor, background: background, onTapGesture: onTapGesture)
-                        .onDrag { viewModel.onDrag(tag.offset) }
-                        .onDrop(of: [.utf8PlainText], isTargeted: .none) {
-                            onDrop! ($0.first, tag.offset)
+                    tagView(type, foregroundColor: .white, background: background, onTapGesture: onTapGesture)
+                        .onDrag { viewModel.onDrag(type) }
+                        .onDrop(of: [.text], isTargeted: .none) {
+                            onDrop! ($0.first, type)
                         }
                 } else {
-                    tagView(tag, foregroundColor: .white, background: background, onTapGesture: onTapGesture)
-                        .onDrag { viewModel.onDrag(tag.offset) }
+                    tagView(type, foregroundColor: .white, background: background, onTapGesture: onTapGesture)
+                        .onDrag { viewModel.onDrag(type) }
                 }
                 
             }
         }
     }
     
-    private func tagView(_ tag: DTTag,
+    private func tagView(_ type: DTType,
                          foregroundColor: Color,
                          background: Color,
-                         onTapGesture: @escaping (DTTag) -> Void) -> some View {
-        
-        Text(viewModel.tagTitle(tag.element))
+                         onTapGesture: @escaping (DTType) -> Void) -> some View {
+
+        Text(viewModel.tagTitle(type))
             .lineLimit(1)
             .minimumScaleFactor(0.1)
             .frame(width: 55)
             .padding(5)
             .background(background)
-            .foregroundColor(foregroundColor)
-            .clipShape(Capsule())
+            .appForeground(foregroundColor)
+            .clipShape(.capsule)
             .onTapGesture {
-                onTapGesture(tag)
+                onTapGesture(type)
             }
         
     }

@@ -8,11 +8,12 @@
 import Sparkle
 import UserNotifications
 import Cocoa
+import CalendarXShared
 
 class Updater: NSObject {
     
-    static let version = " \(AppInfo.version) ( \(AppInfo.commitHash) ) "
-    
+    static let version = " \(AppBundle.version) ( \(AppBundle.commitHash) ) "
+
     private static let UpdateNotificationId = "UpdateNotificationId"
     
     private static let shared = Updater()

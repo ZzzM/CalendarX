@@ -1,49 +1,43 @@
 name: Mars
 
 on:
-#   push:
-#     tags:
-#       - '*'
-  
   workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 env:
-  APP_NAME: CalendarX
   SPARKLE_KEY: ${{ secrets.SPARKLE_KEY }}
-  BODY_PATH: BODY_PATH.md
+  PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
 
 jobs:
 
   Release:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v3.3.0
+      uses: actions/checkout@v4.1.1
       
     - name: Setup
-      uses: actions/setup-node@v3.6.0
-      
-    - run: |
-        echo "APP_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      uses: actions/setup-node@v4.0.0
+    
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1.6.0
 
-    - name: Package
+    - name: Create DMG
       run: |
-        fastlane package
-
-    - name: Create
-      run: |
-        sh scripts/create_dmg.sh
+        fastlane create_dmg
 
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        body_path: ${{ env.BODY_PATH }}
-        files: ${{ env.APP_NAME }}.dmg
- 
+        body_path: ${{ env.LOG_PATH }}
+        files: ${{ env.APP_PATH }}
+
     - name: Appcast
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7.0.1
       if: startsWith(github.ref, 'refs/tags/')
       with:
         github-token: ${{ secrets.PERSONAL_TOKEN }}

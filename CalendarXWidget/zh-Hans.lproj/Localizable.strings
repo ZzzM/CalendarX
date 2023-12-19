@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  CalendarX
+
+  Created by zm on 2023/12/19.
+  
+*/
+"largeWidget.displayName" = "月";
+"largeWidget.description" = "追踪当月日期。";

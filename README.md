@@ -16,6 +16,7 @@ A lightweight macOS app for displaying calendar and time
 - [x] Custom menubar styles (default, text, date & time）
 - [x] Dark mode
 - [x] Localization (简体中文、English)
+- [x] Widget
 - [x] SwiftUI / Async / Await
 
 ## Compatibility
@@ -28,23 +29,39 @@ A lightweight macOS app for displaying calendar and time
 ## Snapshots
 - Calendar - left click to show
 
-<img src="assets/cl01.png" width=250> <img src="assets/cd01.png" width=250>
-
-<img src="assets/cl02.png" width=250> <img src="assets/cd02.png" width=250>
+<img src="assets/001.png" width=250> 
+<img src="assets/002.png" width=250>
 
 - Settings - right click to show
 
-<img src="assets/sl01.png" width=250> <img src="assets/sd01.png" width=250>
-
-<img src="assets/sl02.png" width=250> <img src="assets/sd02.png" width=250> 
-
-<img src="assets/sl03.png" width=250> <img src="assets/sd03.png" width=250> 
+<img src="assets/003.png" width=250> 
+<img src="assets/004.png" width=250> 
+<img src="assets/005.png" width=250> 
 
 - Menubar Date&Time Style - drag and drop to edit
 
-<img src="assets/sl04.png" width=250> <img src="assets/sd04.png" width=250> 
-  
+<img src="assets/006.png" width=250> 
 
+- Widget & Edit
+
+<img src="assets/007.png" width=210> 
+<img src="assets/008.png" width=250> 
+
+## FAQ
+
+1. **"CalendarX.dmg" can't be opened.**
+    
+    <img src="assets/101.png" width=300> 
+
+1. **"CalendarX" can't be opened.**
+    
+    <img src="assets/102.png" width=300> 
+
+    **Or open `Terminal` and run**
+    
+    ``` shell
+    sudo xattr -r -d com.apple.quarantine /Applications/CalendarX.app
+    ```
 ## Dependencies
 
 - [Sparkle](https://github.com/sparkle-project/Sparkle)

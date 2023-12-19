@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import CalendarXShared
 
 @main
 struct CalendarXApp: App {
@@ -15,9 +15,11 @@ struct CalendarXApp: App {
     private var delegate
     
     init() {
+
         LaunchHelper.migrateIfNeeded()
-        EventHelper.start()
+        CalendarPreference.check()
         Updater.start()
+
     }
 
     var body: some Scene {
@@ -32,17 +34,20 @@ class CalendarXDelegate: NSObject & NSApplicationDelegate {
     lazy var rootView = RootView()
     lazy var popover = MenubarPopover(rootView)
     lazy var controller =  MenubarController(popover)
-    
+
     func applicationWillFinishLaunching(_ notification: Notification) {
+
         NSRunningApplication
-            .runningApplications(withBundleIdentifier: AppInfo.identifier)
+            .runningApplications(withBundleIdentifier: AppBundle.identifier)
             .filter { $0.isFinishedLaunching }
             .forEach { $0.terminate() }
+        
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         _ = controller
     }
+
 
 }
 

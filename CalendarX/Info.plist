@@ -3,14 +3,18 @@
 <plist version="1.0">
 <dict>
 	<key>CommitDate</key>
-	<string>2023.03.09 15:04</string>
+	<string>2023.12.19  6:34</string>
 	<key>CommitHash</key>
-	<string>60f115b</string>
+	<string>20e65e2</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>WidgetConfigurationIntent</string>
+	</array>
 	<key>SUEnableAutomaticChecks</key>
 	<false/>
 	<key>SUFeedURL</key>

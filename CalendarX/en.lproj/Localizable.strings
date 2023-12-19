@@ -19,10 +19,10 @@
 
 "calendar.showLunar" = "Show lunar calendar";
 "calendar.showHolidays" = "Show Chinese statutory holidays";
-"calendar.showEvents" = "Display calendar events";
+"calendar.showEvents" = "Show calendar events";
 "calendar.startWeekOn" = "Start week on";
 
-"appearance.tint" = "Accent color";
+"appearance.tint" = "Tint";
 "appearance.hex" = "Color hex code";
 
 "alert.exit" = "Exit";

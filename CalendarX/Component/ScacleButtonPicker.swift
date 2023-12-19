@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-
 struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
     
     private let items: [Item]
@@ -61,26 +60,26 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
     @ViewBuilder
     func popoverContent() -> some View {
         ScrollViewReader { reader in
-            ScrollView {
-                LazyVStack {
+            ScrollView(showsIndicators: false) {
+                LazyVGrid(columns: [GridItem(.fixed(width))], spacing: 0) {
                     ForEach(items, id: \.self) { item in
                         Button {
                             selection = item
                             isPresented.toggle()
                         } label: {
                             itemLabel(item)
-                                .foregroundColor(item == selection ? tint:.primary)
+                                .appForeground(item == selection ? tint:.primary)
                                 .lineLimit(1)
-                                .minimumScaleFactor(0.1)
+                                .minimumScaleFactor(0.75)
                         }
                         .id(item)
                         .buttonStyle(.plain)
-                        .frame(minWidth: width, idealHeight: .popoverRowHeight)
+                        .frame(height: .popoverRowHeight)
                     }
                 }
                 .padding(5)
             }
-            .frame(height: min(CGFloat(items.count + 1) * .popoverRowHeight + 10, .popoverHeight))
+            .frame(height: min(CGFloat(items.count) * .popoverRowHeight + 10, .popoverHeight))
             .onAppear { reader.scrollTo(selection) }
         }
     }

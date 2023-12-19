@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CalendarXShared
 
 enum MenubarStyle: Int, CaseIterable, Decodable {
     // 2.2.0 or earlier

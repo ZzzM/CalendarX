@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Combine
+import CalendarXShared
 
 class MainViewModel: ObservableObject {
     
@@ -18,9 +20,9 @@ class MainViewModel: ObservableObject {
     
     @Published
     var date: Date
-    
-    var weekday: CalWeekday { calendarPref.weekday }
-    
+
+    var weekday: AppWeekday { calendarPref.weekday }
+
     var showEvents: Bool { calendarPref.showEvents }
     
     var showLunar: Bool { calendarPref.showLunar }
@@ -30,7 +32,7 @@ class MainViewModel: ObservableObject {
     var colorScheme: ColorScheme? { pref.colorScheme }
     
     var tint: Color { pref.color }
-    
+
     init() {
         date = Date()
         interval = Date().timeIntervalSince1970
@@ -57,5 +59,6 @@ class MainViewModel: ObservableObject {
     func reset() {
         date = Date()
     }
+
 
 }

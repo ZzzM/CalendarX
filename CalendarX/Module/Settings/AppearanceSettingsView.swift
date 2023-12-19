@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CalendarXShared
 
 struct AppearanceSettingsView: View {
     
@@ -14,13 +15,15 @@ struct AppearanceSettingsView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            
+
             TitleView {
                 Text(L10n.Settings.appearance)
-            } actions: {
-                ScacleImageButton(image: .close, action: Router.backSettings)
+            } leftItems: {
+                ScacleImageButton(image: .backward, action: Router.backSettings)
+            } rightItems: {
+                EmptyView()
             }
-            
+
             darkSection
             accentSection
             
@@ -35,12 +38,12 @@ extension AppearanceSettingsView {
     private var darkSection: some View {
         Section {
             Toggle(isOn: $viewModel.isSystem) { Text(L10n.Theme.system) }
-                .foregroundColor(.secondary)
+                .appForeground(.appSecondary)
                 .checkboxStyle()
             
             if viewModel.isShown {
                 Toggle(isOn: $viewModel.isDark) { Text(L10n.Theme.dark) }
-                    .foregroundColor(.secondary)
+                    .appForeground(.appSecondary)
                     .checkboxStyle()
             }
             
@@ -55,7 +58,7 @@ extension AppearanceSettingsView {
         Section {
             HStack {
                 Text(L10n.Appearance.hex)
-                    .foregroundColor(.secondary)
+                    .appForeground(.appSecondary)
                 Spacer()
                 
                 if #available(macOS 12.0, *) {
@@ -63,18 +66,17 @@ extension AppearanceSettingsView {
                 } else {
                     hexLabel
                 }
-
             }
-            
-            ScrollView {
+
+            ScrollView(showsIndicators: false) {
                 LazyVGrid(columns: Array(repeating: .init(spacing: 0), count: 3), spacing: 0) {
                     ForEach(Appearance.palettes, id: \.self) {
                         colorRow($0)
                     }
                 }
-                .cornerRadius(5)
+                .clipShape(.rect(cornerRadius: 5))
             }
-            
+
         } header: {
             RowTitleView(title: L10n.Appearance.tint, font: .title3)
         }
@@ -107,8 +109,8 @@ extension AppearanceSettingsView {
             .frame(height: 20)
             .padding(.horizontal, 3)
             .background(Color.accentColor)
-            .foregroundColor(.white)
-            .cornerRadius(5)
+            .appForeground(.white)
+            .clipShape(.rect(cornerRadius: 5))
     }
     
 }

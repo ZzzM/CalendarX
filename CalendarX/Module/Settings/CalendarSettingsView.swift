@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CalendarXShared
 
 struct CalendarSettingsView: View {
     
@@ -15,12 +16,17 @@ struct CalendarSettingsView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            
+
+
             TitleView {
                 Text(L10n.Settings.calendar)
-            } actions: {
-                ScacleImageButton(image: .close, action: Router.backSettings)
+            } leftItems: {
+                ScacleImageButton(image: .backward, action: Router.backSettings)
+            } rightItems: {
+                EmptyView()
             }
+
+
             
             Section {
                 weekRow
@@ -38,7 +44,7 @@ extension CalendarSettingsView {
     
     private  var weekRow: some View {
         SettingsPickerRow(title: L10n.Calendar.startWeekOn,
-                          items: CalWeekday.allCases,
+                          items: AppWeekday.allCases,
                           selection:  $viewModel.weekday) { Text($0.description) }
     }
     

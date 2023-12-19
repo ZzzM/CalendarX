@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CalendarXShared
 
 struct AboutView: View {
     
@@ -14,19 +15,25 @@ struct AboutView: View {
             
             TitleView {
                 Text(L10n.Settings.about)
-            } actions: {
-                ScacleImageButton(image: .close, action: Router.backSettings)
+            } leftItems: {
+                ScacleImageButton(image: .backward, action: Router.backSettings)
+            } rightItems: {
+                EmptyView()
             }
-            
+
+
             Image(nsImage: NSApp.applicationIconImage)
-            
-            Text(AppInfo.name).bold()
-            
+
+            Text(AppBundle.name).bold()
+
             Group {
                 
-                ScacleButton(action: { NSWorkspace.open(CalLink.gitHub) }) {
-                    Text("GitHub for \(AppInfo.name)")
-                        .foregroundColor(.accentColor)
+
+                ScacleButton {
+                    NSWorkspace.open(AppLink.gitHub)
+                } label: {
+                    Text("GitHub for \(AppBundle.name)")
+                        .appForeground(.accentColor)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 5)
                         .background(Capsule().stroke(Color.accentColor))
@@ -36,7 +43,7 @@ struct AboutView: View {
                                     foregroundColor: .white,
                                     backgroundColor: .accentColor,
                                     action: Updater.checkForUpdates)
-            
+
             }
             .font(.caption2)
             .frame(width: .mainWidth / 2.5)
@@ -46,11 +53,11 @@ struct AboutView: View {
                 
                 Spacer()
                 
-                Text("Copyright © 2020 ZzzM. All rights reserved.")
+                Text(AppBundle.copyright)
             }
             .font(.footnote)
-            .foregroundColor(.secondary)
-            
+            .appForeground(.appSecondary)
+
         }
         .frame(height: .mainHeight, alignment: .top)
     }

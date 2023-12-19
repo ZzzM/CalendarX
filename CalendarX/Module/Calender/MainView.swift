@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-
+import CalendarXShared
 
 struct MainView: View {
 
     @ObservedObject
     var viewModel: MainViewModel
-    
+
     var body: some View {
-        
+
         CalendarView(date: viewModel.date,
                      firstWeekday: viewModel.weekday,
                      interval: viewModel.interval,
@@ -23,7 +23,7 @@ struct MainView: View {
                      dayView: dayView)
         .equatable()
         .frame(height: .mainHeight)
-        
+
     }
     
     private func header() -> some View {
@@ -31,7 +31,7 @@ struct MainView: View {
         HStack {
             MonthYearPicker(date: $viewModel.date, colorScheme: viewModel.colorScheme, tint: viewModel.tint)
             Spacer()
-            ScacleImageButton(image: .leftArrow,  action: viewModel.lastMonth)
+            ScacleImageButton(image: .leftArrow, action: viewModel.lastMonth)
                 .frame(width: .buttonWidth)
             ScacleImageButton(image: .circle, action: viewModel.reset)
                 .frame(width: .buttonWidth)
@@ -39,63 +39,65 @@ struct MainView: View {
                 .frame(width: .buttonWidth)
         }
         
-        
     }
     
     private func weekView(date: Date) -> some View {
         Text(L10n.shortWeekday(from: date))
-            .foregroundColor(date.inWeekend ? .secondary : .primary)
+            .appForeground(date.inWeekend ? .appSecondary : .appPrimary)
             .sideLength(30)
     }
     
     @ViewBuilder
-    private func dayView(inSameMonth: Bool, day: CalDay) -> some View {
-        
-        let showHolidays = !day.inNormal && viewModel.showHolidays,
-            showEvents = day.events.isNotEmpty && viewModel.showEvents,
-            defaultColor: Color = day.inWeekend ? .secondary : .primary
-        
+    private func dayView(appDate: AppDate) -> some View {
+
+        let showHolidays = !appDate.inNormal && viewModel.showHolidays,
+            showEvents = appDate.events.isNotEmpty && viewModel.showEvents,
+            showLunar = viewModel.showLunar,
+            defaultColor: Color = appDate.inWeekend ? .appSecondary : .appPrimary,
+            inSameMonth = viewModel.date.inSameMonth(as: appDate.date),
+            txColor: Color = appDate.onHoliday ? .offBackground : .workBackground
+
         ScacleButton {
-            Router.toDate(day)
+            Router.toDate(appDate)
         } label: {
             ZStack {
-                
-                if day.inToday {
+
+                if appDate.inToday {
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(Color.accentColor, lineWidth: 1)
                 }
                 
                 if showHolidays {
-                    (day.onHoliday ? Color.tagBackground : Color.workdayBackground)
-                        .cornerRadius(4)
-                    Text(day.stateDesc)
-                        .font(.system(size: 7).bold().monospacedDigit())
+                    txColor.clipShape(.rect(cornerRadius: 4))
+                    Text(appDate.stateDesc)
+                        .font(.system(size: 7, weight: .bold, design: .monospaced))
                         .offset(x: -14, y: -14)
-                        .foregroundColor(day.onHoliday ? .accentColor: .secondary)
+                        .appForeground(appDate.onHoliday ? .accentColor: .appSecondary)
                 }
 
                 if showEvents {
                     Circle()
                         .size(width: 5, height: 5)
-                        .foregroundColor(.accentColor)
+                        .appForeground(.accentColor)
                         .offset(x: 32, y: 3)
                 }
                 
                 VStack {
-                    Text(day.title)
+                    Text(appDate.title)
                         .font(.title3.monospacedDigit())
-                        .foregroundColor(showHolidays ? day.onHoliday ? .accentColor: defaultColor : defaultColor)
-                    if viewModel.showLunar {
-                        Text(day.subtitle)
+                        .appForeground(showHolidays ? appDate.onHoliday ? .accentColor: defaultColor : defaultColor)
+                    if showLunar {
+                        Text(appDate.subtitle)
                             .font(.caption2.weight(.regular))
-                            .foregroundColor(.secondary)
+                            .appForeground(showHolidays ? appDate.onHoliday ? .accentColor: .appSecondary : .appSecondary)
                     }
                 }
                 
             }
+            .opacity(inSameMonth ? 1:0.3)
+            .sideLength(40)
         }
-        .opacity(inSameMonth ? 1:0.3)
-        .sideLength(40)
+
         
     }
 }
@@ -120,7 +122,7 @@ struct MonthYearPicker: View {
                            colorScheme: colorScheme,
                            selection: $date.month,
                            isPresented: $isPresentedOfMonth) {
-            Text(L10n.monthSymbol(from: date.month)).font(.title2).foregroundColor(tint)
+            Text(L10n.monthSymbol(from: date.month)).font(.title2).appForeground(tint)
         } itemLabel: {
             Text(L10n.monthSymbol(from: $0))
         }
@@ -130,7 +132,7 @@ struct MonthYearPicker: View {
                            colorScheme: colorScheme,
                            selection: $date.year,
                            isPresented: $isPresentedOfYear) {
-            Text(date.year.description).font(.title2).foregroundColor(tint)
+            Text(date.year.description).font(.title2).appForeground(tint)
         } itemLabel: {
             Text(String($0))
         }
@@ -140,16 +142,16 @@ struct MonthYearPicker: View {
 
 struct CalendarView<Day: View, Header: View, Week: View>: View {
     
-    private let date: Date, firstWeekday: CalWeekday, interval: TimeInterval
-    
-    private let dayView: (Bool, CalDay) -> Day, header: () -> Header, weekView: (Date) -> Week
-    
+    private let date: Date, firstWeekday: AppWeekday, interval: TimeInterval
+
+    private let dayView: (AppDate) -> Day, header: () -> Header, weekView: (Date) -> Week
+
     init(date: Date,
-         firstWeekday: CalWeekday,
+         firstWeekday: AppWeekday,
          interval: TimeInterval,
          @ViewBuilder header: @escaping () -> Header,
          @ViewBuilder weekView: @escaping (Date) -> Week,
-         @ViewBuilder dayView: @escaping (Bool, CalDay) -> Day
+         @ViewBuilder dayView: @escaping (AppDate) -> Day
     ) {
         self.date = date
         self.firstWeekday = firstWeekday
@@ -158,37 +160,28 @@ struct CalendarView<Day: View, Header: View, Week: View>: View {
         self.header = header
         self.weekView = weekView
     }
-    
-    private let columns = Array(repeating: GridItem(), count: Solar.daysInWeek)
-    
+
     var body: some View {
         
-        let days = makeDays()
-        let spacing: CGFloat? = days.count > Solar.minDates ? 1.7: nil
-        
+        let dates = CalendarHelper.makeDates(firstWeekday: firstWeekday, date: date)
+        let columns = CalendarHelper.columns
+        let spacing = CalendarHelper.spacing(from: dates.count)
+
         LazyVGrid(columns: columns, spacing: spacing) {
-            Section(content: {
-                ForEach(0..<min(Solar.daysInWeek, days.count), id: \.self) {
-                    weekView(days[$0].date)
+            Section {
+                ForEach(0..<min(Solar.daysInWeek, dates.count), id: \.self) {
+                    weekView(dates[$0].date)
                 }
-                ForEach(days, id: \.id) { day in
-                    dayView(date.inSameMonth(as: day.date), day)
+                ForEach(dates, id: \.id) { appDate in
+                    dayView(appDate)
                 }
-            }, header: header)
+            } header: {
+                header()
+            }
         }
         
     }
-    
-    private func makeDays() -> [CalDay]  {
-        var calendar = Calendar.gregorian
-        calendar.firstWeekday = firstWeekday.rawValue
-        let dates = calendar.generateDates(for: date)
-        let events = EventHelper.fetchEvents(with: dates.first!, end: dates.last!)
-        
-        return dates.map { date in
-            CalDay(date, events: events.filter{$0.startDate.isSameDay(as: date)})
-        }
-    }
+
 }
 
 extension CalendarView: Equatable {

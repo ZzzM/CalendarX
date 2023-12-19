@@ -2,43 +2,24 @@ default_platform(:mac)
 
 platform :mac do
   
-  lane :package do
-    setup(name: ENV["APP_NAME"], version: ENV["APP_VERSION"])
+  before_all do
+    ENV["APP_NAME"] = "CalendarX"
+    ENV["APP_VERSION"] = last_git_tag
+    ENV["SYS_MIN_VERSION"] = "11.0.0"
+    ENV["BUILD_PATH"] = "./build"
+  end
+
+  lane :create_dmg do
+    setup
     build
     clean
+    sh "cd .. && zsh ./scripts/create_dmg.sh"
   end
 
-  lane :test do |options|
-    setup(name: options[:name], version: options[:version])
-    build
-    clean
-  end
-  
-  lane :release do |options|
+  private_lane :setup do
 
-    name = options[:name]
-    repo = options[:repo]
-    tag = options[:tag]
-    token = options[:token]
-
-    github_release = set_github_release(
-      repository_name: repo,
-      api_token: token,
-      name: tag,
-      tag_name: tag,
-      description: (File.read("../TEST.md") rescue "No changelog provided"),
-      upload_assets: ["#{name}.dmg"])
-  end
-
-  lane :show do
-    msg = File.read("../TEST.md")
-    UI.message msg
-  end
-
-  private_lane :setup do |options| 
-
-    name = options[:name]
-    version = options[:version]
+    name = ENV["APP_NAME"]
+    version = ENV["APP_VERSION"]
 
     commit = last_git_commit
     date = Time.now.utc.localtime("+08:00").strftime("%Y.%m.%d %k:%M")  
@@ -52,15 +33,51 @@ platform :mac do
   end
 
   private_lane :build do 
-    
-    build_app(
+
+    build_mac_app(
+      scheme: ENV["APP_NAME"],
       clean: true,
       silent: true,
-      export_method: 'mac-application')
+      export_method: "mac-application",
+      output_directory: ENV["BUILD_PATH"])
+      
   end
 
   private_lane :clean do
     sh "rm -vfr ~/Library/Developer/Xcode/Archives/*"
+  end
+
+
+  # TEST
+  lane :test do |options|
+    setup
+    build
+    clean
+    sh "cd .. && zsh ./scripts/test.sh"
+  end
+  
+  # lane :release do |options|
+
+  #   name = ENV["APP_NAME"]
+  #   tag = ENV["APP_VERSION"]
+
+  #   repo = options[:repo]
+  #   token = options[:token]
+
+  #   github_release = set_github_release(
+  #     repository_name: repo,
+  #     api_token: token,
+  #     name: tag,
+  #     tag_name: tag,
+  #     description: (File.read("../TEST.md") rescue "No changelog provided"),
+  #     upload_assets: ["#{name}.dmg"])
+      
+  # end
+
+  lane :show do
+    # msg = File.read("../TEST.md")
+    UI.message ENV["APP_NAME"]
+    UI.message ENV["APP_VERSION"]
   end
 
 

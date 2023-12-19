@@ -6,51 +6,52 @@
 //
 
 import SwiftUI
+import CalendarXShared
 
 class MenubarViewModel: ObservableObject {
 
     private let pref = MenubarPreference.shared
-    
+
     @Published
     var style = MenubarPreference.shared.style
-    
+
     // Text Style
     @Published
     var text = MenubarPreference.shared.text
-    
+
     // Date&Time Style
-    
+
     // Use a 24-hour clock
     @Published
     var use24h = MenubarPreference.shared.use24h
-    
+
     //Display the time with seconds
     @Published
     var showSeconds = MenubarPreference.shared.showSeconds
-    
+
     @Published
-    private var shownTypes = MenubarPreference.shared.shownTypes
-    
+    var shownTypes = MenubarPreference.shared.shownTypes
+
     @Published
-    private var hiddenTypes = MenubarPreference.shared.hiddenTypes
-    
-    var shownTags: [DTTag] { Array(shownTypes.enumerated()) }
-    
-    var hiddenTags: [DTTag] { Array(hiddenTypes.enumerated()) }
-    
+    var hiddenTypes = MenubarPreference.shared.hiddenTypes
+
+    //    var shownTags: [DTTag] { shownTypes.enumerated().map{ .init(offset: $0.offset, element: $0.element) } }
+    //
+    //    var hiddenTags: [DTTag] { hiddenTypes.enumerated().map{ .init(offset: $0.offset, element: $0.element) } }
+
     var dateTitle: String {
-        L10n.dateTitle(types: shownTypes) { tagTitle($0) }
+        pref.dateTitle(types: shownTypes) { tagTitle($0) }
     }
-    
-    var disabled: Bool {
+
+    var canSave: Bool {
         switch style {
-        case .text: return text.isEmpty
-        default: return false
+        case .text: return !text.isEmpty
+        default: return true
         }
     }
-    
+
     func save() {
-        
+
         if style == .date {
             pref.showSeconds = showSeconds
             pref.use24h = use24h
@@ -60,16 +61,15 @@ class MenubarViewModel: ObservableObject {
         else if style == .text {
             pref.text = text
         }
-        
+
         pref.style = style
-        
+
         Router.backSettings()
-        
+
         NotificationCenter.default.post(name: .titleStyleDidChanged, object: .none)
     }
-    
 
-    
+
 }
 
 //MARK: Date&Time Style
@@ -86,56 +86,51 @@ extension  MenubarViewModel {
         case .t: return  (use24h ? "20:30":"8:30") + (showSeconds ? ":30":"") //d 24, e sec
         }
     }
-    
-    func shownTagTapped(_ tag: DTTag) {
+
+    func shownTagTapped(_ type: DTType) {
         guard shownTypes.count > 1 else { return }
         Task { @MainActor in
-            guard shownTypes.indices ~= tag.offset else { return }
-            withAnimation {
-                shownTypes.remove(at: tag.offset)
-                hiddenTypes.append(tag.element)
-            }
+            guard let index = shownTypes.firstIndex(of: type) else { return }
+            shownTypes.remove(at: index)
+            hiddenTypes.append(type)
         }
     }
-    
-    func hiddenTagTapped(_ tag: DTTag) {
+
+    func hiddenTagTapped(_ type: DTType) {
         Task { @MainActor in
-            guard hiddenTypes.indices ~= tag.offset else { return }
-            withAnimation {
-                hiddenTypes.remove(at: tag.offset)
-                shownTypes.append(tag.element)
-            }
+            guard let index = hiddenTypes.firstIndex(of: type) else { return }
+            hiddenTypes.remove(at: index)
+            shownTypes.append(type)
         }
     }
-    
-    func onDrop(provider: NSItemProvider?, to: Int) -> Bool {
-        
-        provider?.loadObject(ofClass: NSString.self) { reading, error in
-        
-            guard let reading = reading as? String else { return }
-            guard let obj = reading.toObject(DTIndex.self) else { return }
-            
-            Task { @MainActor in
-                withAnimation(.easeInOut) {
-                    let isShown = obj.isShown, from = obj.index
-                    
-                    if isShown {
-                        self.shownTypes.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? (to + 1): to)
-                    } else {
-                        let type = self.hiddenTypes[from]
-                        self.shownTypes.insert(type, at: to)
-                        self.hiddenTypes.remove(at: from)
-                    }
+
+    func onDrop(provider: NSItemProvider?, type: DTType) -> Bool {
+
+        provider?.loadObject(ofClass: NSString.self) { [weak self] reading, error in
+
+            guard let typeRawValue = reading as? String else { return }
+
+            Task { @MainActor [weak self] in
+
+                guard let self else { return }
+                guard let to = shownTypes.firstIndex(of: type) else { return }
+
+                if let from = shownTypes.firstIndex(where: { typeRawValue == $0.rawValue }) {
+                    shownTypes.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? (to + 1): to)
                 }
+                else if let from = hiddenTypes.firstIndex(where: { typeRawValue == $0.rawValue }) {
+                    let type = hiddenTypes[from]
+                    shownTypes.insert(type, at: to)
+                    hiddenTypes.remove(at: from)
+                }
+
             }
         }
-        
         return false
     }
-    
-    func onDrag(_ index: Int) -> NSItemProvider {
-        NSItemProvider(object: #"{"isShown":true,"index":\#(index)}"# as NSString)
+
+    func onDrag(_ type: DTType) -> NSItemProvider {
+        return NSItemProvider(object: type.rawValue as NSString)
     }
-    
 
 }

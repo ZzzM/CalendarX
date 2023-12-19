@@ -7,24 +7,28 @@
 
 import SwiftUI
 import WrappingHStack
-
+import CalendarXShared
 
 struct DateView: View {
     
-    let day: CalDay
-    
+    let appDate: AppDate
+
     private var showEvents: Bool { CalendarPreference.shared.showEvents }
     
     var body: some View {
         VStack(spacing: 10) {
             TitleView {
-                Text(day.date, style: .date)
-            } actions: {
-                ScacleImageButton(image: .close, action: Router.backMain)
+                Text(appDate.date, style: .date)
+            } leftItems: {
+                ScacleImageButton(image: .backward, action: Router.backMain)
+            } rightItems: {
+                EmptyView()
             }
-            Text(day.lunarDate).font(.footnote).foregroundColor(.accentColor)
-            FestivalsView(festivals: day.festivals)
-            EventsView(events: day.events, showEvents: showEvents)
+
+
+            Text(appDate.lunarDate).font(.footnote).appForeground(.accentColor)
+            FestivalsView(festivals: appDate.festivals)
+            EventsView(events: appDate.events, showEvents: showEvents)
         }
     }
     
@@ -41,6 +45,7 @@ struct FestivalsView: View {
                 ScacleTagButton(title: festival.l10nKey) {
                     NSWorkspace.searching(festival)
                 }
+                .font(.subheadline)
             }
         }
     }
@@ -50,8 +55,8 @@ struct FestivalsView: View {
 
 struct EventsView: View {
     
-    let events: [CalEvent], showEvents: Bool
-    
+    let events: [AppEvent], showEvents: Bool
+
     var body: some View {
         
         Section {
@@ -71,14 +76,14 @@ struct EventsView: View {
     }
     
     @ViewBuilder
-    func eventView(_ event: CalEvent) -> some View {
+    func eventView(_ event: AppEvent) -> some View {
 
         VStack(alignment: .leading, spacing: 5) {
               
             HStack {
                 
-                Image.clock.foregroundColor(event.color)
-                
+                Image.clock.appForeground(event.color)
+
                 if event.isAllDay {
                     Text(L10n.Date.allDay)
                 } else {
@@ -89,15 +94,15 @@ struct EventsView: View {
                 
             }
             .font(.caption2)
-            .foregroundColor(.secondary)
+            .appForeground(.appSecondary)
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text(event.title).foregroundColor(.primary)
+            Text(event.title).appForeground(.appPrimary)
 
         }
         .padding(5)
         .background(Color.card)
-        .cornerRadius(5)
+        .clipShape(.rect(cornerRadius: 5))
         .shadow(radius: 1, x: 1, y: 1)
         .padding(.horizontal, 3)
         

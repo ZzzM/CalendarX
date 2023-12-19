@@ -15,7 +15,7 @@ struct RowTitleView: View {
         Text(title)
             .font(font)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundColor(font != .none ? .primary: .secondary)
+            .appForeground(font != .none ? .appPrimary: .appSecondary)
     }
     
 }
