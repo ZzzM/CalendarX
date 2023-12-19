@@ -29,13 +29,11 @@ A lightweight macOS app for displaying calendar and time
 ## Snapshots
 - Calendar - left click to show
 
-<img src="assets/001.png" width=250> 
-<img src="assets/002.png" width=250>
+<img src="assets/001.png" width=250> <img src="assets/002.png" width=250>
 
 - Settings - right click to show
 
-<img src="assets/003.png" width=250> 
-<img src="assets/004.png" width=250> 
+<img src="assets/003.png" width=250> <img src="assets/004.png" width=250> 
 <img src="assets/005.png" width=250> 
 
 - Menubar Date&Time Style - drag and drop to edit
@@ -44,8 +42,7 @@ A lightweight macOS app for displaying calendar and time
 
 - Widget & Edit
 
-<img src="assets/007.png" width=210> 
-<img src="assets/008.png" width=250> 
+<img src="assets/007.png" width=210> <img src="assets/008.png" width=250> 
 
 ## FAQ
 
