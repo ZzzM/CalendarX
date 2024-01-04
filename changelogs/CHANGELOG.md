@@ -1,3 +1,13 @@
+## 2.3.3 - 2024-01-05
+
+### Fixed
+- macOS 14 calendar event permission issues
+- macOS 14 widget display issues
+
+### Changed
+- Transition animations
+
+---
 ## 2.3.2 - 2023-12-19
 
 ### Added
@@ -9,7 +19,7 @@
 
 ### Changed
 - Transition animations
-- Alert View
+- Alert UI
 
 ---
 ## 2.3.1 - 2023-03-09
