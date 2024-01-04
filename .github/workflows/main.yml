@@ -11,6 +11,7 @@ env:
   PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
   BARK_KEY: ${{ secrets.BARK_KEY }}
   BARK_HOST: ${{ secrets.BARK_HOST }}
+  BARK_ICON: https://raw.githubusercontent.com/ZzzM/CalendarX/master/CalendarX/Assets.xcassets/AppIcon.appiconset/icon_128x128.png
 
 jobs:
 
@@ -57,6 +58,6 @@ jobs:
         host: ${{ env.BARK_HOST }}
         title: ${{ env.APP_NAME }} - ${{ env.APP_VERSION }}
         body: ${{ job.status }}
-        icon: https://raw.githubusercontent.com/ZzzM/AA/main/KAI/Assets.xcassets/AppIcon.appiconset/icon_128x128.png
+        icon: ${{ env.BARK_ICON }}
         sound: alarm
         isArchive: 1
