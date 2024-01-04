@@ -1,8 +1,16 @@
 ## 2.3.3 - 2024-01-05
 
+### Added
+- Calendar View can be changed by keyboard shortcuts
+    - ⬅️: Last month
+    - ➡️: Next month
+    - ⬆️: Last year
+    - ⬇️: Next year
+    - Space: Today
+    
 ### Fixed
-- macOS 14 calendar event permission issues
-- macOS 14 widget display issues
+- **macOS 14** calendar event permission issues
+- **macOS** 14 widget display issues
 
 ### Changed
 - Transition animations
@@ -19,7 +27,7 @@
 
 ### Changed
 - Transition animations
-- Alert UI
+- Alert View
 
 ---
 ## 2.3.1 - 2023-03-09

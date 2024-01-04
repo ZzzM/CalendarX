@@ -16,7 +16,7 @@ A lightweight macOS app for displaying calendar and time
 - [x] Custom menubar styles (default, text, date & time）
 - [x] Dark mode
 - [x] Localization (简体中文、English)
-- [x] Widget
+- [x] Widget / KeyboardShortcut
 - [x] SwiftUI / Async / Await
 
 ## Compatibility
@@ -30,6 +30,7 @@ A lightweight macOS app for displaying calendar and time
 - Calendar - left click to show
 
 <img src="assets/001.png" width=250> <img src="assets/002.png" width=250>
+
 
 - Settings - right click to show
 
