@@ -20,7 +20,7 @@ struct SettingsView: View {
 
             TitleView {
                 Text( L10n.Settings.title).onTapGesture {
-                    Router.backMain()
+                    Router.back()
                 }
             } leftItems: {
                 EmptyView()

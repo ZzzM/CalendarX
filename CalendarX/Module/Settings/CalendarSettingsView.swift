@@ -21,7 +21,7 @@ struct CalendarSettingsView: View {
             TitleView {
                 Text(L10n.Settings.calendar)
             } leftItems: {
-                ScacleImageButton(image: .backward, action: Router.backSettings)
+                ScacleImageButton(image: .backward, action: Router.back)
             } rightItems: {
                 EmptyView()
             }

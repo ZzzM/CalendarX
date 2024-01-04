@@ -6,3 +6,4 @@
   
 */
 "NSCalendarsUsageDescription" = "用于显示日历事件";
+"NSCalendarsFullAccessUsageDescription" = "用于显示日历事件";

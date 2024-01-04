@@ -7,29 +7,40 @@
 
 import Foundation
 
-public extension Bundle {
-    func json2KeyValue<T: Decodable>(from resource: String) -> [String: T] {
-        guard let url = url(forResource: resource, withExtension: "json"),
+protocol JSONDecodable {
+    associatedtype Response: Decodable
+    static var empty: Response { get }
+}
+
+extension JSONDecodable {
+    static func toObject(from resource: String) -> Response {
+        guard let url = Bundle.module.url(forResource: resource, withExtension: "json"),
               let data = try? Data(contentsOf: url),
-              let dict = try? JSONDecoder().decode([String: T].self, from: data) else {
-            return [:]
-        }
-        return dict
-    }
-    func json2Object<T: Decodable>(from resource: String) -> T? {
-        guard let url = url(forResource: resource, withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let object = try? JSONDecoder().decode(T.self, from: data) else {
-            return .none
+              let object = try? JSONDecoder().decode(Response.self, from: data) else {
+            return empty
         }
         return object
     }
-    
-    func json2Festival(from resource: String) -> [String: String] {
-        json2KeyValue(from: resource)
-    }
-    func json2AllFestivals(from resource: String) -> [String: [String]] {
-        json2KeyValue(from: resource)
-    }
-
 }
+
+public struct PatternA: JSONDecodable {
+    public typealias Response = [AppInfo]
+    static var empty: Response { [] }
+}
+
+struct PatternB: JSONDecodable {
+    typealias Response = [String: [String: AppDateState]]
+    static var empty: Response { [:] }
+}
+
+struct PatternC: JSONDecodable {
+    typealias Response = [String: [String]]
+    static var empty: Response { [:] }
+}
+
+struct PatternD: JSONDecodable {
+    typealias Response = [String: String]
+    static var empty: Response { [:] }
+}
+
+

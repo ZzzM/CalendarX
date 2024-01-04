@@ -19,7 +19,7 @@ struct AppearanceSettingsView: View {
             TitleView {
                 Text(L10n.Settings.appearance)
             } leftItems: {
-                ScacleImageButton(image: .backward, action: Router.backSettings)
+                ScacleImageButton(image: .backward, action: Router.back)
             } rightItems: {
                 EmptyView()
             }

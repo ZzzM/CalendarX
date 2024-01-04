@@ -55,7 +55,15 @@ class MainViewModel: ObservableObject {
     func nextMonth() {
         date.nextMonth()
     }
-    
+
+    func lastYear() {
+        date.lastYear()
+    }
+
+    func nextYear() {
+        date.nextYear()
+    }
+
     func reset() {
         date = Date()
     }

@@ -22,12 +22,17 @@ struct RootView: View {
     @StateObject
     private var settingsVM = SettingsViewModel()
     
-
     var body: some View {
 
         ZStack {
             Color.appBackground.padding(.top, -15)
-            content.padding()
+
+            Group {
+                rootView
+                detailView
+            }
+            .padding()
+
             AlertView(alert: alert).zIndex(1)
         }
         .appForeground(.appPrimary)
@@ -39,16 +44,25 @@ struct RootView: View {
     }
 
     @ViewBuilder
-    private var content: some View {
+    private var rootView: some View {
+        if router.isCalendar {
+            MainView(viewModel: mainVM)
+        } else {
+            SettingsView(viewModel: settingsVM)
+        }
+    }
+
+
+    @ViewBuilder
+    private var detailView: some View {
         switch router.path {
-        case .main: MainView(viewModel: mainVM)
-        case .settings: SettingsView(viewModel: settingsVM)
         case .date(let appDate): DateView(appDate: appDate).fullScreenCover()
         case .recommendations: RecommendationsView().fullScreenCover()
         case .menubarSettings: MenubarSettingsView().fullScreenCover()
         case .appearanceSettings: AppearanceSettingsView(viewModel: settingsVM).fullScreenCover()
         case .calendarSettings: CalendarSettingsView().fullScreenCover()
         case .about: AboutView().fullScreenCover()
+        default: EmptyView()
         }
     }
 

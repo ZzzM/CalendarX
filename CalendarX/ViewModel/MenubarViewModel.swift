@@ -64,7 +64,7 @@ class MenubarViewModel: ObservableObject {
 
         pref.style = style
 
-        Router.backSettings()
+        Router.back()
 
         NotificationCenter.default.post(name: .titleStyleDidChanged, object: .none)
     }

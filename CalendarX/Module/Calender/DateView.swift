@@ -20,7 +20,7 @@ struct DateView: View {
             TitleView {
                 Text(appDate.date, style: .date)
             } leftItems: {
-                ScacleImageButton(image: .backward, action: Router.backMain)
+                ScacleImageButton(image: .backward, action: Router.back)
             } rightItems: {
                 EmptyView()
             }

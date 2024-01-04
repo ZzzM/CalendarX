@@ -109,14 +109,6 @@ public extension String {
     
 }
 
-public extension String {
-    func toObject<T: Decodable>(_ type: T.Type) -> T? {
-        guard let data = data(using: .utf8) else { return .none }
-        return try? JSONDecoder().decode(type, from: data)
-    }
-}
-
-
 public extension Binding where Value == String {
     func max(_ limit: Int = 30) -> Self {
         if self.wrappedValue.count > limit {

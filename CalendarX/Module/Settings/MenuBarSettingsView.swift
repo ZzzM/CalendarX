@@ -22,7 +22,7 @@ struct MenubarSettingsView: View {
             TitleView {
                 Text(L10n.Settings.menubarStyle)
             } leftItems: {
-                ScacleImageButton(image: .backward, action: Router.backSettings)
+                ScacleImageButton(image: .backward, action: Router.back)
             } rightItems: {
                 if viewModel.canSave {
                     ScacleImageButton(image: .save, action: viewModel.save)

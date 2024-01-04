@@ -24,28 +24,39 @@ struct LargeWidgetView: View {
     }
 
     var body: some View {
+
+        if #available(macOS 14.0, *) {
+            content
+                .containerBackground(for: .widget) { Color.appBackground }
+        } else {
+            ZStack {
+                Color.appBackground
+                content.padding()
+            }
+        }
+
+    }
+
+    var content: some View {
+
         let dates = CalendarHelper.makeDates(firstWeekday: entry.firstWeekday, date: date)
         let columns = CalendarHelper.columns
         let spacing = CalendarHelper.spacing(from: dates.count)
 
-        ZStack{
-            Color.appBackground
-            LazyVGrid(columns: columns, spacing: spacing) {
-                Section {
-                    ForEach(0..<min(Solar.daysInWeek, dates.count), id: \.self) {
-                        weekView(dates[$0].date)
-                    }
-                    ForEach(dates, id: \.id) { appDate in
-                        dayView(appDate: appDate)
-                    }
-                } header: {
-                    header
+        return LazyVGrid(columns: columns, spacing: spacing) {
+            Section {
+                ForEach(0..<min(Solar.daysInWeek, dates.count), id: \.self) {
+                    weekView(dates[$0].date)
                 }
+                ForEach(dates, id: \.id) { appDate in
+                    dayView(appDate: appDate)
+                }
+            } header: {
+                header
             }
-            .padding()
         }
-
     }
+
 
     @ViewBuilder
     func weekView(_ date: Date) -> some View {
@@ -111,4 +122,5 @@ struct LargeWidgetView: View {
         }
     }
 }
+
 

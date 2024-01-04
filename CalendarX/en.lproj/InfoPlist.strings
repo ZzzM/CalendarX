@@ -6,3 +6,5 @@
   
 */
 "NSCalendarsUsageDescription" = "Used to display calendar events";
+"NSCalendarsFullAccessUsageDescription" = "Used to display calendar events";
+

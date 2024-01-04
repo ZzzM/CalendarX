@@ -84,6 +84,14 @@ public extension Date {
         added(component: .month, value: 1)
     }
 
+    mutating func lastYear() {
+        added(component: .year, value: -1)
+    }
+
+    mutating func nextYear() {
+        added(component: .year, value: 1)
+    }
+
     var startOfTomorrow: Date {
         let startOfDay = Calendar.gregorian.startOfDay(for: self)
         return Calendar.gregorian.date(byAdding: .day, value: 1, to: startOfDay) ?? self

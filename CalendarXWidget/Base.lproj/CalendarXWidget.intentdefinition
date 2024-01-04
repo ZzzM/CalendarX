@@ -302,7 +302,7 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>DrmhqH</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>22G436</string>
+	<string>23C71</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
 	<string>15C65</string>
 	<key>INIntentDefinitionToolsVersion</key>
@@ -575,8 +575,6 @@
 					<integer>5</integer>
 					<key>INIntentParameterMetadata</key>
 					<dict>
-						<key>INIntentParameterMetadataDefaultValue</key>
-						<true/>
 						<key>INIntentParameterMetadataFalseDisplayName</key>
 						<string>false</string>
 						<key>INIntentParameterMetadataFalseDisplayNameID</key>

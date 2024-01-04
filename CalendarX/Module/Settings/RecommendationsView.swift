@@ -19,7 +19,7 @@ struct RecommendationsView: View {
             TitleView {
                 Text(L10n.Settings.recommendations)
             } leftItems: {
-                ScacleImageButton(image: .backward, action: Router.backSettings)
+                ScacleImageButton(image: .backward, action: Router.back)
             } rightItems: {
                 EmptyView()
             }

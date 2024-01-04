@@ -48,7 +48,7 @@ extension LargeWidgetEntry {
     }
 
     var showEvents: Bool {
-        configuration.showEvents?.boolValue ?? true
+        configuration.showEvents?.boolValue ?? false
     }
 
     var showHolidays: Bool {

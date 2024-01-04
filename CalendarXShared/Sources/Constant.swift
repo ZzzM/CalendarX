@@ -22,16 +22,16 @@ public extension CGFloat {
 }
 
 extension Bundle {
-    public static let apps: [AppInfo] = module.json2Object(from: "apps") ?? []
-    static let tiaoxiu: [String: [String: AppDateState]] = module.json2KeyValue(from: "tiaoxiu")
-    static let solarAF = module.json2AllFestivals(from: "solarAF") // Contains solarPF
-    static let weekAF = module.json2AllFestivals(from: "weekAF")
-    static let weekSF = module.json2Festival(from: "weekSF")
-    static let solarPF = module.json2Festival(from: "solarPF")
-    static let weekPF = module.json2Festival(from: "weekPF")
-    static let lunarPF = module.json2Festival(from: "lunarPF")
-    static let chuxi = module.json2Festival(from: "chuxi")
-    static let terms = module.json2AllFestivals(from: "terms")
+    public static let apps = PatternA.toObject(from: "apps")
+    static let tiaoxiu = PatternB.toObject(from: "tiaoxiu")  // [String: [String: AppDateState]] = module.json2KeyValue(from: "tiaoxiu")
+    static let solarAF = PatternC.toObject(from: "solarAF") // module.json2AllFestivals(from: "solarAF") // Contains solarPF
+    static let weekAF = PatternC.toObject(from: "weekAF") // module.json2AllFestivals(from: "weekAF")
+    static let weekSF = PatternD.toObject(from: "weekSF")  //module.json2Festival(from: "weekSF")
+    static let solarPF = PatternD.toObject(from: "solarPF")  //module.json2Festival(from: "solarPF")
+    static let weekPF = PatternD.toObject(from: "weekPF")  // module.json2Festival(from: "weekPF")
+    static let lunarPF = PatternD.toObject(from: "lunarPF") //module.json2Festival(from: "lunarPF")
+    static let chuxi = PatternD.toObject(from: "chuxi")  //module.json2Festival(from: "chuxi")
+    static let terms = PatternC.toObject(from: "terms")  //module.json2AllFestivals(from: "terms")
 }
 
 public extension UserDefaults {

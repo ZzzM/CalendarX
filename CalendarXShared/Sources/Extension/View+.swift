@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import WidgetKit
 
 public extension View {
 
@@ -18,9 +18,8 @@ public extension View {
             foregroundColor(color)
         }
     }
+    
 }
-
-
 
 struct TintModifier: ViewModifier {
     
