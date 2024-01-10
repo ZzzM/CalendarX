@@ -89,15 +89,17 @@ extension MenubarItemController {
 extension MenubarItemController {
     private var icon: NSImage? { style == .default ? calendarIcon : .none }
     private var title: NSAttributedString {
-        var attributes: [NSAttributedString.Key : Any] = [.font: NSFont.statusItem], title = ""
-        if style == .default {
-            attributes[.baselineOffset] = -1
-            attributes[.font] = NSFont.statusIcon
-            title = Date().day.description
-        }  else if style == .text {
-            title = pref.text
+
+        let title = switch style {
+        case .default: Date().day.description
+        case .text: pref.text
+        case .date: pref.dateItemTitle
+        }
+        
+        let attributes: [NSAttributedString.Key : Any] = if style == .default {
+            [.font: NSFont.statusIcon, .baselineOffset: -1]
         } else {
-            title = pref.dateItemTitle
+            [.font: NSFont.statusItem]
         }
         return NSAttributedString(string:  title, attributes: attributes)
     }

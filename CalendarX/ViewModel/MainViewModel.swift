@@ -29,8 +29,10 @@ class MainViewModel: ObservableObject {
     
     var showHolidays: Bool { calendarPref.showHolidays }
     
+    var keyboardShortcut: Bool { calendarPref.keyboardShortcut }
+
     var colorScheme: ColorScheme? { pref.colorScheme }
-    
+
     var tint: Color { pref.color }
 
     init() {
@@ -43,9 +45,9 @@ class MainViewModel: ObservableObject {
             .assign(to: &$interval)
         NotificationCenter.default
             .publisher(for: .NSCalendarDayChanged)
-            .map { _ in Date().timeIntervalSince1970 }
+            .map { _ in Date() }
             .receive(on: DispatchQueue.main)
-            .assign(to: &$interval)
+            .assign(to: &$date)
     }
     
     func lastMonth() {

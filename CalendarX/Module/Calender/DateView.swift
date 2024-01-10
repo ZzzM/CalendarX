@@ -30,6 +30,7 @@ struct DateView: View {
             FestivalsView(festivals: appDate.festivals)
             EventsView(events: appDate.events, showEvents: showEvents)
         }
+        .padding()
     }
     
     

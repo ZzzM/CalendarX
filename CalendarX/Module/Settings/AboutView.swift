@@ -60,5 +60,7 @@ struct AboutView: View {
 
         }
         .frame(height: .mainHeight, alignment: .top)
+        .padding()
+
     }
 }

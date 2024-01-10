@@ -31,7 +31,11 @@ struct ScacleImageButton: View {
     }
     
     var body: some View {
-        ScacleButton(action: action, label: { image.font(.title3).appForeground(color) })
+        ScacleButton(action: action) {
+            image
+                .font(.title3)
+                .appForeground(color)
+        }
     }
 }
 

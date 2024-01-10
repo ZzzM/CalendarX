@@ -94,8 +94,7 @@ extension MenubarController {
     
     private func showPopover(_ sender: Any?) {
         guard let event = NSApp.currentEvent else { return }
-
-        Router.to(event.isRightClicked)
+        Router.set(event.isRightClicked ? .settings: .calendar)
         popover.show(sender)
         monitor.start()
     }

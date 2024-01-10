@@ -11,7 +11,6 @@ import CalendarXShared
 
 class SettingsViewModel: ObservableObject {
     
-    
     private let pref = Preference.shared
     
     private var cancellables: Set<AnyCancellable> = []
@@ -74,13 +73,7 @@ class SettingsViewModel: ObservableObject {
             .store(in: &cancellables)
      
     }
-
-    func exit() {
-       AlertAction.exit()
-        //NSApp.terminate(.none)
-    }
     
-    func openPreference() { }
 }
 
 extension SettingsViewModel {
@@ -89,7 +82,7 @@ extension SettingsViewModel {
 
     func setNotificationStatut(_ value: Bool) {
         if Updater.isDenied {
-            AlertAction.enableNotifications()
+            AlertViewModel.enableNotifications()
         } else if Updater.isNotDetermined {
             Task { @MainActor in
                 automaticallyChecksForUpdates = await Updater.requestAuthorization()

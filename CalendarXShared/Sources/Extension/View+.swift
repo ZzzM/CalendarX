@@ -55,7 +55,7 @@ struct HoverModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .scaleEffect(hovered ? 1.2 : 1.0)
+            .scaleEffect(hovered ? 1.01 : 1.0)
             .animation(.default, value: hovered)
             .onHover { isHovered in
                 hovered = isHovered

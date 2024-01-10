@@ -7,7 +7,6 @@
 
 import Sparkle
 import UserNotifications
-import Cocoa
 import CalendarXShared
 
 class Updater: NSObject {

@@ -153,3 +153,13 @@ public extension Date {
         Calendar.chinese.dateComponents([.year, .month, .day], from: self).isLeapMonth ?? false
     }
 }
+
+extension Date: RawRepresentable {
+    public var rawValue: String {
+        self.timeIntervalSinceReferenceDate.description
+    }
+
+    public init?(rawValue: String) {
+        self = Date(timeIntervalSinceReferenceDate: Double(rawValue) ?? 0.0)
+    }
+}

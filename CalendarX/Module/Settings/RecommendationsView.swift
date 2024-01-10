@@ -24,18 +24,17 @@ struct RecommendationsView: View {
                 EmptyView()
             }
 
-            
             ScrollView {
-                
                 ForEach(apps) { app in
-                    AppView(app: app)
+                  AppView(app: app)
                 }
-                
             }
             
         }
-        
+        .padding()
+
     }
+
 }
 
 struct AppView: View {
@@ -43,32 +42,37 @@ struct AppView: View {
     let app: AppInfo
 
     var body: some View {
-        HStack {
-            Image(app.name).resizable().sideLength(60)
             VStack(alignment: .leading, spacing: 5) {
-                HStack {
-                    Text(app.name)
-                    Spacer()
-                    ScacleButton {
-                        NSWorkspace.open(app.link)
-                    } label: {
-                        Image.gitHub.sideLength(15)
-                            .appForeground(.appSecondary)
-                    }
-                    .hoverEffect
+                header
+                Text(app.about)
+                    .font(.callout)
+                    .padding(2)
+            }
+            .padding(5)
+            .background(Color.card)
+            .clipShape(.rect(cornerRadius: 5))
+            .shadow(radius: 1, x: 1, y: 1)
+            .padding(.horizontal, 3)
+            .hoverEffect
+            .onTapGesture {
+                NSWorkspace.open(app.link)
+            }
+    }
 
-                }
-                Text(app.about).font(.caption2).appForeground(.appSecondary).lineLimit(2)
+    var header: some View {
+        HStack(spacing: 5) {
+            Image(app.name).resizable().sideLength(.buttonWidth)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(app.name).bold()
+                Text(app.link)
+                    .font(.caption2)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .appForeground(.secondary)
             }
         }
-        .padding(5)
-        .background(Color.card)
-        .clipShape(.rect(cornerRadius: 5))
-        .shadow(radius: 1, x: 1, y: 1)
-        .padding(.horizontal, 3)
-    
-        
-        
+
     }
 }
 

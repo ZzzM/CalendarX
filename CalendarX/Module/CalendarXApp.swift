@@ -31,7 +31,7 @@ struct CalendarXApp: App {
 
 class CalendarXDelegate: NSObject & NSApplicationDelegate {
 
-    lazy var rootView = RootView()
+    lazy var rootView = CalendarXView()
     lazy var popover = MenubarPopover(rootView)
     lazy var controller =  MenubarController(popover)
 
@@ -43,7 +43,7 @@ class CalendarXDelegate: NSObject & NSApplicationDelegate {
             .forEach { $0.terminate() }
         
     }
-    
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         _ = controller
     }

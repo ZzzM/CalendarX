@@ -22,16 +22,16 @@ public extension CGFloat {
 }
 
 extension Bundle {
-    public static let apps = PatternA.toObject(from: "apps")
-    static let tiaoxiu = PatternB.toObject(from: "tiaoxiu")  // [String: [String: AppDateState]] = module.json2KeyValue(from: "tiaoxiu")
-    static let solarAF = PatternC.toObject(from: "solarAF") // module.json2AllFestivals(from: "solarAF") // Contains solarPF
-    static let weekAF = PatternC.toObject(from: "weekAF") // module.json2AllFestivals(from: "weekAF")
-    static let weekSF = PatternD.toObject(from: "weekSF")  //module.json2Festival(from: "weekSF")
-    static let solarPF = PatternD.toObject(from: "solarPF")  //module.json2Festival(from: "solarPF")
-    static let weekPF = PatternD.toObject(from: "weekPF")  // module.json2Festival(from: "weekPF")
-    static let lunarPF = PatternD.toObject(from: "lunarPF") //module.json2Festival(from: "lunarPF")
-    static let chuxi = PatternD.toObject(from: "chuxi")  //module.json2Festival(from: "chuxi")
-    static let terms = PatternC.toObject(from: "terms")  //module.json2AllFestivals(from: "terms")
+    public static let apps = PatternA.json2Object(from: "apps")
+    static let tiaoxiu = PatternB.json2Object(from: "tiaoxiu")  // [String: [String: AppDateState]] = module.json2KeyValue(from: "tiaoxiu")
+    static let solarAF = PatternC.json2Object(from: "solarAF") // module.json2AllFestivals(from: "solarAF") // Contains solarPF
+    static let weekAF = PatternC.json2Object(from: "weekAF") // module.json2AllFestivals(from: "weekAF")
+    static let weekSF = PatternD.json2Object(from: "weekSF")  //module.json2Festival(from: "weekSF")
+    static let solarPF = PatternD.json2Object(from: "solarPF")  //module.json2Festival(from: "solarPF")
+    static let weekPF = PatternD.json2Object(from: "weekPF")  // module.json2Festival(from: "weekPF")
+    static let lunarPF = PatternD.json2Object(from: "lunarPF") //module.json2Festival(from: "lunarPF")
+    static let chuxi = PatternD.json2Object(from: "chuxi")  //module.json2Festival(from: "chuxi")
+    static let terms = PatternC.json2Object(from: "terms")  //module.json2AllFestivals(from: "terms")
 }
 
 public extension UserDefaults {
@@ -60,6 +60,7 @@ public enum CalendarStorageKey {
     public static let showEvents = generate("showEvents")
     public static let showLunar = generate("showLunar")
     public static let showHolidays = generate("showHolidays")
+    public static let keyboardShortcut = generate("keyboardShortcut")
     private static func generate(_ key: String) -> String { "\(AppBundle.name).calendar.\(key)" }
 }
 
@@ -72,8 +73,10 @@ public extension Image {
 
     static let quit = Image(systemName: "escape")
     static let backward = Image(systemName: "arrow.backward")
-    static let info = Image(systemName: "text.bubble")
+    static let text = Image(systemName: "text.bubble")
+    static let info = Image(systemName: "info.bubble")
     static let privacy = Image(systemName: "exclamationmark.shield")
+    static let tips = Image(systemName: "info.circle")
     static let clock = Image(systemName: "clock.fill")
     static let leftArrow = Image(systemName: "chevron.left")
     static let rightArrow = Image(systemName: "chevron.right")
@@ -81,7 +84,6 @@ public extension Image {
     static let recommend = Image(systemName: "hand.thumbsup.fill")
     static let save = Image(systemName: "checkmark")
 
-    static let gitHub = Image("GitHub").renderingMode(.template).resizable()
     static let calendar = Image("Calendar").renderingMode(.template).resizable()
 }
 
@@ -108,7 +110,7 @@ public extension Color {
     static let appPrimary = Color(light: "555555", dark: "EEEEEE")
     static let appSecondary = Color(light: "8f8f8f", dark: "777777")
 
-    static let card = Color(light: "F6F6EE", dark: "393939")
+    static let card = Color(light: "FEF9EE", dark: "393939")
 
     static let workBackground = Color.secondary.opacity(0.16)
     static let offBackground = Color.accentColor.opacity(0.12)
@@ -118,8 +120,8 @@ public extension Color {
 
 }
 
-public extension NSNotification.Name {
-    static let  titleStyleDidChanged = NSNotification.Name("titleStyleDidChanged")
+public extension Notification.Name {
+    static let  titleStyleDidChanged = Notification.Name("titleStyleDidChanged")
 }
 
 

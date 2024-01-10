@@ -25,7 +25,7 @@ struct SettingsView: View {
             } leftItems: {
                 EmptyView()
             } rightItems: {
-                ScacleImageButton(image: .quit, action: viewModel.exit)
+                ScacleImageButton(image: .quit, action: AlertViewModel.exit)
             }
 
             Section {
@@ -42,6 +42,7 @@ struct SettingsView: View {
             
         }
         .frame(height: .mainHeight, alignment: .top)
+        .padding()
 
     }
 
@@ -78,7 +79,10 @@ extension SettingsView {
     @ViewBuilder
     var autoRow: some View {
         
-        let isOn = Binding(get: viewModel.getNotificationStatut, set:  viewModel.setNotificationStatut)
+        let isOn = Binding(
+            get: viewModel.getNotificationStatut,
+            set: viewModel.setNotificationStatut
+        )
 
         Toggle(isOn: isOn) { Text(L10n.Settings.auto).font(.title3) }
             .checkboxStyle()

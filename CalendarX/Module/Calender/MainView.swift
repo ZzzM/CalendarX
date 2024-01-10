@@ -23,7 +23,7 @@ struct MainView: View {
                      dayView: dayView)
         .equatable()
         .frame(height: .mainHeight)
-
+        .padding()
     }
     
     private func header() -> some View {
@@ -32,22 +32,27 @@ struct MainView: View {
             MonthYearPicker(date: $viewModel.date, colorScheme: viewModel.colorScheme, tint: viewModel.tint)
 
             Spacer()
-            Group {
-                Button(action: viewModel.lastMonth) {}.keyboardShortcut(.leftArrow, modifiers: [])
-                Button(action: viewModel.reset) {}.keyboardShortcut(.space, modifiers: [])
-                Button(action: viewModel.nextMonth) {}.keyboardShortcut(.rightArrow, modifiers: [])
-                Button(action: viewModel.lastYear) {}.keyboardShortcut(.upArrow, modifiers: [])
-                Button(action: viewModel.nextYear) {}.keyboardShortcut(.downArrow, modifiers: [])
-            }
-            .frame(maxWidth: 1)
-            .opacity(.zero)
 
-            ScacleImageButton(image: .leftArrow, action: viewModel.lastMonth)
-                .frame(width: .buttonWidth)
-            ScacleImageButton(image: .circle, action: viewModel.reset)
-                .frame(width: .buttonWidth)
-            ScacleImageButton(image: .rightArrow, action: viewModel.nextMonth)
-                .frame(width: .buttonWidth)
+
+            if viewModel.keyboardShortcut {
+                Group {
+                    Button(action: viewModel.lastMonth) { }.keyboardShortcut(.leftArrow, modifiers: [])
+                    Button(action: viewModel.reset) {}.keyboardShortcut(.space, modifiers: [])
+                    Button(action: viewModel.nextMonth) {}.keyboardShortcut(.rightArrow, modifiers: [])
+                    Button(action: viewModel.lastYear) {}.keyboardShortcut(.upArrow, modifiers: [])
+                    Button(action: viewModel.nextYear) {}.keyboardShortcut(.downArrow, modifiers: [])
+                }
+                .buttonStyle(.borderless)
+            }
+
+
+            Group {
+                ScacleImageButton(image: .leftArrow, action: viewModel.lastMonth)
+                ScacleImageButton(image: .circle, action: viewModel.reset)
+                ScacleImageButton(image: .rightArrow, action: viewModel.nextMonth)
+            }
+            .frame(width: .buttonWidth)
+
 
         }
         

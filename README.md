@@ -16,7 +16,7 @@ A lightweight macOS app for displaying calendar and time
 - [x] Custom menubar styles (default, text, date & time）
 - [x] Dark mode
 - [x] Localization (简体中文、English)
-- [x] Widget / KeyboardShortcut
+- [x] Widget / Interactive Widget / KeyboardShortcut
 - [x] SwiftUI / Async / Await
 
 ## Compatibility
@@ -27,23 +27,44 @@ A lightweight macOS app for displaying calendar and time
 - [English](changelogs/CHANGELOG.md)
 
 ## Snapshots
-- Calendar - left click to show
+- Calendar 
+    
+    Left click the menubar item to open it
 
-<img src="assets/001.png" width=250> <img src="assets/002.png" width=250>
+    <img src="assets/001.png" width=250> <img src="assets/002.png" width=250>
+
+    
+
+- Settings
+
+    Right click the menubar item to open it
+    
+
+    <img src="assets/003.png" width=250> <img src="assets/004.png" width=250> 
+
+- Menubar Style 
+
+    Drag and drop to edit `Date & Time Style`
+
+    <img src="assets/006.png" width=250> 
+
+- Widget
+
+    <img src="assets/008.png" width=250> <img src="assets/009.png" width=250> 
+    
+- Interactive Widget ( **macOS 14.0 +** )
+
+    `<`: Last month
+    
+    `Month & Year`: Today
+    
+    `>`: Next month
+
+    <img src="assets/007.png" width=250>
+    
 
 
-- Settings - right click to show
 
-<img src="assets/003.png" width=250> <img src="assets/004.png" width=250> 
-<img src="assets/005.png" width=250> 
-
-- Menubar Date&Time Style - drag and drop to edit
-
-<img src="assets/006.png" width=250> 
-
-- Widget & Edit
-
-<img src="assets/007.png" width=210> <img src="assets/008.png" width=250> 
 
 ## FAQ
 

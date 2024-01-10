@@ -21,6 +21,7 @@
 "calendar.showHolidays" = "显示中国法定假日";
 "calendar.showEvents" = "显示日历事件";
 "calendar.startWeekOn" = "星期开始于";
+"calendar.keyboardShortcut" = "键盘快捷键";
 
 "appearance.tint" = "色彩";
 "appearance.hex" = "颜色十六进制编码";
@@ -31,6 +32,7 @@
 "alert.exitMessage" = "您确定要退出吗？";
 "alert.notificationsMessage" = "允许通知用以开启自动检查更新";
 "alert.calendarsMessage" = "允许访问日历以显示日历事件";
+"alert.keyboardShortcutMessage" = "使用键盘快捷键来控制日历： \n\n⬅️：上一月   ➡️：下一月\n⬆️：上一年   ⬇️：下一年\n空格：今天";
 "alert.no" = "否";
 "alert.yes" = "是";
 "alert.ok" = "好的";

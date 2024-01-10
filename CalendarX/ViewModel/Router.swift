@@ -12,6 +12,10 @@ class Router: ObservableObject {
 
     static let shared = Router()
 
+    enum Root {
+        case calendar, settings, unknown
+    }
+
     enum Path {
         case date(AppDate), recommendations, menubarSettings, appearanceSettings, calendarSettings, about, unknown
     }
@@ -20,7 +24,7 @@ class Router: ObservableObject {
     var path = Path.unknown
 
     @Published
-    var isCalendar = true
+    var root = Root.unknown
 
     private static func to(_ path: Path, animated: Bool = true) {
         if animated {
@@ -30,9 +34,9 @@ class Router: ObservableObject {
         }
     }
 
-    static func to(_ isRightClicked: Bool) {
+    static func set(_ root: Root) {
         to(.unknown, animated: false)
-        shared.isCalendar = !isRightClicked
+        shared.root = root
     }
 
     static func back() {
@@ -41,14 +45,9 @@ class Router: ObservableObject {
 }
 
 extension Router {
-
-
-
-    static func toDate(_ appDate: AppDate) { to(.date(appDate)) }
-}
-
-extension Router {
     
+    static func toDate(_ appDate: AppDate) { to(.date(appDate)) }
+
     static func toRecommendations() { to(.recommendations) }
 
     static func toMenubarSettings() { to(.menubarSettings) }

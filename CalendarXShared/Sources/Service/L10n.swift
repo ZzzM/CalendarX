@@ -37,6 +37,7 @@ public struct L10n {
         public static let startWeekOn = "calendar.startWeekOn".l10nKey
         public static let showLunar = "calendar.showLunar".l10nKey
         public static let showHolidays = "calendar.showHolidays".l10nKey
+        public static let keyboardShortcut = "calendar.keyboardShortcut".l10nKey
     }
 
     public enum Appearance {
@@ -52,6 +53,7 @@ public struct L10n {
         public static let exitMessage = "alert.exitMessage".l10nKey
         public static let notificationsMessage = "alert.notificationsMessage".l10nKey
         public static let calendarsMessage = "alert.calendarsMessage".l10nKey
+        public static let keyboardShortcutMessage = "alert.keyboardShortcutMessage".l10nKey
 
         public static let ok = "alert.ok".l10nKey
         public static let yes = "alert.yes".l10nKey

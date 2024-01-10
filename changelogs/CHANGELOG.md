@@ -1,7 +1,25 @@
+## 2.3.4 - 2024-01-10
+
+### Added
+- Interactive Widget ( **macOS 14.0 +** )
+    - `<`: Last month
+    - `>`: Next month
+    - `Month & Year`: Today
+
+- Keyboard shortcut-enabled toggle
+
+### Fixed
+- Display issues on secondary level view
+- Calendar view display is not synchronized with the date
+
+### Changed
+- Recommendations
+
+---
 ## 2.3.3 - 2024-01-05
 
 ### Added
-- Calendar View can be changed by keyboard shortcuts
+- Calendar view can be changed by keyboard shortcuts
     - ⬅️: Last month
     - ➡️: Next month
     - ⬆️: Last year

@@ -29,15 +29,22 @@ class CalendarViewModel: ObservableObject {
     }
     
     @Published
+    var keyboardShortcut = CalendarPreference.shared.keyboardShortcut {
+        didSet { pref.keyboardShortcut = keyboardShortcut }
+    }
+    
+    @Published
     private var showEvents = CalendarPreference.shared.showEvents {
         didSet { pref.showEvents = showEvents }
     }
-    
+
+
+
     func getEventStatut() -> Bool { showEvents }
 
     func setEventStatut(_ value: Bool) {
         if EventHelper.isDenied {
-            AlertAction.enableCalendars()
+            AlertViewModel.enableCalendars()
         } else if EventHelper.isNotDetermined {
             Task { @MainActor in
                 showEvents = await EventHelper.requestAccess()

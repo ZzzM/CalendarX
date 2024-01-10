@@ -24,7 +24,9 @@ struct CalendarPreference  {
     
     @AppStorage(CalendarStorageKey.showHolidays, store: .group)
     var showHolidays: Bool = true
-    
+
+    @AppStorage(CalendarStorageKey.keyboardShortcut, store: .group)
+    var keyboardShortcut: Bool = true
 }
 
 extension CalendarPreference {

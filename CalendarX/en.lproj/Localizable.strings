@@ -21,6 +21,7 @@
 "calendar.showHolidays" = "Show Chinese statutory holidays";
 "calendar.showEvents" = "Show calendar events";
 "calendar.startWeekOn" = "Start week on";
+"calendar.keyboardShortcut" = "Keyboard Shortcut";
 
 "appearance.tint" = "Tint";
 "appearance.hex" = "Color hex code";
@@ -31,6 +32,8 @@
 "alert.exitMessage" = "Are you sure you want to exit？";
 "alert.notificationsMessage" = "Allow notifications to enable automatic update checks.";
 "alert.calendarsMessage" = "Allow access to calendars for displaying calendar events.";
+"alert.keyboardShortcutMessage" = "Using keyboard shortcut to control the calendar: \n\n⬅️: Last month   ➡️: Next month\n⬆️: Last year   ⬇️: Next year\nSpace: Today";
+
 "alert.no" = "No";
 "alert.yes" = "Yes";
 "alert.ok" = "OK";

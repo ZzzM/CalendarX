@@ -13,7 +13,7 @@ struct CalendarSettingsView: View {
     
     @StateObject
     private var viewModel = CalendarViewModel()
-    
+
     var body: some View {
         VStack(spacing: 20) {
 
@@ -26,17 +26,18 @@ struct CalendarSettingsView: View {
                 EmptyView()
             }
 
-
-            
             Section {
                 weekRow
                 eventsRow
                 lunarRow
                 holidaysRow
+                keyboardShortcutRow
             }
             
         }
         .frame(maxHeight: .infinity, alignment: .top)
+        .padding()
+
     }
 }
 
@@ -50,7 +51,10 @@ extension CalendarSettingsView {
     
     @ViewBuilder
     private var eventsRow: some View {
-        let isOn = Binding(get: viewModel.getEventStatut, set: viewModel.setEventStatut)
+        let isOn = Binding(
+            get: viewModel.getEventStatut,
+            set: viewModel.setEventStatut
+        )
         Toggle(isOn: isOn) { Text(L10n.Calendar.showEvents).font(.title3) }
             .checkboxStyle()
         
@@ -66,6 +70,15 @@ extension CalendarSettingsView {
             .checkboxStyle()
     }
     
+    private var keyboardShortcutRow: some View {
+        Toggle(isOn: $viewModel.keyboardShortcut) {
+            HStack {
+                Text(L10n.Calendar.keyboardShortcut).font(.title3)
+                ScacleImageButton(image: .tips, action:  AlertViewModel.keyboardShortcut)
+            }
+        }
+        .checkboxStyle()
+    }
 }
 
 

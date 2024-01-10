@@ -1,25 +1,21 @@
-//
-//  LargeWidgetEntry.swift
-//  CalendarXWidget
-//
-//  Created by zm on 2023/12/8.
-//
-
 import WidgetKit
 import CalendarXShared
 import SwiftUI
 
-struct LargeWidgetEntry: TimelineEntry {
-    let date: Date, configuration: LargeWidgetProvider.Intent
 
-    init(date: Date = Date(), configuration: LargeWidgetProvider.Intent = .init()) {
-        self.date = date
-        self.configuration = configuration
+extension LargeWidget {
+    struct Entry: TimelineEntry {
+        let date: Date, configuration: Provider.Intent
+
+        init(date: Date = Date(), configuration: Provider.Intent = .init()) {
+            self.date = date
+            self.configuration = configuration
+        }
     }
 }
 
-extension LargeWidgetEntry {
-    
+extension LargeWidget.Entry {
+
     private var palettes: [String] {
         ["C72C41", "F07B3F", "E0C341", "03C988", "1363DF", "876445", "7858A6"]
     }
@@ -42,7 +38,7 @@ extension LargeWidgetEntry {
     }
 }
 
-extension LargeWidgetEntry {
+extension LargeWidget.Entry {
     var showLunar: Bool {
         configuration.showLunar?.boolValue ?? true
     }

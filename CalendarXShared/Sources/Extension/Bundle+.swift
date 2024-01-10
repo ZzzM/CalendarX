@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol JSONDecodable {
+protocol Formatable {
     associatedtype Response: Decodable
     static var empty: Response { get }
 }
 
-extension JSONDecodable {
-    static func toObject(from resource: String) -> Response {
+extension Formatable {
+    static func json2Object(from resource: String) -> Response {
         guard let url = Bundle.module.url(forResource: resource, withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let object = try? JSONDecoder().decode(Response.self, from: data) else {
@@ -23,22 +23,22 @@ extension JSONDecodable {
     }
 }
 
-public struct PatternA: JSONDecodable {
+public struct PatternA: Formatable {
     public typealias Response = [AppInfo]
     static var empty: Response { [] }
 }
 
-struct PatternB: JSONDecodable {
+struct PatternB: Formatable {
     typealias Response = [String: [String: AppDateState]]
     static var empty: Response { [:] }
 }
 
-struct PatternC: JSONDecodable {
+struct PatternC: Formatable {
     typealias Response = [String: [String]]
     static var empty: Response { [:] }
 }
 
-struct PatternD: JSONDecodable {
+struct PatternD: Formatable {
     typealias Response = [String: String]
     static var empty: Response { [:] }
 }

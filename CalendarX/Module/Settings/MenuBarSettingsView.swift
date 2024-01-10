@@ -49,7 +49,8 @@ struct MenubarSettingsView: View {
             
         }
         .focusable(false)
-        
+        .padding()
+
     }
     
     

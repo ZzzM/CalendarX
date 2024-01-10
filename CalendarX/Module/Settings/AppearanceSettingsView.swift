@@ -29,7 +29,8 @@ struct AppearanceSettingsView: View {
             
         }
         .frame(maxHeight: .infinity, alignment: .top)
-        
+        .padding()
+
     }
     
 }

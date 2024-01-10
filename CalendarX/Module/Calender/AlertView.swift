@@ -11,26 +11,32 @@ import Combine
 struct AlertView: View {
 
     @ObservedObject
-    var alert: AlertAction
+    var viewModel: AlertViewModel
 
     var body: some View {
-
 
         ZStack(alignment: .bottom) {
 
             Color.black
-                .opacity(alert.isPresented ? 0.5: 0)
-                .onTapGesture(perform: alert.dismiss)
+                .opacity(viewModel.isPresented ? 0.5: 0)
+                .onTapGesture(perform: viewModel.dismiss)
 
-
-            if alert.isPresented {
+            if viewModel.isPresented {
                 VStack {
 
-                    alert.image.font(.largeTitle).appForeground(.accentColor)
-                    Text(alert.message).font(.title3).multilineTextAlignment(.center).padding(.vertical, 5)
+                    viewModel.image.font(.largeTitle).appForeground(.accentColor)
 
-                    ScacleCapsuleButton(title: alert.yes, foregroundColor: .white, backgroundColor: .accentColor, action: alert.action)
-                    ScacleCapsuleButton(title: alert.no, foregroundColor: .white, backgroundColor: .appSecondary, action: alert.dismiss)
+                    if let message = viewModel.message {
+                        Text(message).font(.title3).multilineTextAlignment(.center).padding(.vertical, 5)
+                    }
+
+                    if let yes = viewModel.yes {
+                        ScacleCapsuleButton(title: yes, foregroundColor: .white, backgroundColor: .accentColor, action: viewModel.action)
+                    }
+
+                    if let no = viewModel.no {
+                        ScacleCapsuleButton(title: no, foregroundColor: .white, backgroundColor: .appSecondary, action: viewModel.dismiss)
+                    }
 
                 }
                 .padding()
@@ -39,5 +45,6 @@ struct AlertView: View {
                 .padding()
             }
         }
+        .zIndex(1)
     }
 }
