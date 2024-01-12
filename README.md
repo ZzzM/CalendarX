@@ -76,7 +76,9 @@ A lightweight macOS app for displaying calendar and time
     
     <img src="assets/102.png" width=300> 
 
-    **Or open `Terminal` and run**
+    **Or**
+   
+   open `Terminal` and run
     
     ``` shell
     sudo xattr -r -d com.apple.quarantine /Applications/CalendarX.app
