@@ -205,6 +205,7 @@ extension CalendarView: Equatable {
     static func == (lhs: CalendarView<Day, Header, Week>, rhs: CalendarView<Day, Header, Week>) -> Bool {
         lhs.date.year == rhs.date.year &&
         lhs.date.month == rhs.date.month &&
+        lhs.date.day == rhs.date.day &&
         lhs.interval == rhs.interval
     }
 }
