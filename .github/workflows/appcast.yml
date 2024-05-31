@@ -11,14 +11,14 @@ jobs:
 
   build:
     # The type of runner that the job will run on
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
 
     steps:
      
           
       - name: Rebuild 🚀 
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PERSONAL_TOKEN }}
           script: |
