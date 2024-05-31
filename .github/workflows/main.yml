@@ -16,7 +16,7 @@ env:
 jobs:
 
   Release:
-    runs-on: macos-14
+    runs-on: macos-14-large
     steps:
 
     - name: Checkout
