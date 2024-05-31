@@ -35,7 +35,6 @@ platform :mac do
   private_lane :build do 
 
     build_mac_app(
-      scheme: ENV["APP_NAME"],
       clean: true,
       silent: true,
       export_method: "mac-application",
