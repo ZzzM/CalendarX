@@ -22,32 +22,60 @@ public extension CGFloat {
 }
 
 extension Bundle {
-    public static let apps = PatternA.json2Object(from: "apps")
-    static let tiaoxiu = PatternB.json2Object(from: "tiaoxiu")  // [String: [String: AppDateState]] = module.json2KeyValue(from: "tiaoxiu")
-    static let solarAF = PatternC.json2Object(from: "solarAF") // module.json2AllFestivals(from: "solarAF") // Contains solarPF
-    static let weekAF = PatternC.json2Object(from: "weekAF") // module.json2AllFestivals(from: "weekAF")
-    static let weekSF = PatternD.json2Object(from: "weekSF")  //module.json2Festival(from: "weekSF")
-    static let solarPF = PatternD.json2Object(from: "solarPF")  //module.json2Festival(from: "solarPF")
-    static let weekPF = PatternD.json2Object(from: "weekPF")  // module.json2Festival(from: "weekPF")
-    static let lunarPF = PatternD.json2Object(from: "lunarPF") //module.json2Festival(from: "lunarPF")
-    static let chuxi = PatternD.json2Object(from: "chuxi")  //module.json2Festival(from: "chuxi")
-    static let terms = PatternC.json2Object(from: "terms")  //module.json2AllFestivals(from: "terms")
+
+    public typealias ArrayA = [AppInfo]
+    public typealias ArrayB = [ColorInfo]
+
+    typealias DictionaryA = [String: String]
+    typealias DictionaryB = [String: [String]]
+    typealias DictionaryC = [String: [String: Tiaoxiu]]
+
+
+
+    public static let recommendation = decode(from: "recommendation_app", empty: ArrayA())
+
+
+    public static let defaultLightAccent = lightAccent[4]
+    public static let defaultLightBackground = lightBackground[4]
+
+    public static let defaultDarkAccent = darkAccent[4]
+    public static let defaultDarkBackground = darkBackground[4]
+
+
+    public static let lightAccent = decode(from: "color_light_accent", empty: ArrayB())
+    public static let lightBackground = decode(from: "color_light_background", empty: ArrayB())
+    public static let darkAccent = decode(from: "color_dark_accent", empty: ArrayB())
+    public static let darkBackground = decode(from: "color_dark_background", empty: ArrayB())
+
+    static let lunarPrimary = decode(from: "festival_lunar_primary", empty: DictionaryA())
+    static let lunarChuxi = decode(from: "festival_lunar_chuxi", empty: DictionaryA())
+    static let lunarJieqi = decode(from: "festival_lunar_jieqi", empty: DictionaryB())
+
+    static let solarAll = decode(from: "festival_solar_all", empty: DictionaryB()) //Contains solarPF
+    static let solarPrimary = decode(from: "festival_solar_primary", empty: DictionaryA())
+    static let solarTiaoxu = decode(from: "festival_solar_tiaoxiu", empty: DictionaryC())
+
+    static let weekAll = decode(from: "festival_week_all", empty: DictionaryB())
+    static let weekPrimary = decode(from: "festival_week_primary", empty: DictionaryA())
+    static let weekSpeical = decode(from: "festival_week_ special", empty: DictionaryA()) // Special
+
 }
 
 public extension UserDefaults {
     static let group = UserDefaults(suiteName: "group.\(AppBundle.identifier)")
 }
 
-enum AppStorageKey {
-    static let theme = generate("theme")
-    static let tint = generate("tint")
-    static let language = generate("language")
+public enum AppStorageKey {
+    public static let theme = generate("theme")
+    public static let tint = generate("tint")
+    public static let appearance = generate("appearance")
+    public static let language = generate("language")
     private static func generate(_ key: String) -> String { "\(AppBundle.name).app.\(key)" }
 }
 
 public enum MenubarStorageKey {
     public static let style = generate("style")
-    public static let text = generate("text")
+    public static let iconType = generate("iconType")
     public static let use24h = generate("use24h")
     public static let showSeconds = generate("showSeconds")
     public static let shownTypes = generate("shownTypes")
@@ -83,8 +111,8 @@ public extension Image {
     static let circle = Image(systemName: "circle")
     static let recommend = Image(systemName: "hand.thumbsup.fill")
     static let save = Image(systemName: "checkmark")
+    static let pin = Image(systemName: "paintbrush.pointed.fill")
 
-    static let calendar = Image("Calendar").renderingMode(.template).resizable()
 }
 
 public extension NSImage {
@@ -105,8 +133,7 @@ public extension Locale {
 
 
 public extension Color {
-
-    static let appBackground = Color(light: "FEF9EF", dark: "323232")
+//    static let appBackground = Color(light: "FEF9EF", dark: "323232")
     static let appPrimary = Color(light: "555555", dark: "EEEEEE")
     static let appSecondary = Color(light: "8f8f8f", dark: "777777")
 
@@ -115,7 +142,7 @@ public extension Color {
     static let workBackground = Color.secondary.opacity(0.16)
     static let offBackground = Color.accentColor.opacity(0.12)
 
-    static let tagBackground  = Color.accentColor.opacity(0.6)
+    static let tagBackground  = Color.accentColor
     static let disable = Color.secondary.opacity(0.6)
 
 }
@@ -124,7 +151,6 @@ public extension Notification.Name {
     static let  titleStyleDidChanged = Notification.Name("titleStyleDidChanged")
 }
 
-
 public struct AppLink {
     public static let gitHub = "https://github.com/ZzzM/CalendarX"
 }
@@ -132,19 +158,6 @@ public struct AppLink {
 public struct Privacy {
     public static let calendars = "com.apple.preference.security?Privacy_Calendars"
     public static let notifications = "com.apple.preference.notifications"
-}
-
-public struct Appearance {
-
-    public static let tint = palettes[0][0]
-
-    public static let palettes = [
-        ["C72C41", "E97777", "EE4540"], ["4C3575", "5B4B8A", "7858A6"], ["205295", "42C2FF", "2C74B3"],
-        ["A1B57D", "519872", "A4B494"], ["AA2B1D", "CC561E", "F07B3F"], ["876445", "CA965C", "847545"],
-        ["F1CA89", "A1CAE2", "B25068"], ["704F4F", "AD8B73", "A77979"], ["00A8CC", "1F8A70", "A61F69"],
-        ["03C988", "007880", "E0C341"], ["4A89DC", "D770AD", "1363DF"], ["CD4DCC", "59CE8F", "6D67E4"]
-    ]
-
 }
 
 public struct Lunar {
@@ -173,18 +186,18 @@ public struct Lunar {
     //Ren
     //Gui
 
-    public static let heavenlyStems = [
+    public static let tiangan = [
         "甲", "乙", "丙", "丁", "戊",
         "己", "庚", "辛", "壬", "癸"
     ]
 
-    public static let earthlyBranches = [
+    public static let dizhi = [
         "子", "丑", "寅", "卯",
         "辰", "巳", "午", "未",
         "申", "酉", "戌", "亥"
     ]
 
-    public static let zodiacs = [
+    public static let shengxiao = [
         "鼠", "牛", "虎", "兔",
         "龙", "蛇", "马", "羊",
         "猴", "鸡", "狗", "猪"

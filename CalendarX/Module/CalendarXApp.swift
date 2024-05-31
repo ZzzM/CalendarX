@@ -15,11 +15,9 @@ struct CalendarXApp: App {
     private var delegate
     
     init() {
-
         LaunchHelper.migrateIfNeeded()
         CalendarPreference.check()
         Updater.start()
-
     }
 
     var body: some Scene {
@@ -31,17 +29,16 @@ struct CalendarXApp: App {
 
 class CalendarXDelegate: NSObject & NSApplicationDelegate {
 
-    lazy var rootView = CalendarXView()
-    lazy var popover = MenubarPopover(rootView)
+    lazy var rootScreen = RootScreen()
+    lazy var popover = MenubarPopover(rootScreen)
     lazy var controller =  MenubarController(popover)
 
     func applicationWillFinishLaunching(_ notification: Notification) {
-
         NSRunningApplication
             .runningApplications(withBundleIdentifier: AppBundle.identifier)
             .filter { $0.isFinishedLaunching }
             .forEach { $0.terminate() }
-        
+
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {

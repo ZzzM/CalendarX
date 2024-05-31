@@ -23,8 +23,8 @@
 "calendar.startWeekOn" = "星期开始于";
 "calendar.keyboardShortcut" = "键盘快捷键";
 
-"appearance.tint" = "色彩";
-"appearance.hex" = "颜色十六进制编码";
+"appearance.accentColor" = "强调色";
+"appearance.backgroundColor" = "背景颜色";
 
 "alert.exit" = "退出";
 "alert.notifications" = "通知";
@@ -37,16 +37,16 @@
 "alert.yes" = "是";
 "alert.ok" = "好的";
 
-"menubarStyle.default" = "默认";
+"menubarStyle.icon" = "图标";
 "menubarStyle.text" = "文本";
 "menubarStyle.date" = "日期和时间";
 "menubarStyle.save" = "保存";
-"menubarStyle.tips" = "最大字符长度为30";
 "menubarStyle.use24" = "使用24小时格式";
 "menubarStyle.showSeconds" = "在时间中显示秒钟";
 
+"theme.title" = "主题";
 "theme.system" = "跟随系统";
-"theme.dark" = "深色模式";
+"theme.dark" = "深色";
 "theme.light" = "浅色";
 
 "date.allDay" = "全天";

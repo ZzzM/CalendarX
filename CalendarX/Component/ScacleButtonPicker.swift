@@ -57,6 +57,7 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
 
     }
 
+
     @ViewBuilder
     func popoverContent() -> some View {
         ScrollViewReader { reader in
@@ -83,6 +84,5 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
             .onAppear { reader.scrollTo(selection) }
         }
     }
-
 }
 

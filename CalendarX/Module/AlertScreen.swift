@@ -1,5 +1,5 @@
 //
-//  AlertView.swift
+//  AlertScreen.swift
 //  CalendarX
 //
 //  Created by zm on 2023/3/5.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct AlertView: View {
+struct AlertScreen: View {
 
     @ObservedObject
     var viewModel: AlertViewModel

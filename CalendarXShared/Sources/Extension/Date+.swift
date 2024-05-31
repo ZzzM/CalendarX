@@ -128,7 +128,9 @@ public extension Date {
 }
 
 public extension Date {
-    
+
+    var eventsKey: String { "\(year).\(month).\(day)" }
+
     var lunarYear: Int {
         Calendar.chinese.component(.year, from: self)
     }

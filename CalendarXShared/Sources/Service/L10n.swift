@@ -41,8 +41,8 @@ public struct L10n {
     }
 
     public enum Appearance {
-        public static let hex = "appearance.hex".l10nKey
-        public static let tint = "appearance.tint".l10nKey
+        public static let accentColor = "appearance.accentColor".l10nKey
+        public static let backgroundColor = "appearance.backgroundColor".l10nKey
     }
 
     public enum Alert {
@@ -61,10 +61,12 @@ public struct L10n {
     }
 
     public enum Theme {
-       public static let system = "theme.system".l10nKey
-       public static let dark = "theme.dark".l10nKey
-       public static let light = "theme.light".l10nKey
+        public static let title = "theme.title".l10nKey
+        public static let system = "theme.system".l10nKey
+        public static let dark = "theme.dark".l10nKey
+        public static let light = "theme.light".l10nKey
     }
+
 
     public enum Language {
         public static let system = "theme.system".l10nKey
@@ -73,10 +75,9 @@ public struct L10n {
     }
 
     public enum MenubarStyle {
-        public static let `default` = "menubarStyle.default".l10nKey
+        public static let icon = "menubarStyle.icon".l10nKey
         public static let text = "menubarStyle.text".l10nKey
         public static let date = "menubarStyle.date".l10nKey
-        public static let tips = "menubarStyle.tips".l10nKey
         public static let save = "menubarStyle.save".l10nKey
         public static let use24 = "menubarStyle.use24".l10nKey
         public static let showSeconds = "menubarStyle.showSeconds".l10nKey
@@ -127,9 +128,9 @@ public extension L10n {
 
 //MARK: Widget
 public extension L10n {
-    public enum LargeWidget {
-       public static let displayName = "largeWidget.displayName".l10nKey
-       public static let description = "largeWidget.description".l10nKey
+    enum LargeWidget {
+        public static let displayName = "largeWidget.displayName".l10nKey
+        public static let description = "largeWidget.description".l10nKey
     }
 }
 
@@ -153,29 +154,29 @@ public extension L10n {
 
 //MARK: Menubar Date&Time Style
 public extension L10n {
-     static func lm(from date: L10Date) -> String { date.lunarMonthString }
-     static func ld(from date: L10Date) -> String { date.lunarDayString }
-     static func sm(from date: L10Date) -> String { monthSymbol(from: date.month) }
+    static func lm(from date: L10Date) -> String { date.lunarMonthString }
+    static func ld(from date: L10Date) -> String { date.lunarDayString }
+    static func sm(from date: L10Date) -> String { monthSymbol(from: date.month) }
 
-     static func sd(from date: L10Date) -> String {
+    static func sd(from date: L10Date) -> String {
         formatter.locale = locale
         formatter.dateFormat = L10n.inChinese ? "d日":"d"
         return formatter.string(from: date)
     }
 
-     static func e(from date: L10Date) -> String {
+    static func e(from date: L10Date) -> String {
         formatter.locale = locale
         formatter.dateFormat = "E"
         return formatter.string(from: date)
     }
 
-     static func a(from date: L10Date) -> String {
+    static func a(from date: L10Date) -> String {
         formatter.locale = locale
         formatter.dateFormat = "a"
         return formatter.string(from: date)
     }
 
-     static func t(from date: L10Date, use24h: Bool, showSeconds: Bool) -> String {
+    static func t(from date: L10Date, use24h: Bool, showSeconds: Bool) -> String {
         formatter.locale = .posix
         formatter.dateFormat = (use24h ? "HH:mm":"h:mm") + (showSeconds ? ":ss":"")
         return formatter.string(from: date)

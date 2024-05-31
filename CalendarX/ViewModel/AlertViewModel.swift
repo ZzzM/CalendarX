@@ -8,6 +8,15 @@ import SwiftUI
 import Combine
 import CalendarXShared
 
+
+enum AlertType {
+    case exit, colorPicker
+
+//    var image: Image {
+//
+//    }
+}
+
 class AlertViewModel: ObservableObject {
 
     static let shared = AlertViewModel()
@@ -66,8 +75,9 @@ class AlertViewModel: ObservableObject {
     }
 
     func dismiss() {
-        Task { @MainActor in
-            withAnimation {
+        DispatchQueue.main.async {
+            withAnimation { [weak self] in
+                guard let self else { return }
                 isPresented = false
             }
         }
@@ -89,12 +99,9 @@ class AlertViewModel: ObservableObject {
     }
 
     private static func show() {
-        Task { @MainActor in
-            withAnimation {
-                shared.isPresented = true
-            }
+        withAnimation {
+            shared.isPresented = true
         }
     }
-    
 
 }

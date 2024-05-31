@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  MainScreen.swift
 //  CalendarX
 //
 //  Created by zm on 2022/1/26.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CalendarXShared
 
-struct MainView: View {
+struct MainScreen: View {
 
     @ObservedObject
     var viewModel: MainViewModel
@@ -30,6 +30,7 @@ struct MainView: View {
         
         HStack {
             MonthYearPicker(date: $viewModel.date, colorScheme: viewModel.colorScheme, tint: viewModel.tint)
+                .focusDisabled()
 
             Spacer()
 
@@ -58,24 +59,24 @@ struct MainView: View {
         
     }
     
-    private func weekView(date: Date) -> some View {
-        Text(L10n.shortWeekday(from: date))
-            .appForeground(date.inWeekend ? .appSecondary : .appPrimary)
+    private func weekView(_ appDate: AppDate) -> some View {
+        Text(L10n.shortWeekday(from: appDate))
+            .appForeground(appDate.inWeekend ? .appSecondary : .appPrimary)
             .sideLength(30)
     }
     
     @ViewBuilder
-    private func dayView(appDate: AppDate) -> some View {
+    private func dayView(_ appDate: AppDate, events: [AppEvent]) -> some View {
 
-        let showHolidays = !appDate.inNormal && viewModel.showHolidays,
-            showEvents = appDate.events.isNotEmpty && viewModel.showEvents,
+        let showHolidays = !appDate.isOrdinary && viewModel.showHolidays,
+            showEvents = events.isNotEmpty && viewModel.showEvents,
             showLunar = viewModel.showLunar,
             defaultColor: Color = appDate.inWeekend ? .appSecondary : .appPrimary,
-            inSameMonth = viewModel.date.inSameMonth(as: appDate.date),
-            txColor: Color = appDate.onHoliday ? .offBackground : .workBackground
+            inSameMonth = viewModel.date.inSameMonth(as: appDate),
+            txColor: Color = appDate.isXiu ? .offBackground : .workBackground
 
         ScacleButton {
-            Router.toDate(appDate)
+            Router.toDate(appDate, events: events)
         } label: {
             ZStack {
 
@@ -86,10 +87,10 @@ struct MainView: View {
                 
                 if showHolidays {
                     txColor.clipShape(.rect(cornerRadius: 4))
-                    Text(appDate.stateDesc)
+                    Text(appDate.tiaoxiuTitle)
                         .font(.system(size: 7, weight: .bold, design: .monospaced))
                         .offset(x: -14, y: -14)
-                        .appForeground(appDate.onHoliday ? .accentColor: .appSecondary)
+                        .appForeground(appDate.isXiu ? .accentColor: .appSecondary)
                 }
 
                 if showEvents {
@@ -102,11 +103,11 @@ struct MainView: View {
                 VStack {
                     Text(appDate.title)
                         .font(.title3.monospacedDigit())
-                        .appForeground(showHolidays ? appDate.onHoliday ? .accentColor: defaultColor : defaultColor)
+                        .appForeground(showHolidays ? appDate.isXiu ? .accentColor: defaultColor : defaultColor)
                     if showLunar {
                         Text(appDate.subtitle)
                             .font(.caption2.weight(.regular))
-                            .appForeground(showHolidays ? appDate.onHoliday ? .accentColor: .appSecondary : .appSecondary)
+                            .appForeground(showHolidays ? appDate.isXiu ? .accentColor: .appSecondary : .appSecondary)
                     }
                 }
                 
@@ -134,25 +135,28 @@ struct MonthYearPicker: View {
 
     var body: some View {
         
-        ScacleButtonPicker(items: Array(Solar.minMonth...Solar.maxMonth),
-                           tint: tint,
-                           colorScheme: colorScheme,
-                           selection: $date.month,
-                           isPresented: $isPresentedOfMonth) {
-            Text(L10n.monthSymbol(from: date.month)).font(.title2).appForeground(tint)
-        } itemLabel: {
-            Text(L10n.monthSymbol(from: $0))
-        }
+       
+            ScacleButtonPicker(items: Array(Solar.minMonth...Solar.maxMonth),
+                               tint: tint,
+                               colorScheme: colorScheme,
+                               selection: $date.month,
+                               isPresented: $isPresentedOfMonth) {
+                Text(L10n.monthSymbol(from: date.month)).font(.title2).appForeground(tint)
+            } itemLabel: {
+                Text(L10n.monthSymbol(from: $0))
+            }
+            
+            ScacleButtonPicker(items: Array(Solar.minYear...Solar.maxYear),
+                               tint: tint,
+                               colorScheme: colorScheme,
+                               selection: $date.year,
+                               isPresented: $isPresentedOfYear) {
+                Text(date.year.description).font(.title2).appForeground(tint)
+            } itemLabel: {
+                Text(String($0))
+            }
         
-        ScacleButtonPicker(items: Array(Solar.minYear...Solar.maxYear),
-                           tint: tint,
-                           colorScheme: colorScheme,
-                           selection: $date.year,
-                           isPresented: $isPresentedOfYear) {
-            Text(date.year.description).font(.title2).appForeground(tint)
-        } itemLabel: {
-            Text(String($0))
-        }
+        
         
     }
 }
@@ -161,14 +165,14 @@ struct CalendarView<Day: View, Header: View, Week: View>: View {
     
     private let date: Date, firstWeekday: AppWeekday, interval: TimeInterval
 
-    private let dayView: (AppDate) -> Day, header: () -> Header, weekView: (Date) -> Week
+    private let dayView: (AppDate, [AppEvent]) -> Day, header: () -> Header, weekView: (Date) -> Week
 
     init(date: Date,
          firstWeekday: AppWeekday,
          interval: TimeInterval,
          @ViewBuilder header: @escaping () -> Header,
          @ViewBuilder weekView: @escaping (Date) -> Week,
-         @ViewBuilder dayView: @escaping (AppDate) -> Day
+         @ViewBuilder dayView: @escaping (AppDate, [AppEvent]) -> Day
     ) {
         self.date = date
         self.firstWeekday = firstWeekday
@@ -183,14 +187,15 @@ struct CalendarView<Day: View, Header: View, Week: View>: View {
         let dates = CalendarHelper.makeDates(firstWeekday: firstWeekday, date: date)
         let columns = CalendarHelper.columns
         let spacing = CalendarHelper.spacing(from: dates.count)
+        let eventsList = EventHelper.makeEventsList(dates)
 
         LazyVGrid(columns: columns, spacing: spacing) {
             Section {
                 ForEach(0..<min(Solar.daysInWeek, dates.count), id: \.self) {
-                    weekView(dates[$0].date)
+                    weekView(dates[$0])
                 }
-                ForEach(dates, id: \.id) { appDate in
-                    dayView(appDate)
+                ForEach(dates, id: \.self) { appDate in
+                    dayView(appDate, eventsList[appDate.eventsKey] ?? [])
                 }
             } header: {
                 header()

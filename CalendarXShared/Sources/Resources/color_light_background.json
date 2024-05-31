@@ -1,0 +1,52 @@
+[
+  {
+    "hex": "#F0F0F0",
+    "name_en": "Anti-Flash White",
+    "name_zh": "防闪白"
+  },
+  {
+    "hex": "#F2F2F2",
+    "name_en": "Seashell",
+    "name_zh": "贝壳白"
+  },
+  {
+    "hex": "#F4F4F4",
+    "name_en": "Isabelline",
+    "name_zh": "灰白色"
+  },
+  {
+    "hex": "#F5F5F5",
+    "name_en": "White Smoke",
+    "name_zh": "烟白色"
+  },
+  {
+    "hex": "#F8F8F8",
+    "name_en": "Ghost White",
+    "name_zh": "幽灵白"
+  },
+  {
+    "hex": "#FAFAFA",
+    "name_en": "Cultured",
+    "name_zh": "培育白"
+  },
+  {
+    "hex": "#FCFCFC",
+    "name_en": "Baby Powder",
+    "name_zh": "婴儿粉白"
+  },
+  {
+    "hex": "#FEFEFE",
+    "name_en": "Snow",
+    "name_zh": "雪白"
+  },
+  {
+    "hex": "#FFFAFA",
+    "name_en": "Floral White",
+    "name_zh": "花卉白"
+  },
+  {
+    "hex": "#FFFFFF",
+    "name_en": "Pure White",
+    "name_zh": "纯白色"
+  }
+]

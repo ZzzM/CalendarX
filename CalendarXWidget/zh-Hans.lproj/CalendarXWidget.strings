@@ -1,7 +1,3 @@
-"0KwTK2" = "🟨";
-
-"0x6ok8" = "🟦";
-
 "23t8NN" = "周一";
 
 "2ZS03J" = "语言";
@@ -22,6 +18,8 @@
 
 "8R2rKx" = "跟随系统";
 
+"Bb99Yy" = "浅色 - 强调色";
+
 "BxmIDl-3h5WUz" = "Just to confirm, you wanted ‘Light’?";
 
 "BxmIDl-8R2rKx" = "Just to confirm, you wanted ‘Follow system’?";
@@ -30,45 +28,13 @@
 
 "CJwnoY" = "Widget Weekday";
 
-"Cvj4om" = "🟩";
-
 "EjYffU" = "周日";
-
-"FtpWg1" = "🟥";
 
 "JLPDos" = "周四";
 
 "JMeC7c" = "显示日历事件";
 
-"PHmfP2-0KwTK2" = "Just to confirm, you wanted ‘🟨’?";
-
-"PHmfP2-0x6ok8" = "Just to confirm, you wanted ‘🟦’?";
-
-"PHmfP2-Cvj4om" = "Just to confirm, you wanted ‘🟩’?";
-
-"PHmfP2-FtpWg1" = "Just to confirm, you wanted ‘🟥’?";
-
-"PHmfP2-PwlH5o" = "Just to confirm, you wanted ‘🟧’?";
-
-"PHmfP2-emz1ih" = "Just to confirm, you wanted ‘🟪’?";
-
-"PHmfP2-iZZDhi" = "Just to confirm, you wanted ‘🟫’?";
-
-"PwlH5o" = "🟧";
-
-"PyAT7j-0KwTK2" = "There are ${count} options matching ‘🟨’.";
-
-"PyAT7j-0x6ok8" = "There are ${count} options matching ‘🟦’.";
-
-"PyAT7j-Cvj4om" = "There are ${count} options matching ‘🟩’.";
-
-"PyAT7j-FtpWg1" = "There are ${count} options matching ‘🟥’.";
-
-"PyAT7j-PwlH5o" = "There are ${count} options matching ‘🟧’.";
-
-"PyAT7j-emz1ih" = "There are ${count} options matching ‘🟪’.";
-
-"PyAT7j-iZZDhi" = "There are ${count} options matching ‘🟫’.";
+"Nrzpin" = "深色 - 强调色";
 
 "Qx5ip1-23t8NN" = "There are ${count} options matching ‘Monday’.";
 
@@ -110,8 +76,6 @@
 
 "eStozH" = "周三";
 
-"emz1ih" = "🟪";
-
 "fxBCVh" = "跟随系统";
 
 "h7F9C9-R74qr4" = "There are ${count} options matching ‘简体中文’.";
@@ -120,17 +84,17 @@
 
 "h7F9C9-w8fWt0" = "There are ${count} options matching ‘English’.";
 
-"iZZDhi" = "🟫";
-
 "ixslPm" = "深色";
 
 "j5uOVs" = "星期开始于";
 
+"k86Std" = "浅色 - 背景色";
+
 "mch2I8" = "Widget Language";
 
-"pikPQm" = "true";
+"oqNPaD" = "Widget Color";
 
-"szmpx4" = "Widget Tint";
+"pikPQm" = "true";
 
 "veSx01" = "false";
 
@@ -138,7 +102,7 @@
 
 "w8fWt0" = "English";
 
-"wkmfzv" = "色彩";
+"ws7CHA" = "深色 - 背景色";
 
 "zNI9vB-23t8NN" = "Just to confirm, you wanted ‘Monday’?";
 

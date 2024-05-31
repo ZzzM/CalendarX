@@ -131,7 +131,7 @@ extension Updater: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard  response.notification.request.identifier == Self.UpdateNotificationId else { return }
         guard  response.actionIdentifier  == UNNotificationDefaultActionIdentifier else { return }
-        Task { @MainActor in
+        DispatchQueue.main.async {
             Self.checkForUpdates()
         }
     }

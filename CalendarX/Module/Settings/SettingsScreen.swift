@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  SettingsScreen.swift
 //  CalendarX
 //
 //  Created by zm on 2022/1/26.
@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import CalendarXShared
 
-struct SettingsView: View {
+struct SettingsScreen: View {
     
     @ObservedObject
     var viewModel: SettingsViewModel
@@ -26,6 +26,7 @@ struct SettingsView: View {
                 EmptyView()
             } rightItems: {
                 ScacleImageButton(image: .quit, action: AlertViewModel.exit)
+                    .focusDisabled()
             }
 
             Section {
@@ -48,7 +49,7 @@ struct SettingsView: View {
 
 }
 
-extension SettingsView {
+extension SettingsScreen {
     
     var appearanceRow: some View {
         SettingsRow(title: L10n.Settings.appearance, detail: {}, action: Router.toAppearanceSettings)
@@ -100,7 +101,7 @@ extension SettingsView {
 }
 
 
-extension SettingsView {
+extension SettingsScreen {
     
     var versionRow: some View {
         Group {
@@ -113,18 +114,20 @@ extension SettingsView {
 
 struct SettingsRow<Content: View>: View {
     
-    let title: LocalizedStringKey, showArrow: Bool
-    
+    let title: LocalizedStringKey, titleFont: Font, showArrow: Bool
+
     @ViewBuilder
     let detail: () -> Content
     
     let action: VoidClosure
     
     init(title: LocalizedStringKey,
+         titleFont: Font = .title3,
          showArrow: Bool = true,
          @ViewBuilder detail: @escaping () -> Content,
          action: @escaping VoidClosure) {
         self.title = title
+        self.titleFont = titleFont
         self.showArrow = showArrow
         self.detail = detail
         self.action = action
@@ -134,13 +137,13 @@ struct SettingsRow<Content: View>: View {
         
         HStack {
             Text(title)
-                .font(.title3)
+                .font(titleFont)
             Spacer()
             
             Group {
                 detail()
                 if showArrow {
-                    Image.rightArrow.font(.title3)
+                    Image.rightArrow.font(titleFont)
                 }
             }
             .appForeground(.appSecondary)
@@ -185,7 +188,7 @@ struct SettingsPickerRow<Item: Hashable, Label: View>: View {
             Text(title).font(.title3)
             Spacer()
             ScacleButtonPicker(items: items,
-                               tint: pref.color,
+                               tint: pref.accentColor,
                                width: width,
                                locale: pref.locale,
                                colorScheme: pref.colorScheme,

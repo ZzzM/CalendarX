@@ -23,8 +23,9 @@
 "calendar.startWeekOn" = "Start week on";
 "calendar.keyboardShortcut" = "Keyboard Shortcut";
 
-"appearance.tint" = "Tint";
-"appearance.hex" = "Color hex code";
+
+"appearance.accentColor" = "Accent color";
+"appearance.backgroundColor" = "Background color";
 
 "alert.exit" = "Exit";
 "alert.notifications" = "Notifications";
@@ -38,16 +39,16 @@
 "alert.yes" = "Yes";
 "alert.ok" = "OK";
 
-"menubarStyle.default" = "Default";
+"menubarStyle.icon" = "Icon";
 "menubarStyle.text" = "Text";
 "menubarStyle.date" = "Date&Time";
 "menubarStyle.save" = "Save";
-"menubarStyle.tips" = "The max character length is 30";
 "menubarStyle.use24" = "Use a 24-hour clock";
 "menubarStyle.showSeconds" = "Display the time with seconds";
 
+"theme.title" = "Theme";
 "theme.system" = "Follow system";
-"theme.dark" = "Dark mode";
+"theme.dark" = "Dark";
 "theme.light" = "Light";
 
 "date.allDay" = "All Day";

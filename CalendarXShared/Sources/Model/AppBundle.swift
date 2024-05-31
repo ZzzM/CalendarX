@@ -7,7 +7,6 @@ enum AppBundleKey: String {
          commitHash = "CommitHash",
          commitDate = "CommitDate",
          copyright = "NSHumanReadableCopyright"
-
 }
 
 public struct AppBundle {

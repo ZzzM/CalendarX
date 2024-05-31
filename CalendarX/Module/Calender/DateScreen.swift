@@ -1,5 +1,5 @@
 //
-//  DateView.swift
+//  DateScreen.swift
 //  CalendarX
 //
 //  Created by zm on 2022/1/27.
@@ -9,26 +9,25 @@ import SwiftUI
 import WrappingHStack
 import CalendarXShared
 
-struct DateView: View {
+struct DateScreen: View {
     
-    let appDate: AppDate
+    let appDate: AppDate, events: [AppEvent]
 
     private var showEvents: Bool { CalendarPreference.shared.showEvents }
     
     var body: some View {
         VStack(spacing: 10) {
             TitleView {
-                Text(appDate.date, style: .date)
+                Text(appDate, style: .date)
             } leftItems: {
                 ScacleImageButton(image: .backward, action: Router.back)
             } rightItems: {
                 EmptyView()
             }
 
-
             Text(appDate.lunarDate).font(.footnote).appForeground(.accentColor)
             FestivalsView(festivals: appDate.festivals)
-            EventsView(events: appDate.events, showEvents: showEvents)
+            EventsView(events: events, showEvents: showEvents)
         }
         .padding()
     }

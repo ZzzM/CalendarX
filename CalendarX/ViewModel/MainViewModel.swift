@@ -33,7 +33,7 @@ class MainViewModel: ObservableObject {
 
     var colorScheme: ColorScheme? { pref.colorScheme }
 
-    var tint: Color { pref.color }
+    var tint: Color { pref.accentColor }
 
     init() {
         date = Date()

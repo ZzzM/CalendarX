@@ -13,7 +13,7 @@ A lightweight macOS app for displaying calendar and time
 
 ## Features
 - [x] Chinese statutory holidays and other festivals
-- [x] Custom menubar styles (default, text, date & time）
+- [x] Custom menubar styles (icon, date & time）
 - [x] Dark mode
 - [x] Localization (简体中文、English)
 - [x] Widget / Interactive Widget / KeyboardShortcut
@@ -42,11 +42,17 @@ A lightweight macOS app for displaying calendar and time
 
     <img src="assets/003.png" width=250> <img src="assets/004.png" width=250> 
 
+- Appearance Settings 
+
+    <img src="assets/004a.png" width=250> <img src="assets/004b.png" width=250> 
+
 - Menubar Style 
 
     Drag and drop to edit `Date & Time Style`
 
-    <img src="assets/006.png" width=250> 
+    <img src="assets/006a.png" width=250> <img src="assets/006b.png" width=250> 
+
+
 
 - Widget
 
@@ -89,3 +95,4 @@ A lightweight macOS app for displaying calendar and time
 - [WrappingHStack](https://github.com/dkk/WrappingHStack)
 - [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
 - [Schedule](https://github.com/luoxiu/Schedule)  
+- [Swift Algorithms](https://github.com/apple/swift-algorithms)

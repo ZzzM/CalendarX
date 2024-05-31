@@ -1,5 +1,5 @@
 //
-//  MenubarSettingsView.swift
+//  MenubarStyleScreen.swift
 //  CalendarX
 //
 //  Created by zm on 2022/10/27.
@@ -10,25 +10,23 @@ import Combine
 import CalendarXShared
 
 
-struct MenubarSettingsView: View {
+struct MenubarStyleScreen: View {
     
     @StateObject
     private var viewModel = MenubarViewModel()
-
+    
     var body: some View {
         
         VStack(spacing: 10) {
-
+            
             TitleView {
                 Text(L10n.Settings.menubarStyle)
             } leftItems: {
                 ScacleImageButton(image: .backward, action: Router.back)
             } rightItems: {
-                if viewModel.canSave {
-                    ScacleImageButton(image: .save, action: viewModel.save)
-                }
+                ScacleImageButton(image: .save, action: viewModel.save)
             }
-
+            
             Picker(selection: $viewModel.style) {
                 ForEach(MenubarStyle.allCases, id: \.self) {
                     Text($0.title)
@@ -37,11 +35,10 @@ struct MenubarSettingsView: View {
                 EmptyView()
             }
             .pickerStyle(.segmented)
-
+            
             ZStack {
                 switch viewModel.style {
-                case .default: DefaultStyleView()
-                case .text: TextStyleView(text: $viewModel.text)
+                case .icon: IconStyleView(iconType: $viewModel.iconType)
                 case .date: DateStyleView(viewModel: viewModel)
                 }
             }
@@ -50,46 +47,58 @@ struct MenubarSettingsView: View {
         }
         .focusable(false)
         .padding()
-
+        
     }
     
     
 }
 
-struct DefaultStyleView: View {
-    var body: some View {
-        Image.calendar.sideLength(40)
-        Text(Date().day.description)
-            .font(.title3)
-            .offset(y: 5)
-    }
-}
-
-
-struct TextStyleView: View {
+struct IconStyleView: View {
     
     @Binding
-    var text: String
+    var iconType: IconType
+    
     
     var body: some View {
+
         VStack {
-
-            Text(text)
-                .font(.title3)
-                .frame(height: 30)
-                .padding()
-
-            TextField(AppBundle.name, text: $text.max())
-                .textFieldStyle(.plain)
-                .multilineTextAlignment(.center)
-
-            Divider().padding(.horizontal)
             
-            Text(L10n.MenubarStyle.tips)
-                .font(.footnote)
-                .appForeground(.appSecondary)
+            ScrollView(showsIndicators: false) {
+                LazyVGrid(columns: Array(repeating: .init(spacing: 0), count: 3), spacing: 0) {
+                    
+                    ForEach(IconType.allCases, id: \.self) { type in
+                        
+            
+                        ScacleButton {
+                            iconType = type
 
+                        } label: {
+                            
+                            ZStack {
+                                
+                                if type == iconType {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.accentColor, lineWidth: 3)
+                                }
+                                
+                                Text(type.title)
+                                    .font(.caption2)
+                                    .offset(y: 1)
+                                
+                                Image(nsImage: type.nsImage)
+                                    .resizable()
+                                    .frame(width: type.size.width,
+                                           height: type.size.height)
+                                
+                            }
+                            .sideLength(40)
+                            .padding()
+                        }
+                    }
+                }.padding()
+            }
         }
+        
     }
 }
 
@@ -105,9 +114,9 @@ struct DateStyleView: View {
             Text(viewModel.dateTitle)
                 .font(.title3)
                 .padding(.vertical)
-
+            
             ScrollView {
-    
+                
                 gridView(types: viewModel.shownTypes,
                          background: Color.tagBackground,
                          onTapGesture: viewModel.shownTagTapped,
@@ -120,20 +129,20 @@ struct DateStyleView: View {
                 Toggle(isOn: $viewModel.use24h) { Text(L10n.MenubarStyle.use24).font(.title3) }
                     .checkboxStyle()
                     .padding(.top)
-
+                
                 Toggle(isOn: $viewModel.showSeconds) { Text(L10n.MenubarStyle.showSeconds).font(.title3) }
                     .checkboxStyle()
                 
             }
             
-
+            
         }
     }
     private func gridView(types:  [DTType],
                           background: Color,
                           onTapGesture: @escaping (DTType) -> Void,
                           onDrop: ((NSItemProvider?,  DTType) -> Bool)? = .none) -> some View {
-
+        
         LazyVGrid(columns: .init(repeating: .init(), count: 4)) {
             ForEach(types, id: \.self) { type in
                 if onDrop != nil {
@@ -155,8 +164,8 @@ struct DateStyleView: View {
                          foregroundColor: Color,
                          background: Color,
                          onTapGesture: @escaping (DTType) -> Void) -> some View {
-
-        Text(viewModel.tagTitle(type))
+        
+        Text(viewModel.transform(type))
             .lineLimit(1)
             .minimumScaleFactor(0.1)
             .frame(width: 55)

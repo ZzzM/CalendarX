@@ -1,5 +1,5 @@
 //
-//  RecommendationsView.swift
+//  RecommendationsScreen.swift
 //  CalendarX
 //
 //  Created by zm on 2022/12/9.
@@ -8,10 +8,8 @@
 import SwiftUI
 import CalendarXShared
 
-struct RecommendationsView: View {
-
-    private let apps = Bundle.apps
-
+struct RecommendationsScreen: View {
+    
     var body: some View {
         
         VStack {
@@ -25,7 +23,7 @@ struct RecommendationsView: View {
             }
 
             ScrollView {
-                ForEach(apps) { app in
+                ForEach(Bundle.recommendation, id: \.name) { app in
                   AppView(app: app)
                 }
             }

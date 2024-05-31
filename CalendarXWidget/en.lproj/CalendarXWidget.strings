@@ -1,7 +1,3 @@
-"0KwTK2" = "🟨";
-
-"0x6ok8" = "🟦";
-
 "23t8NN" = "Monday";
 
 "2ZS03J" = "Language";
@@ -22,6 +18,8 @@
 
 "8R2rKx" = "Follow system";
 
+"Bb99Yy" = "Light Accent Color";
+
 "BxmIDl-3h5WUz" = "Just to confirm, you wanted ‘Light’?";
 
 "BxmIDl-8R2rKx" = "Just to confirm, you wanted ‘Follow system’?";
@@ -30,45 +28,13 @@
 
 "CJwnoY" = "Widget Weekday";
 
-"Cvj4om" = "🟩";
-
 "EjYffU" = "Sunday";
-
-"FtpWg1" = "🟥";
 
 "JLPDos" = "Thursday";
 
 "JMeC7c" = "Show calendar events";
 
-"PHmfP2-0KwTK2" = "Just to confirm, you wanted ‘🟨’?";
-
-"PHmfP2-0x6ok8" = "Just to confirm, you wanted ‘🟦’?";
-
-"PHmfP2-Cvj4om" = "Just to confirm, you wanted ‘🟩’?";
-
-"PHmfP2-FtpWg1" = "Just to confirm, you wanted ‘🟥’?";
-
-"PHmfP2-PwlH5o" = "Just to confirm, you wanted ‘🟧’?";
-
-"PHmfP2-emz1ih" = "Just to confirm, you wanted ‘🟪’?";
-
-"PHmfP2-iZZDhi" = "Just to confirm, you wanted ‘🟫’?";
-
-"PwlH5o" = "🟧";
-
-"PyAT7j-0KwTK2" = "There are ${count} options matching ‘🟨’.";
-
-"PyAT7j-0x6ok8" = "There are ${count} options matching ‘🟦’.";
-
-"PyAT7j-Cvj4om" = "There are ${count} options matching ‘🟩’.";
-
-"PyAT7j-FtpWg1" = "There are ${count} options matching ‘🟥’.";
-
-"PyAT7j-PwlH5o" = "There are ${count} options matching ‘🟧’.";
-
-"PyAT7j-emz1ih" = "There are ${count} options matching ‘🟪’.";
-
-"PyAT7j-iZZDhi" = "There are ${count} options matching ‘🟫’.";
+"Nrzpin" = "Dark Accent Color";
 
 "Qx5ip1-23t8NN" = "There are ${count} options matching ‘Monday’.";
 
@@ -110,8 +76,6 @@
 
 "eStozH" = "Wednesday";
 
-"emz1ih" = "🟪";
-
 "fxBCVh" = "Follow system";
 
 "h7F9C9-R74qr4" = "There are ${count} options matching ‘简体中文’.";
@@ -120,17 +84,17 @@
 
 "h7F9C9-w8fWt0" = "There are ${count} options matching ‘English’.";
 
-"iZZDhi" = "🟫";
-
 "ixslPm" = "Dark";
 
 "j5uOVs" = "Start week on";
 
+"k86Std" = "Light Background Color";
+
 "mch2I8" = "Widget Language";
 
-"pikPQm" = "true";
+"oqNPaD" = "Widget Color";
 
-"szmpx4" = "Widget Tint";
+"pikPQm" = "true";
 
 "veSx01" = "false";
 
@@ -138,7 +102,7 @@
 
 "w8fWt0" = "English";
 
-"wkmfzv" = "Tint";
+"ws7CHA" = "Dark Background Color";
 
 "zNI9vB-23t8NN" = "Just to confirm, you wanted ‘Monday’?";
 

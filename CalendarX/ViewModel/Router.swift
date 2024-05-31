@@ -17,7 +17,7 @@ class Router: ObservableObject {
     }
 
     enum Path {
-        case date(AppDate), recommendations, menubarSettings, appearanceSettings, calendarSettings, about, unknown
+        case date(AppDate, [AppEvent]), recommendations, menubarSettings, appearanceSettings, calendarSettings, about, unknown
     }
 
     @Published
@@ -46,7 +46,7 @@ class Router: ObservableObject {
 
 extension Router {
     
-    static func toDate(_ appDate: AppDate) { to(.date(appDate)) }
+    static func toDate(_ appDate: AppDate, events: [AppEvent]) { to(.date(appDate, events)) }
 
     static func toRecommendations() { to(.recommendations) }
 

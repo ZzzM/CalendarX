@@ -13,14 +13,16 @@ enum MenubarStyle: Int, CaseIterable, Decodable {
 //    case style1, style2, style3, style4,
 
     // 2.2.1 or later
-    case `default`, text, date
+//    case `default`, text, date
+    
+    // 2.3.5 or later
+    case icon, date
 
     var title: LocalizedStringKey {
 
         switch self {
-        case .text: return L10n.MenubarStyle.text
         case .date: return L10n.MenubarStyle.date
-        default: return L10n.MenubarStyle.default
+        default: return L10n.MenubarStyle.icon
         }
 
     }

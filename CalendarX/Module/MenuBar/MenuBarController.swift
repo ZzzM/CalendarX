@@ -21,8 +21,7 @@ class MenubarController {
                                                             action: #selector(togglePopover))
     
     private lazy var monitor = MonitorHelper { [weak self] _ in
-        guard let self else { return }
-        guard popover.isShown else { return }
+        guard let self, popover.isShown else { return }
         closePopover()
     }
     

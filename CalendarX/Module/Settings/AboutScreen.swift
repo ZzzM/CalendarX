@@ -1,5 +1,5 @@
 //
-//  AboutView.swift
+//  AboutScreen.swift
 //  CalendarX
 //
 //  Created by zm on 2023/3/1.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CalendarXShared
 
-struct AboutView: View {
+struct AboutScreen: View {
     
     var body: some View {
         VStack {

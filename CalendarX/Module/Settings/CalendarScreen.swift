@@ -1,5 +1,5 @@
 //
-//  CalendarSettingsView.swift
+//  CalendarScreen.swift
 //  CalendarX
 //
 //  Created by zm on 2023/2/26.
@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import CalendarXShared
 
-struct CalendarSettingsView: View {
+struct CalendarScreen: View {
     
     @StateObject
     private var viewModel = CalendarViewModel()
@@ -41,7 +41,7 @@ struct CalendarSettingsView: View {
     }
 }
 
-extension CalendarSettingsView {
+extension CalendarScreen {
     
     private  var weekRow: some View {
         SettingsPickerRow(title: L10n.Calendar.startWeekOn,
@@ -57,7 +57,6 @@ extension CalendarSettingsView {
         )
         Toggle(isOn: isOn) { Text(L10n.Calendar.showEvents).font(.title3) }
             .checkboxStyle()
-        
     }
     
     private var lunarRow: some View {

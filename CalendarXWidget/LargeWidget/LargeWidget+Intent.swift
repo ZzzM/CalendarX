@@ -8,6 +8,7 @@
 #if canImport(AppIntents)
 import AppIntents
 import SwiftUI
+import CalendarXShared
 @available(macOS 14.0, *)
 extension LargeWidget {
     
@@ -51,8 +52,6 @@ extension LargeWidget {
         }
     }
     
-    
 }
 
 #endif
-

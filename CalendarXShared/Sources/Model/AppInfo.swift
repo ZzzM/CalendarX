@@ -7,7 +7,6 @@
 
 import Foundation
 
-public struct AppInfo: Decodable, Identifiable {
-    public var id: String { name }
-    public let name: String, about: String, link: String
+public struct AppInfo: Decodable {
+    public let name, about, link: String
 }

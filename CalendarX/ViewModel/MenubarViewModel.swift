@@ -15,10 +15,10 @@ class MenubarViewModel: ObservableObject {
     @Published
     var style = MenubarPreference.shared.style
 
-    // Text Style
+    // Icon Style
     @Published
-    var text = MenubarPreference.shared.text
-
+    var iconType = MenubarPreference.shared.iconType
+    
     // Date&Time Style
 
     // Use a 24-hour clock
@@ -35,31 +35,21 @@ class MenubarViewModel: ObservableObject {
     @Published
     var hiddenTypes = MenubarPreference.shared.hiddenTypes
 
-    //    var shownTags: [DTTag] { shownTypes.enumerated().map{ .init(offset: $0.offset, element: $0.element) } }
-    //
-    //    var hiddenTags: [DTTag] { hiddenTypes.enumerated().map{ .init(offset: $0.offset, element: $0.element) } }
 
     var dateTitle: String {
-        pref.dateTitle(types: shownTypes) { tagTitle($0) }
-    }
-
-    var canSave: Bool {
-        switch style {
-        case .text: return !text.isEmpty
-        default: return true
-        }
+        shownTypes.generateTitle(transform: transform)
     }
 
     func save() {
 
-        if style == .date {
+        if .date == style {
             pref.showSeconds = showSeconds
             pref.use24h = use24h
             pref.shownTypes = shownTypes
             pref.hiddenTypes = hiddenTypes
         }
-        else if style == .text {
-            pref.text = text
+        else if .icon == style {
+            pref.iconType = iconType
         }
 
         pref.style = style
@@ -75,7 +65,7 @@ class MenubarViewModel: ObservableObject {
 //MARK: Date&Time Style
 extension  MenubarViewModel {
 
-    func tagTitle(_ type: DTType) -> String {
+    func transform(_ type: DTType) -> String {
         switch type {
         case .lm: return "正月"
         case .ld: return "十五"
@@ -89,16 +79,16 @@ extension  MenubarViewModel {
 
     func shownTagTapped(_ type: DTType) {
         guard shownTypes.count > 1 else { return }
-        Task { @MainActor in
-            guard let index = shownTypes.firstIndex(of: type) else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self, let index = shownTypes.firstIndex(of: type) else { return }
             shownTypes.remove(at: index)
             hiddenTypes.append(type)
         }
     }
 
     func hiddenTagTapped(_ type: DTType) {
-        Task { @MainActor in
-            guard let index = hiddenTypes.firstIndex(of: type) else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self, let index = hiddenTypes.firstIndex(of: type) else { return }
             hiddenTypes.remove(at: index)
             shownTypes.append(type)
         }
@@ -106,14 +96,13 @@ extension  MenubarViewModel {
 
     func onDrop(provider: NSItemProvider?, type: DTType) -> Bool {
 
-        provider?.loadObject(ofClass: NSString.self) { [weak self] reading, error in
+        provider?.loadObject(ofClass: NSString.self) { reading, error in
 
             guard let typeRawValue = reading as? String else { return }
 
-            Task { @MainActor [weak self] in
+            DispatchQueue.main.async { [weak self] in
 
-                guard let self else { return }
-                guard let to = shownTypes.firstIndex(of: type) else { return }
+                guard let self, let to = shownTypes.firstIndex(of: type) else { return }
 
                 if let from = shownTypes.firstIndex(where: { typeRawValue == $0.rawValue }) {
                     shownTypes.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? (to + 1): to)

@@ -7,40 +7,13 @@
 
 import Foundation
 
-protocol Formatable {
-    associatedtype Response: Decodable
-    static var empty: Response { get }
-}
-
-extension Formatable {
-    static func json2Object(from resource: String) -> Response {
-        guard let url = Bundle.module.url(forResource: resource, withExtension: "json"),
+extension Bundle {
+    static func decode<T: Decodable>(from resource: String, empty: T) -> T {
+        guard let url = Self.module.url(forResource: resource, withExtension: "json"),
               let data = try? Data(contentsOf: url),
-              let object = try? JSONDecoder().decode(Response.self, from: data) else {
+              let result = try? JSONDecoder().decode(T.self, from: data) else {
             return empty
         }
-        return object
+        return result
     }
 }
-
-public struct PatternA: Formatable {
-    public typealias Response = [AppInfo]
-    static var empty: Response { [] }
-}
-
-struct PatternB: Formatable {
-    typealias Response = [String: [String: AppDateState]]
-    static var empty: Response { [:] }
-}
-
-struct PatternC: Formatable {
-    typealias Response = [String: [String]]
-    static var empty: Response { [:] }
-}
-
-struct PatternD: Formatable {
-    typealias Response = [String: String]
-    static var empty: Response { [:] }
-}
-
-

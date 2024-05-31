@@ -1,0 +1,52 @@
+[
+  {
+    "hex": "#323232",
+    "name_en": "Charcoal",
+    "name_zh": "木炭黑"
+  },
+  {
+    "hex": "#2C2C2C",
+    "name_en": "Outer Space",
+    "name_zh": "外太空黑"
+  },
+  {
+    "hex": "#232323",
+    "name_en": "Raisin Black",
+    "name_zh": "葡萄干黑"
+  },
+  {
+    "hex": "#1D1C1C",
+    "name_en": "Eerie Black",
+    "name_zh": "诡黑"
+  },
+  {
+    "hex": "#161616",
+    "name_en": "Night",
+    "name_zh": "夜黑"
+  },
+  {
+    "hex": "#141010",
+    "name_en": "Black Coffee",
+    "name_zh": "黑咖啡"
+  },
+  {
+    "hex": "#0F0F0F",
+    "name_en": "Rich Black",
+    "name_zh": "浓黑"
+  },
+  {
+    "hex": "#0C0C0C",
+    "name_en": "Onyx",
+    "name_zh": "缟玛瑙黑"
+  },
+  {
+    "hex": "#0A0A0A",
+    "name_en": "Licorice",
+    "name_zh": "甘草黑"
+  },
+  {
+    "hex": "#000000",
+    "name_en": "Black",
+    "name_zh": "黑色"
+  }
+]

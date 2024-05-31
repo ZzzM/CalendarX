@@ -45,6 +45,13 @@ public struct EventHelper {
         }
     }
 
+    public static func makeEventsList(_ dates: [AppDate]) -> [String: [AppEvent]] {
+        guard dates.isNotEmpty, isAuthorized else { return [:] }
+        let events = fetchEvents(with: dates.first!, end: dates.last!)
+        return .init(grouping: events, by: \.eventsKey)
+    }
+
+
     public static func fetchEvents(with start: Date, end: Date) -> [AppEvent] {
 
         let calendars = store.calendars(for: .event).filter {

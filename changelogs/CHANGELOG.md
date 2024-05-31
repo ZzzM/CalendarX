@@ -1,3 +1,23 @@
+## 2.3.5 - 2024-05-31
+
+### Fixed
+- [Calendar view display is not synchronized with the date](https://github.com/ZzzM/CalendarX/issues/11)
+- Some page buttons display abnormally
+- Widget background color does not change with theme switching
+
+### Changed
+- Appearance settings have been reconstructed to support setting accent colors and background colors under different themes.
+- Menu bar settings have been restructured, added multiple style icons
+- Adjust the date format in the English menu bar
+- Get calendar event logic optimization
+- Some page color adjustments
+- Widget date update logic optimization
+- Widget settings have been reconstructed to support setting accent colors and background colors under different themes.
+
+### Removed
+- Menu bar text style
+
+---
 ## 2.3.4 - 2024-01-10
 
 ### Added
@@ -28,7 +48,7 @@
     
 ### Fixed
 - **macOS 14** calendar event permission issues
-- **macOS** 14 widget display issues
+- **macOS 14** widget display issues
 
 ### Changed
 - Transition animations

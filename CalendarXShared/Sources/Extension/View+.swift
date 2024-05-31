@@ -19,6 +19,16 @@ public extension View {
         }
     }
     
+    @ViewBuilder
+    func focusDisabled(_ disabled: Bool = true) -> some View {
+        if #available(macOS 14.0, *) {
+            focusEffectDisabled(disabled)
+        } else if #available(macOS 12.0, *) {
+            focusable(!disabled)
+        } else {
+            focusable(!disabled, onFocusChange: { _ in })
+        }
+    }
 }
 
 struct TintModifier: ViewModifier {
@@ -137,17 +147,15 @@ public extension View {
     }
     
     
-    func fullScreenCover(_ backgroudColor: Color = .appBackground) -> some View {
+    func fullScreenCover(_ backgroudColor: Color) -> some View {
         background(backgroudColor)
             .transition(.move(edge: .trailing))
             .zIndex(1)
     }
     
-    
     var hoverEffect: some View {
         modifier(HoverModifier())
     }
-    
 
 }
 

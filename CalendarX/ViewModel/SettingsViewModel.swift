@@ -34,32 +34,35 @@ class SettingsViewModel: ObservableObject {
     
     // Appearance
     @Published
-    var tint = Preference.shared.tint {
-        didSet { pref.tint = tint }
-    }
-    
-    @Published
-    var isSystem = Preference.shared.theme == .system {
+    var appearance = Preference.shared.appearance {
         didSet {
-            if isSystem {
-                pref.theme = .system
-            } else {
-                isDark = NSApp.effectiveAppearance.name == .darkAqua
-            }
+            pref.appearance = appearance
+        }
+    }
+
+    @Published
+    var theme = Preference.shared.theme {
+        didSet { pref.theme = theme }
+    }
+
+    @Published
+    var isSystemTheme = Preference.shared.theme == .system  {
+        didSet {
+            theme = if isSystemTheme { .system } else { isDarkTheme ? .dark: .light }
         }
     }
     
-    @Published
-    var isDark = Preference.shared.theme == .dark  {
-        didSet {  pref.theme = isDark ? .dark : .light }
+    private var isDarkTheme: Bool {
+        NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .vibrantDark]) == .darkAqua
     }
-    
-    var isShown: Bool { !isSystem }
-    
-    var color: Color { Color(hex: tint) }
-    
+
+    var accentColor: Color { pref.accentColor }
+
+    var backgroundColor: Color { pref.backgroundColor }
+
     var colorScheme: ColorScheme? { pref.colorScheme }
     
+
     init() {
         
         NotificationCenter.default
