@@ -2,7 +2,7 @@ name: Mars
 
 on:
   workflow_dispatch:
-  push:
+  # push:
     # tags:
     #   - '*'
 
