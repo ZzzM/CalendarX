@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct RowTitleView: View {
-    
     let title: LocalizedStringKey, font: Font?
 
     var body: some View {
         Text(title)
             .font(font)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .appForeground(font != .none ? .appPrimary: .appSecondary)
+            .appForeground(font != .none ? .appPrimary : .appSecondary)
     }
-    
 }

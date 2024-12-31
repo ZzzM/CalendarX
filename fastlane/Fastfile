@@ -5,8 +5,11 @@ platform :mac do
   before_all do
     ENV["APP_NAME"] = "CalendarX"
     ENV["APP_VERSION"] = last_git_tag
+    ENV["APP_BUILD"] = "#{number_of_commits}"
     ENV["SYS_MIN_VERSION"] = "11.0.0"
     ENV["BUILD_PATH"] = "./build"
+    ENV["LOG_PATH"] = ENV["BUILD_PATH"] + "/TMP.md"
+    ENV["DMG_PATH"] = ENV["BUILD_PATH"] + "/#{ENV["APP_NAME"]}.dmg"
   end
 
   lane :create_dmg do
@@ -18,17 +21,8 @@ platform :mac do
 
   private_lane :setup do
 
-    name = ENV["APP_NAME"]
-    version = ENV["APP_VERSION"]
-
-    commit = last_git_commit
-    date = Time.now.utc.localtime("+08:00").strftime("%Y.%m.%d %k:%M")  
-    path = "#{name}/Info.plist"
-    
-    increment_version_number_in_xcodeproj(version_number: version, scheme: name)
-    increment_build_number_in_xcodeproj(build_number: version, scheme: name)
-    set_info_plist_value(path: path, key: "CommitHash", value: commit[:abbreviated_commit_hash])
-    set_info_plist_value(path: path, key: "CommitDate", value: date)
+    increment_build_number_in_xcodeproj(build_number: ENV["APP_BUILD"])
+    increment_version_number_in_xcodeproj(version_number: ENV["APP_VERSION"])
   
   end
 
@@ -37,6 +31,7 @@ platform :mac do
     build_mac_app(
       clean: true,
       silent: true,
+      skip_codesigning: true,
       export_method: "mac-application",
       output_directory: ENV["BUILD_PATH"])
       
@@ -52,31 +47,40 @@ platform :mac do
     setup
     build
     clean
-    sh "cd .. && zsh ./scripts/test.sh"
+    case UI.input("do you want to release app? (yes / no)")
+    when "yes"
+       sh "cd .. && zsh ./scripts/test.sh release"
+    else
+       sh "cd .. && zsh ./scripts/test.sh debug"
+    end
   end
   
-  # lane :release do |options|
+  lane :release do |options|
 
-  #   name = ENV["APP_NAME"]
-  #   tag = ENV["APP_VERSION"]
+    name = ENV["APP_NAME"]
+    tag = ENV["APP_VERSION"]
 
-  #   repo = options[:repo]
-  #   token = options[:token]
+    repo = options[:repo]
+    token = options[:token]
 
-  #   github_release = set_github_release(
-  #     repository_name: repo,
-  #     api_token: token,
-  #     name: tag,
-  #     tag_name: tag,
-  #     description: (File.read("../TEST.md") rescue "No changelog provided"),
-  #     upload_assets: ["#{name}.dmg"])
+    log_path = "../" + ENV["LOG_PATH"]
+    dmg_path = ENV["DMG_PATH"] 
+
+    github_release = set_github_release(
+      repository_name: repo,
+      api_token: token,
+      name: tag,
+      tag_name: tag,
+      description: (File.read(log_path) rescue "No changelog provided"),
+      upload_assets: [dmg_path])
       
-  # end
+  end
 
   lane :show do
     # msg = File.read("../TEST.md")
-    UI.message ENV["APP_NAME"]
-    UI.message ENV["APP_VERSION"]
+
+    increment_build_number_in_xcodeproj(build_number: ENV["APP_BUILD"])
+    increment_version_number_in_xcodeproj(version_number: "2.3.7")
   end
 
 

@@ -1,9 +1,10 @@
-import WidgetKit
-import CalendarXShared
+import CalendarXLib
 import SwiftUI
-
+import WidgetKit
 
 extension LargeWidget {
+
+    @dynamicMemberLookup
     struct Entry: TimelineEntry {
         let date: Date, configuration: Provider.Intent
 
@@ -11,20 +12,12 @@ extension LargeWidget {
             self.date = date
             self.configuration = configuration
         }
+
+        subscript<T>(dynamicMember keyPath: KeyPath<Provider.Intent, T>) -> T {
+            get { configuration[keyPath: keyPath] }
+        }
     }
-}
 
-extension LargeWidget.Entry {
-
-    var accentColor: Color { configuration.accentColor }
-
-    var backgroundColor: Color { configuration.backgroundColor }
-
-    var colorScheme: ColorScheme? { configuration.colorScheme }
-
-    var locale: Locale { configuration.locale }
-
-    var firstWeekday: AppWeekday { configuration.firstWeekday }
 }
 
 extension LargeWidget.Entry {

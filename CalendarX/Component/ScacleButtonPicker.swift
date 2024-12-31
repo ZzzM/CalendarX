@@ -6,8 +6,9 @@
 //
 import SwiftUI
 
-struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
-    
+struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View {
+
+
     private let items: [Item]
 
     @Binding
@@ -18,45 +19,50 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
 
     private let label: () -> Label, itemLabel: (Item) -> ItemLabel
 
-    private let tint: Color, width: CGFloat, arrowEdge: Edge, locale: Locale, colorScheme: ColorScheme?
+    private let tint: Color, width: CGFloat, arrowEdge: Edge
 
-    init(items: [Item],
-         tint: Color,
-         width: CGFloat = .popoverWidth,
-         arrowEdge: Edge = .bottom,
-         locale: Locale = .current,
-         colorScheme: ColorScheme? = .none,
-         selection: Binding<Item>,
-         isPresented: Binding<Bool>,
-         @ViewBuilder label: @escaping ()-> Label,
-         @ViewBuilder itemLabel:  @escaping (Item) -> ItemLabel) {
+
+    @Environment(\.colorScheme)
+    private var colorScheme
+
+    @Environment(\.locale)
+    private var locale
+
+
+    init(
+        items: [Item],
+        tint: Color,
+        width: CGFloat = .popoverWidth,
+        arrowEdge: Edge = .bottom,
+        selection: Binding<Item>,
+        isPresented: Binding<Bool>,
+        @ViewBuilder label: @escaping () -> Label,
+        @ViewBuilder itemLabel: @escaping (Item) -> ItemLabel
+    ) {
         self.items = items
         self.tint = tint
         self.width = width
         self.arrowEdge = arrowEdge
-        self.locale = locale
-        self.colorScheme = colorScheme
         self._selection = selection
         self._isPresented = isPresented
         self.label = label
         self.itemLabel = itemLabel
     }
-    
+
     var body: some View {
-        
         ScacleButton {
-            isPresented.toggle()
+            DispatchQueue.main.async {
+                isPresented.toggle()
+            }
         } label: {
             label()
         }
         .popover(isPresented: $isPresented, attachmentAnchor: .rect(.bounds), arrowEdge: arrowEdge) {
             popoverContent()
-                .environment(\.locale, locale)
+                .preferredLocale(locale)
                 .preferredColorScheme(colorScheme)
         }
-
     }
-
 
     @ViewBuilder
     func popoverContent() -> some View {
@@ -69,7 +75,7 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
                             isPresented.toggle()
                         } label: {
                             itemLabel(item)
-                                .appForeground(item == selection ? tint:.primary)
+                                .appForeground(item == selection ? tint : .primary)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.75)
                         }
@@ -85,4 +91,3 @@ struct ScacleButtonPicker<Item: Hashable, Label: View, ItemLabel: View>: View  {
         }
     }
 }
-

@@ -5,11 +5,11 @@
 //  Created by zm on 2024/5/31.
 //
 
+import CalendarXLib
 import SwiftUI
-import CalendarXShared
 
+@MainActor
 extension WidgetConfigurationIntent {
-
     func colorItem(from colorInfo: ColorInfo) -> WidgetColor {
         WidgetColor(identifier: colorInfo.hex, display: colorInfo.name(from: locale))
     }
@@ -18,14 +18,14 @@ extension WidgetConfigurationIntent {
         let lightAccent = lightAccentColor?.identifier ?? Bundle.defaultLightAccent.hex
         let darkAccent = darkAccentColor?.identifier ?? Bundle.defaultDarkAccent.hex
         guard let colorScheme else { return Color(light: lightAccent, dark: darkAccent) }
-        return colorScheme == .light ? Color(hex: lightAccent): Color(hex: darkAccent)
+        return colorScheme == .light ? Color(hex: lightAccent) : Color(hex: darkAccent)
     }
 
     var backgroundColor: Color {
         let lightBackground = lightBackgroundColor?.identifier ?? Bundle.defaultLightBackground.hex
         let darkBackground = darkBackgroundColor?.identifier ?? Bundle.defaultDarkBackground.hex
         guard let colorScheme else { return Color(light: lightBackground, dark: darkBackground) }
-        return colorScheme == .light ? Color(hex: lightBackground): Color(hex: darkBackground)
+        return colorScheme == .light ? Color(hex: lightBackground) : Color(hex: darkBackground)
     }
 
     var colorScheme: ColorScheme? {
@@ -39,5 +39,4 @@ extension WidgetConfigurationIntent {
     var firstWeekday: AppWeekday {
         AppWeekday(rawValue: startWeekOn.rawValue) ?? .sunday
     }
-
 }

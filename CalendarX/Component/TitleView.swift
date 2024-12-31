@@ -8,19 +8,16 @@
 import SwiftUI
 
 struct TitleView<Title: View, LeftItems: View, RightItems: View>: View {
-    
     let title: () -> Title
-    
+
     @ViewBuilder
     let leftItems: () -> LeftItems
 
     @ViewBuilder
     let rightItems: () -> RightItems
 
-    
     var body: some View {
         ZStack {
-            
             HStack(content: leftItems)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -30,10 +27,6 @@ struct TitleView<Title: View, LeftItems: View, RightItems: View>: View {
 
             HStack(content: rightItems)
                 .frame(maxWidth: .infinity, alignment: .trailing)
-
         }
-
     }
 }
-
-

@@ -32,7 +32,7 @@
 "alert.calendars" = "Calendars";
 "alert.exitMessage" = "Are you sure you want to exit？";
 "alert.notificationsMessage" = "Allow notifications to enable automatic update checks.";
-"alert.calendarsMessage" = "Allow access to calendars for displaying calendar events.";
+"alert.calendarsMessage" = "Allow full access to calendars for displaying calendar events.";
 "alert.keyboardShortcutMessage" = "Using keyboard shortcut to control the calendar: \n\n⬅️: Last month   ➡️: Next month\n⬆️: Last year   ⬇️: Next year\nSpace: Today";
 
 "alert.no" = "No";

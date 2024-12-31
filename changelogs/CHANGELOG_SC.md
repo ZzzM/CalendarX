@@ -1,3 +1,27 @@
+## 2.3.6 - 2024-12-31
+
+### Added
+- 2025 年中国法定节假日
+
+### Fixed
+- 适配 macOS 15.0
+- [开机启动弹窗](https://github.com/ZzzM/CalendarX/issues/16)
+- 日历事件访问权限问题
+
+### Changed
+- 隐藏日历弹窗箭头
+- 简化版本号显示逻辑
+- 重构提醒窗、路由
+- 部分页面布局调整
+- 小组件日期更新逻辑
+
+### Security
+- Complete Concurrency Checking
+- Swift 6 
+- [swift-format](https://github.com/swiftlang/swift-format)
+
+---
+
 ## 2.3.5 - 2024-05-31
 
 ### Fixed

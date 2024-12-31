@@ -5,31 +5,30 @@
 //  Created by zm on 2022/1/27.
 //
 
+import CalendarXLib
 import SwiftUI
-import CalendarXShared
 
 struct ScacleButton<Label: View>: View {
     let action: VoidClosure
-    
+
     @ViewBuilder
     let label: () -> Label
-    
+
     var body: some View {
         Button(action: action, label: label)
             .scaleStyle()
     }
 }
 
-
 struct ScacleImageButton: View {
     private let image: Image, color: Color, action: VoidClosure
 
-    init(image: Image,  color: Color = .appSecondary, action: @escaping VoidClosure) {
+    init(image: Image, color: Color = .appSecondary, action: @escaping VoidClosure) {
         self.image = image
         self.color = color
         self.action = action
     }
-    
+
     var body: some View {
         ScacleButton(action: action) {
             image
@@ -48,7 +47,7 @@ struct ScacleTagButton: View {
                 .padding(.vertical, 5)
                 .background(Color.tagBackground)
                 .appForeground(.white)
-                .clipShape(.capsule)
+                .clipShape(.rect(cornerRadius: 5))
         }
     }
 }
@@ -58,7 +57,7 @@ struct ScacleCapsuleButton: View {
         foregroundColor: Color,
         backgroundColor: Color,
         action: VoidClosure
-    
+
     var body: some View {
         ScacleButton(action: action) {
             Text(title)
@@ -70,4 +69,3 @@ struct ScacleCapsuleButton: View {
         }
     }
 }
-

@@ -66,6 +66,9 @@ iOSInjectionProject/
 
 
 # User Custom
-scripts/test.sh
 TEST.md
+scripts/test.sh
+*.app
+Step.md
+*.dmg
 

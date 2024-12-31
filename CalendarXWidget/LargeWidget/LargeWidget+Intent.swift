@@ -7,11 +7,14 @@
 
 #if canImport(AppIntents)
 import AppIntents
+import CalendarXLib
 import SwiftUI
-import CalendarXShared
+
 @available(macOS 14.0, *)
+
 extension LargeWidget {
-    
+
+    @MainActor
     struct Storage {
 
         @AppStorage("LargeWidget.dateKey")
@@ -20,38 +23,42 @@ extension LargeWidget {
         static func lastMonth() {
             date.lastMonth()
         }
+
         static func nextMonth() {
             date.nextMonth()
         }
+
         static func today() {
             date = .now
         }
-
     }
 
+    @MainActor
     struct NextMonthIntent: AppIntent {
-        static var title: LocalizedStringResource = "Next Month"
+        nonisolated(unsafe) static var title: LocalizedStringResource = "Next Month"
         func perform() async throws -> some IntentResult {
             Storage.nextMonth()
             return .result()
         }
     }
+
+    @MainActor
     struct LastMonthIntent: AppIntent {
-        static var title: LocalizedStringResource = "Last Month"
+        nonisolated(unsafe) static var title: LocalizedStringResource = "Last Month"
         func perform() async throws -> some IntentResult {
             Storage.lastMonth()
             return .result()
         }
     }
-    
+
+    @MainActor
     struct TodayIntent: AppIntent {
-        static var title: LocalizedStringResource = "Today"
+        nonisolated(unsafe) static var title: LocalizedStringResource = "Today"
         func perform() async throws -> some IntentResult {
             Storage.today()
             return .result()
         }
     }
-    
 }
 
 #endif

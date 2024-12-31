@@ -1,13 +1,13 @@
 {
-  "originHash" : "98591a6ffb9d13a8d67c9a47ab194aaad27d28bdd140d7a4d11e4f9c706e455e",
+  "originHash" : "c415b7e064ec6747c7a080f9d574daf3f748dd35445791356cadc2b60d0f42de",
   "pins" : [
     {
       "identity" : "launchatlogin",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/LaunchAtLogin",
       "state" : {
-        "revision" : "22923d335429bfd38c52435505b06a10bcc520fd",
-        "version" : "5.0.1"
+        "revision" : "9a894d799269cb591037f9f9cb0961510d4dca81",
+        "version" : "5.0.2"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sparkle-project/Sparkle",
       "state" : {
-        "revision" : "41847a58cdef7506b257591fcca6f9495df591d4",
-        "version" : "2.6.2"
+        "revision" : "0ef1ee0220239b3776f433314515fd849025673f",
+        "version" : "2.6.4"
       }
     },
     {

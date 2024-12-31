@@ -1,3 +1,26 @@
+## 2.3.6 - 2024-12-31
+
+### Added
+- Chinese statutory holidays in 2025
+
+### Fixed
+- macOS 15.0 compatibility
+- [Startup launch dialog](https://github.com/ZzzM/CalendarX/issues/16)
+- Calendar event access permission issues
+
+### Changed
+- Hidden calendar popup arrow
+- Simplified version number 
+- Refactored reminder window and routing
+- Adjusted layout of some screens
+- Updated date logic for widgets
+
+### Security
+- Complete Concurrency Checking
+- Swift 6 
+- [swift-format](https://github.com/swiftlang/swift-format)
+
+---
 ## 2.3.5 - 2024-05-31
 
 ### Fixed

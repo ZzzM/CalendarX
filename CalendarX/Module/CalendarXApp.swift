@@ -5,20 +5,19 @@
 //  Created by zm on 2021/12/1.
 //
 
+import CalendarXLib
 import SwiftUI
-import CalendarXShared
+import WidgetKit
+
+
+extension EnvironmentValues {
+    @Entry var authorizer = Authorizer()
+}
 
 @main
 struct CalendarXApp: App {
-
     @NSApplicationDelegateAdaptor(CalendarXDelegate.self)
     private var delegate
-    
-    init() {
-        LaunchHelper.migrateIfNeeded()
-        CalendarPreference.check()
-        Updater.start()
-    }
 
     var body: some Scene {
         Settings {
@@ -27,24 +26,66 @@ struct CalendarXApp: App {
     }
 }
 
+@MainActor
 class CalendarXDelegate: NSObject & NSApplicationDelegate {
-
-    lazy var rootScreen = RootScreen()
-    lazy var popover = MenubarPopover(rootScreen)
-    lazy var controller =  MenubarController(popover)
+    
+    private var menubarController: MenubarController?
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         NSRunningApplication
-            .runningApplications(withBundleIdentifier: AppBundle.identifier)
-            .filter { $0.isFinishedLaunching }
+            .runningApplications(withBundleIdentifier: Bundle.identifier)
+            .filter(\.isFinishedLaunching)
             .forEach { $0.terminate() }
-
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        _ = controller
+
+        let appStore = AppStore()
+        let menubarStore = MenubarStore()
+        let calendarStore = CalendarStore()
+        let router = Router()
+        let dialog = Dialog()
+        let authorizer = Authorizer()
+        let updater = Updater(appStore: appStore)
+        
+        bootstrap(calendarStore: calendarStore, authorizer: authorizer, updater: updater)
+        
+        let rootScreen = RootScreen(updater: updater)
+            .environment(\.authorizer, authorizer)
+            .environmentObject(appStore)
+            .environmentObject(menubarStore)
+            .environmentObject(calendarStore)
+            .environmentObject(router)
+            .environmentObject(dialog)
+        let popover = MenubarPopover(router, rootScreen: rootScreen)
+        
+        menubarController = MenubarController(appStore: appStore, menubarStore: menubarStore, popover: popover)
+
     }
-
-
 }
 
+
+extension CalendarXDelegate {
+    
+    private func bootstrap(calendarStore: CalendarStore, authorizer: Authorizer, updater: Updater) {
+        Launcher.migrateIfNeeded()
+        resolveEventsAuthorization(authorizer: authorizer, calendarStore: calendarStore)
+        resolveNotificationsAuthorization(authorizer: authorizer, updater: updater)
+
+    }
+    
+    private func resolveEventsAuthorization(authorizer: Authorizer, calendarStore: CalendarStore) {
+        WidgetCenter.shared.reloadAllTimelines()
+        if authorizer.allowFullAccessToEvents { return }
+        if calendarStore.showEvents { calendarStore.showEvents.toggle() }
+    }
+    
+    private func resolveNotificationsAuthorization(authorizer: Authorizer, updater: Updater) {
+        Task {
+            if await authorizer.allowNotifications { return }
+            if updater.automaticallyChecksForUpdates {
+                updater.automaticallyChecksForUpdates.toggle()
+            }
+        }
+    }
+}

@@ -6,70 +6,117 @@
 //
 
 import AppKit
+import CalendarXLib
 import Combine
-import CalendarXShared
 import WidgetKit
 
+@MainActor
 class MenubarController {
-    
+
+    private let appStore: AppStore
+
+    private let menubarStore: MenubarStore
+
     private let popover: MenubarPopover
-    
-    private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-    
-    private lazy var itemController = MenubarItemController(statusItem,
-                                                            target: self,
-                                                            action: #selector(togglePopover))
-    
-    private lazy var monitor = MonitorHelper { [weak self] _ in
-        guard let self, popover.isShown else { return }
-        closePopover()
-    }
-    
+
+    private let schedule: MenubarSchedule
+
+    private let menubarItem: NSStatusItem
+
+    private let menubarButton: NSStatusBarButton?
+
     private var cancellables: Set<AnyCancellable> = []
-    
-    init(_ popover: MenubarPopover) {
+
+    init(appStore: AppStore, menubarStore: MenubarStore, popover: MenubarPopover) {
+        self.appStore = appStore
+        self.menubarStore = menubarStore
         self.popover = popover
-        self.addObserver()
-        _ = itemController
+        self.schedule = MenubarSchedule(menubarStore: menubarStore)
+        self.menubarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        self.menubarButton = menubarItem.button
+
+        setupMenubarButton()
+        setupMenubarSchedule()
+        setupMenubarObservers()
+
     }
-    
+
 }
 
 extension MenubarController {
-    
-    private func addObserver() {
-        
+
+    private func setupMenubarSchedule() {
+        schedule.action = { [weak self] in
+            guard let self else { return }
+            menubarButton?.image = menubarButtonImage
+            menubarButton?.attributedTitle = menubarButtonTitle
+        }
+        schedule.action?()
+        schedule.update()
+    }
+
+    private func setupMenubarButton() {
+        menubarButton?.imagePosition = .imageOverlaps
+        menubarButton?.target = self
+        menubarButton?.action = #selector(togglePopover)
+        menubarButton?.sendAction(on: [.leftMouseDown, .rightMouseDown])
+    }
+
+    private var menubarButtonImage: NSImage? {
+        menubarStore.style != .icon ? .none : menubarStore.iconType.nsImage(locale: appStore.locale)
+    }
+
+    private var menubarButtonTitle: NSAttributedString {
+        let title =
+            switch menubarStore.style {
+            case .icon: menubarStore.iconType.title
+            case .date: menubarStore.dateItemTitle(locale: appStore.locale)
+            }
+
+        let font =
+            switch menubarStore.style {
+            case .icon: NSFont.statusIcon
+            case .date: NSFont.statusItem
+            }
+
+        return NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: font])
+    }
+}
+
+extension MenubarController {
+
+    private func setupMenubarObservers() {
         NotificationCenter.default
             .publisher(for: .titleStyleDidChanged)
             .sink { [weak self] _ in
                 guard let self else { return }
-                itemController.updateItem()
-                itemController.updateTask()
+                schedule.action?()
+                schedule.update()
             }
             .store(in: &cancellables)
-    
-        NotificationCenter.default
+
+        NSWorkspace.shared.notificationCenter
             .publisher(for: .NSCalendarDayChanged)
-            .sink{ [weak self] _ in
+            .sink { [weak self] _ in
                 guard let self else { return }
-                itemController.updateItem()
+                schedule.action?()
             }
             .store(in: &cancellables)
-        
+
         NotificationCenter.default
             .publisher(for: NSLocale.currentLocaleDidChangeNotification)
-            .sink{ [weak self] _ in
+            .sink { [weak self] _ in
                 guard let self else { return }
-                itemController.updateItem()
+                schedule.action?()
             }
             .store(in: &cancellables)
-        
+
         NotificationCenter.default
             .publisher(for: .NSSystemClockDidChange)
-            .sink{ [weak self] _ in
+            .sink { [weak self] _ in
                 guard let self else { return }
-                itemController.updateItem()
-                itemController.updateTask()
+                schedule.action?()
+                schedule.update()
             }
             .store(in: &cancellables)
 
@@ -79,28 +126,13 @@ extension MenubarController {
                 WidgetCenter.shared.reloadAllTimelines()
             }
             .store(in: &cancellables)
-
     }
-    
 }
 
 extension MenubarController {
-    
-    
-    @objc private func togglePopover(_ sender: Any?) {
-        popover.isShown ? closePopover(): showPopover(sender)
-    }
-    
-    private func showPopover(_ sender: Any?) {
-        guard let event = NSApp.currentEvent else { return }
-        Router.set(event.isRightClicked ? .settings: .calendar)
-        popover.show(sender)
-        monitor.start()
-    }
-    
-    private func closePopover() {
-        popover.close()
-        monitor.stop()
-    }
-}
 
+    @objc private func togglePopover(_ sender: Any?) {
+        popover.isShown ? popover.close() : popover.show(sender)
+    }
+
+}
