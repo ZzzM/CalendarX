@@ -8,7 +8,7 @@
                     {% assign flag = '<!--' %}
                     {% if release.body contains flag %}
                     <item>
-                        <title>{{ release.name }}</title>
+                        <title>Version {{ release.name }}</title>
                         <pubDate>{{ release.published_at | date_to_rfc822 }}</pubDate>
                         
                         {% assign body = release.body | split:flag %}
@@ -17,7 +17,7 @@
 
                         {% if body.size > 2 %}
                         {% assign description_zh = body[1] | strip %}
-                        <description xml:lang="zh-Hans"><![CDATA[{{ description_zh | markdownify }}]]></description>
+                        <description xml:lang="zh"><![CDATA[{{ description_zh | markdownify }}]]></description>
                         {% endif %}
 
                         {% assign enclosure = body.last | strip %}
