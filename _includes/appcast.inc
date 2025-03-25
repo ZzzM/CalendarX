@@ -3,14 +3,17 @@
     <channel>
         <title>{{ site.github.project_title }}</title>
         {% for release in site.github.releases %}
-            {% unless release.draft %}
-                {% unless release.prerelease and page.release_only %}
-                    {% assign flag = '<!--' %}
-                    {% if release.body contains flag %}
+            {% unless release.draft and page.release_only %}
+                {% assign flag = '<!--' %}
+                {% if release.body contains flag %}
                     <item>
-                        <title>Version {{ release.name }}</title>
+                        <title>{{ release.name }}</title>
                         <pubDate>{{ release.published_at | date_to_rfc822 }}</pubDate>
-                        
+
+                        {% if release.prerelease %}
+                        <sparkle:channel>beta</sparkle:channel>
+                        {% endif %}
+
                         {% assign body = release.body | split:flag %}
                         {% assign description = body.first | strip %}
                         <description xml:lang="en"><![CDATA[{{ description | markdownify }}]]></description>
@@ -23,8 +26,7 @@
                         {% assign enclosure = body.last | strip %}
                         {{ enclosure }}
                     </item>
-                    {% endif %}
-                {% endunless %}
+                {% endif %}
             {% endunless %}
         {% endfor %}
     </channel>
