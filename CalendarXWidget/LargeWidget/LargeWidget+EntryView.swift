@@ -1,5 +1,6 @@
 import CalendarXLib
 import SwiftUI
+import Algorithms
 
 extension LargeWidget {
     
@@ -9,19 +10,19 @@ extension LargeWidget {
         
         private let eventStore = AppEventStore()
         private let festivalStore = FestivalStore()
-
+        
         private var date: Date { entry.date }
         private var locale: Locale { entry.locale }
-
+        
         private var accentColor: Color { entry.accentColor }
         private var offBackground: Color { accentColor.opacity(0.12) }
-
+        
         init(entry: Entry, calendar: Calendar) {
             self.entry = entry
             self.calendar = calendar
             self.calendar.firstWeekday = entry.firstWeekday.rawValue
         }
-
+        
         var body: some View {
             if #available(macOSApplicationExtension 14.0, *) {
                 content.containerBackground(for: .widget) {
@@ -34,35 +35,70 @@ extension LargeWidget {
                 }
             }
         }
-
+        
+        @ViewBuilder
         private var content: some View {
             let dates = calendar.generateDates(for: date)
+            
+            let showWeekNumbers = entry.showWeekNumbers
+   
+            
+            let spacing = dates.count > Solar.minDates ? 0.5 : 8.5
             let eventsMap = eventStore.generateEventsMap(dates)
-            let spacing: CGFloat? = dates.count > Solar.minDates ? 1.7 : .none
 
-            return LazyVGrid(columns: Solar.gridColumns, spacing: spacing) {
-                Section {
-                    ForEach(0..<min(Solar.daysInWeek, dates.count), id: \.self) {
-                        weekView(dates[$0])
+            let leadingDates = dates.striding(by: Solar.daysInWeek).map(\.self)
+            let subtitleDates = dates.prefix(Solar.daysInWeek).map(\.self)
+            let columns = Array(repeating: GridItem(spacing: showWeekNumbers ? 11.5 : 15.5), count: Solar.daysInWeek)
+
+            VStack {
+
+                title()
+
+                LazyHStack {
+
+                    if showWeekNumbers {
+                        leading(leadingDates, spacing: spacing)
                     }
-                    ForEach(dates, id: \.self) { appDate in
-                        dayView(appDate, events: eventsMap[appDate.eventsKey] ?? [])
+
+                    LazyVGrid(columns: columns, spacing: spacing) {
+
+                        subtitle(subtitleDates)
+
+                        ForEach(dates, id: \.self) { appDate in
+                            element(appDate, events: eventsMap[appDate.eventsKey] ?? [])
+                        }
                     }
-                } header: {
-                    header
+
+                }
+
+            }
+        }
+        
+        private func subtitle(_ dates: [AppDate]) -> some View {
+            ForEach(dates, id: \.self) {
+                Text($0.shortWeekday(locale: locale))
+                    .appForeground($0.inWeekend ? .appSecondary : .appPrimary)
+                    .sideLength(30)
+            }
+        }
+        
+        
+        private func leading(_ dates: [AppDate], spacing: CGFloat) -> some View {
+            VStack(spacing: spacing) {
+                Text("#")
+                    .frame(width: 15, height: 30)
+                    .appForeground(accentColor)
+                ForEach(dates, id: \.self) {
+                    Text("\(calendar.component(.weekOfYear, from: $0))")
+                        .font(.caption2.monospacedDigit())
+                        .frame(width: 15, height: 40)
+                        .appForeground(accentColor)
                 }
             }
         }
-
+        
         @ViewBuilder
-        private func weekView(_ appDate: AppDate) -> some View {
-            Text(appDate.shortWeekday(locale: locale))
-                .appForeground(appDate.inWeekend ? .appSecondary : .appPrimary)
-                .sideLength(30)
-        }
-
-        @ViewBuilder
-        private func dayView(_ appDate: AppDate, events: [AppEvent]) -> some View {
+        private func element(_ appDate: AppDate, events: [AppEvent]) -> some View {
             
             let tiaoxiu = festivalStore.tiaoxiu(date: appDate)
             let tiaoxiuColor: Color = tiaoxiu.isXiu ? offBackground : .workBackground
@@ -111,7 +147,7 @@ extension LargeWidget {
         }
 
         @ViewBuilder
-        var header: some View {
+        private func title() -> some View {
             if #available(macOSApplicationExtension 14.0, *) {
                 HStack {
                     Button(intent: LastMonthIntent()) {
@@ -144,4 +180,7 @@ extension LargeWidget {
             }
         }
     }
+    
+   
+
 }

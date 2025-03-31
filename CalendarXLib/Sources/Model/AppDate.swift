@@ -52,7 +52,7 @@ extension AppDateFormatter {
         return shared.string(from: date)
     }
 
-    static func t(date: AppDate, locale: Locale, use24h: Bool, showSeconds: Bool) -> String {
+    static func t(date: AppDate, use24h: Bool, showSeconds: Bool) -> String {
         shared.locale = .posix
         shared.dateFormat = (use24h ? "HH:mm" : "h:mm") + (showSeconds ? ":ss" : "")
         return shared.string(from: date)
@@ -134,8 +134,8 @@ extension AppDate {
 
     public func a(locale: Locale) -> String { AppDateFormatter.a(date: self, locale: locale) }
 
-    public func t(locale: Locale, use24h: Bool, showSeconds: Bool) -> String {
-        AppDateFormatter.t(date: self, locale: locale, use24h: use24h, showSeconds: showSeconds)
+    public func t(use24h: Bool, showSeconds: Bool) -> String {
+        AppDateFormatter.t(date: self, use24h: use24h, showSeconds: showSeconds)
     }
 }
 

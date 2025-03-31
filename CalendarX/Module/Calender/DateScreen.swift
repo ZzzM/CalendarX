@@ -7,7 +7,6 @@
 
 import CalendarXLib
 import SwiftUI
-import WrappingHStack
 
 struct DateScreen: View {
 
@@ -46,23 +45,71 @@ struct DateScreen: View {
 
 struct FestivalsView: View {
 
-    let festivals: [String], action: (String) -> Void
+    let action: (String) -> Void
+
+    private var festivalGroups: [[String]] = []
+    private let textPadding: CGFloat = 3
+    private let textSpacing: CGFloat = 5
+    private let textFont: Font = .caption2
+    private let textStyle: NSFont.TextStyle = .caption2
+    private let maxWidth: CGFloat = .mainWidth - 20
+
+    init(festivals: [String], action: @escaping (String) -> Void) {
+        self.action = action
+        self.festivalGroups = convert(festivals: festivals)
+    }
 
     var body: some View {
-        if festivals.isNotEmpty {
-            WrappingHStack(festivals, spacing: .constant(5), lineSpacing: 5) { festival in
-                ScacleButton {
-                    action(festival)
-                } label: {
-                    Text(festival)
-                        .padding(3)
-                        .background(Color.tagBackground)
-                        .appForeground(.white)
-                        .clipShape(.rect(cornerRadius: 3))
-                        .font(.caption2)
+        if festivalGroups.isNotEmpty {
+            VStack(alignment: .leading, spacing: textSpacing) {
+                ForEach(festivalGroups, id: \.self) { group in
+                    HStack(spacing: textSpacing) {
+                        ForEach(group, id: \.self) { festival in
+                            ScacleButton {
+                                action(festival)
+                            } label: {
+                                Text(festival)
+                                    .padding(textPadding)
+                                    .background(Color.tagBackground)
+                                    .appForeground(.appWhite)
+                                    .clipShape(.rect(cornerRadius: 3))
+                                    .font(textFont)
+                            }
+                        }
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    func convert(festivals: [String]) -> [[String]] {
+        var groups: [[String]] = []
+        var group: [String] = []
+        var groupWidth: CGFloat = 0
+
+        for festival in festivals {
+            let width =
+                festival.size(withAttributes: [
+                    .font: NSFont.preferredFont(forTextStyle: textStyle)
+                ]).width + textSpacing
+            let spacing = group.isEmpty ? 0 : textSpacing  // Add spacing only if not the first text
+
+            if groupWidth + width + CGFloat(spacing) > maxWidth {
+                groups.append(group)
+                group = [festival]
+                groupWidth = width
+            } else {
+                group.append(festival)
+                groupWidth += width + CGFloat(spacing)
+            }
+        }
+
+        if !group.isEmpty {
+            groups.append(group)
+        }
+
+        return groups
     }
 }
 
@@ -99,21 +146,11 @@ struct EventsView: View {
                     Text(event.endDate.eventTimeline)
                 }
 
-                //  Remove Event ?
-                //                Spacer()
-                //
-                //                ScacleButton {
-                //
-                //                } label: {
-                //                    Image.trash
-                //                }
-
             }
             .font(.caption2)
             .appForeground(.appSecondary)
             .frame(maxWidth: .infinity, alignment: .leading)
-
-            Text(event.title).appForeground(.appPrimary)
+            Text(event.title)
         }
         .padding(5)
         .background(Color.card)

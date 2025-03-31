@@ -16,31 +16,12 @@ struct SettingsScreen: View {
 
     @EnvironmentObject
     private var dialog: Dialog
-    
+
     @EnvironmentObject
     private var appStore: AppStore
-    
+
     @EnvironmentObject
     private var menubarStore: MenubarStore
-
-    @Environment(\.authorizer)
-    private var authorizer
-
-    private let updater: Updater
-
-    @State
-    private var automaticallyChecksForUpdates: Bool {
-        didSet {
-            updater.automaticallyChecksForUpdates = automaticallyChecksForUpdates
-        }
-    }
-
-    init(updater: Updater) {
-
-        self.automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
-        self.updater = updater
-
-    }
 
     var body: some View {
         VStack(spacing: 15) {
@@ -64,9 +45,9 @@ struct SettingsScreen: View {
                 calendarRow
                 languageRow
                 memubarRow
-                autoRow
                 launchRow
                 recommendRow
+                updateRow
                 aboutRow
             }
         }
@@ -112,36 +93,11 @@ extension SettingsScreen {
             .checkboxStyle()
     }
 
-    @ViewBuilder
-    var autoRow: some View {
+    var updateRow: some View {
 
-        let isOn = Binding {
-            automaticallyChecksForUpdates
-        } set: { value in
-            Task {
-                switch await authorizer.notificationsuStatus {
-                case .denied:
-                    dialog.popup(.notifications) {
-                        router.preference(Privacy.notifications)
-                    }
-                case .notRequested:
-                    automaticallyChecksForUpdates = await authorizer.requestNotificationsAuthorization()
-                default:
-                    automaticallyChecksForUpdates = value
-                }
-            }
+        SettingsRow(title: L10n.Settings.update, detail: {}) {
+            router.push(.update)
         }
-
-        Toggle(isOn: isOn) { Text(L10n.Settings.auto).font(.title3) }
-            .checkboxStyle()
-            .onAppear {
-                Task {
-                    if await authorizer.allowNotifications { return }
-                    if automaticallyChecksForUpdates {
-                        automaticallyChecksForUpdates.toggle()
-                    }
-                }
-            }
 
     }
 
@@ -186,13 +142,14 @@ struct SettingsRow<Content: View>: View {
                 .font(titleFont)
             Spacer()
 
-            Group {
-                detail()
-                if showArrow {
-                    Image.rightArrow.font(titleFont)
-                }
+            detail()
+                .appForeground(.appSecondary)
+            if showArrow {
+                Image.rightArrow
+                    .font(titleFont)
+                    .appForeground(.appSecondary)
             }
-            .appForeground(.appSecondary)
+
         }
         .contentShape(.rect)
         .onTapGesture(perform: action)
@@ -213,7 +170,7 @@ struct SettingsPickerRow<Item: Hashable, Label: View>: View {
 
     @EnvironmentObject
     private var appStore: AppStore
-    
+
     init(
         title: LocalizedStringKey,
         items: [Item],

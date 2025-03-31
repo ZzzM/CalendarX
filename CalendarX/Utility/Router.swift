@@ -15,7 +15,7 @@ class Router: ObservableObject {
     enum Screen {
         case calendar
         case date(AppDate, [AppEvent], [String])
-        case settings, recommendations, menubarSettings, appearanceSettings, calendarSettings, about
+        case settings, recommendations, menubarSettings, appearanceSettings, calendarSettings, update, about
         case empty
     }
 
@@ -48,6 +48,16 @@ class Router: ObservableObject {
             _ = path.popLast()
         }
     }
+
+    func popAndNofiy(_ name: NSNotification.Name, object: Any? = .none) {
+        pop()
+        NotificationCenter.default.post(name: name, object: object)
+    }
+    
+    func popOrNotify(_ name: NSNotification.Name, object: Any? = .none) {
+        path.count > 1 ? pop():NotificationCenter.default.post(name: name, object: object)
+    }
+   
 
 }
 

@@ -23,7 +23,6 @@ struct TitleView<Title: View, LeftItems: View, RightItems: View>: View {
 
             title()
                 .font(.title2)
-                .appForeground(.accentColor)
 
             HStack(content: rightItems)
                 .frame(maxWidth: .infinity, alignment: .trailing)

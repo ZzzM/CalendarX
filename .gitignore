@@ -71,4 +71,4 @@ scripts/test.sh
 *.app
 Step.md
 *.dmg
-
+Gemfile.lock

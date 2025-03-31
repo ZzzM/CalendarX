@@ -12,14 +12,13 @@
 "settings.recommendations" = "App 推荐";
 "settings.menubarStyle" = "菜单栏样式";
 "settings.launchAtLogin" = "开机启动";
-"settings.auto" = "自动检查更新";
-"settings.version" = "版本";
-"settings.checkForUpdates" = "检查更新";
+"settings.update" = "更新";
 "settings.about" = "关于";
 
 "calendar.showLunar" = "显示阴历";
 "calendar.showHolidays" = "显示中国法定假日";
 "calendar.showEvents" = "显示日历事件";
+"calendar.showWeekNumbers" = "显示周数";
 "calendar.startWeekOn" = "星期开始于";
 "calendar.keyboardShortcut" = "键盘快捷键";
 
@@ -32,7 +31,7 @@
 "alert.exitMessage" = "您确定要退出吗？";
 "alert.notificationsMessage" = "允许通知用以开启自动检查更新";
 "alert.calendarsMessage" = "允许完全访问日历以显示日历事件";
-"alert.keyboardShortcutMessage" = "使用键盘快捷键来控制日历： \n\n⬅️：上一月   ➡️：下一月\n⬆️：上一年   ⬇️：下一年\n空格：今天";
+"alert.keyboardShortcutMessage" = "使用键盘快捷键来控制日历： \n\n⬅️：上一月 ➡️：下一月\n⬆️：上一年 ⬇️：下一年\n “空格”：今天\n“Esc”：返回或关闭";
 "alert.no" = "否";
 "alert.yes" = "是";
 "alert.ok" = "好的";
@@ -45,7 +44,7 @@
 "menubarStyle.showSeconds" = "在时间中显示秒钟";
 
 "theme.title" = "主题";
-"theme.system" = "跟随系统";
+"theme.system" = "系统";
 "theme.dark" = "深色";
 "theme.light" = "浅色";
 
@@ -53,6 +52,10 @@
 "date.events" = "日历事件";
 "date.noEvents" = "无日历事件";
 
-"updater.available" = "有新的更新可用 🎉";
-"updater.update" = "版本 %@ 现已可用";
-
+"updater.title" = "有新的更新可用 🎉";
+"updater.body" = "版本 %@ 现已可用";
+"updater.checkForUpdates" = "检查更新";
+"updater.beta" = "包含测试版";
+"updater.auto" = "自动检查更新";
+"updater.version" = "版本";
+"updater.build" = "构建号";

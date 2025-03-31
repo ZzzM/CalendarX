@@ -1,3 +1,28 @@
+## 2.3.7 - 2025-03-31
+### Added
+- ESC key shortcut (back/close window)
+- Updated settings screen
+- Show week number
+
+### Fixed
+- [Unable to set launch at login](https://github.com/ZzzM/CalendarX/issues/24)
+- [Unable to set automatic check for updates](https://github.com/ZzzM/CalendarX/issues/20)
+- [Menu bar date not updating](https://github.com/ZzzM/CalendarX/issues/22)
+- [Widgets not displaying](https://github.com/ZzzM/CalendarX/issues/19)
+
+### Changed
+- Shortcut key hint UI
+- Menu bar icon size & font size
+- Redesigned appearance settings screen
+- Redesigned menu bar settings screen
+- Default white font color set to `#EEEEEE`
+
+### Security
+- Avoided using `Group` in SwiftUI
+
+### Removed
+- `WrappingHStack`
+
 ## 2.3.6 - 2024-12-31
 
 ### Added

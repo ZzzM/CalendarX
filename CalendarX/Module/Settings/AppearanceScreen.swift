@@ -9,6 +9,7 @@ import Algorithms
 import CalendarXLib
 import SwiftUI
 
+
 struct AppearanceScreen: View {
 
     @EnvironmentObject
@@ -17,6 +18,11 @@ struct AppearanceScreen: View {
     @EnvironmentObject
     private var appStore: AppStore
 
+    
+    private var isDark: Bool {
+        NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .vibrantDark]) == .darkAqua
+    }
+    
     var body: some View {
         VStack(spacing: 10) {
             TitleView {
@@ -29,38 +35,23 @@ struct AppearanceScreen: View {
                 EmptyView()
             }
 
-            themeRow
-
-            if appStore.theme.isNotSystem {
-                Picker(selection: $appStore.theme) {
-                    ForEach(Theme.allCases.filter(\.isNotSystem), id: \.self) {
-                        Text($0.title)
-                    }
-                } label: {
-                    EmptyView()
-                }
-                .pickerStyle(.segmented)
-
-                switch appStore.theme {
-                case .light: lightThemeView
-                case .dark: darkThemeView
-                default: EmptyView()
-                }
+            SegmentedPicker(items: Theme.allCases,
+                            selection: $appStore.theme) {
+                Text($0.title)
             }
+            
+            switch appStore.theme {
+            case .light: lightThemeView
+            case .dark: darkThemeView
+            default: deviceThemeView
+            }
+            
+            
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding()
     }
 
-    private var themeRow: some View {
-        let isOn = Binding {
-            appStore.theme.isSystem
-        } set: { value in
-            appStore.theme = value ? .system : NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .vibrantDark]) == .darkAqua ? .dark : .light
-        }
-        return Toggle(isOn: isOn) { Text(L10n.Theme.system).font(.title3) }
-            .checkboxStyle()
-    }
 
     private var lightThemeView: some View {
         ThemeSection(
@@ -79,6 +70,15 @@ struct AppearanceScreen: View {
             backgroundColors: Bundle.darkBackground
         )
     }
+    
+    @ViewBuilder
+    private var deviceThemeView: some View {
+        if isDark {
+            darkThemeView
+        } else {
+            lightThemeView
+        }
+    }
 }
 
 struct ThemeSection: View {
@@ -94,7 +94,6 @@ struct ThemeSection: View {
 
     let accentColors, backgroundColors: [ColorInfo]
 
-
     var body: some View {
         section(
             title: L10n.Appearance.accentColor,
@@ -102,14 +101,12 @@ struct ThemeSection: View {
             selectedItem: selectedAccent
         ) { colorInfo in
             Button {
-                withAnimation {
-                    selectedAccent = colorInfo
-                }
+                selectedAccent = colorInfo
             } label: {
                 ZStack {
                     Color(hex: colorInfo.hex)
                     if colorInfo == selectedAccent {
-                        Image.pin.appForeground(.white)
+                        Image.pin.appForeground(.appWhite)
                     }
                 }
             }
@@ -121,9 +118,7 @@ struct ThemeSection: View {
             selectedItem: selectedBackground
         ) { colorInfo in
             Button {
-                withAnimation {
-                    selectedBackground = colorInfo
-                }
+                selectedBackground = colorInfo
             } label: {
                 ZStack {
                     Color(hex: colorInfo.hex)
@@ -163,11 +158,8 @@ struct ThemeSection: View {
                 title: title,
                 showArrow: false,
                 detail: {
-                    if #available(macOS 13.0, *) {
-                        Text(selectedItem.name(from: locale)).font(.body.monospaced()).contentTransition(.opacity)
-                    } else {
-                        Text(selectedItem.name(from: locale)).font(.system(size: 13, design: .monospaced))
-                    }
+                    Text(selectedItem.name(from: locale))
+                        .font(.footnote)
                 },
                 action: {}
             )

@@ -27,51 +27,33 @@ A lightweight macOS app for displaying calendar and time
 - [English](changelogs/CHANGELOG.md)
 
 ## Snapshots
-- Calendar 
+
+### Calendar 
+
+> [!NOTE]
+> Left click the menubar item to open it
+
+<img src="assets/001.png" width=250> <img src="assets/002.png" width=250>
+
+### Settings
+
+> [!NOTE]
+> Right click the menubar item to open it
     
-    Left click the menubar item to open it
+<img src="assets/003.png" width=250> <img src="assets/003a.png" width=250> 
 
-    <img src="assets/001.png" width=250> <img src="assets/002.png" width=250>
+<img src="assets/003b.png" width=250>
+    <img src="assets/003e.png" width=250> 
 
+> [!TIP]
+> Drag and drop to edit `Date & Time Style`
+
+<img src="assets/003c.png" width=250> <img src="assets/003d.png" width=250> 
+
+### Widget / Interactive Widget ( *macOS 14.0 +* )
+
+<img src="assets/010.png" width=250> <img src="assets/010a.png" width=250>
     
-
-- Settings
-
-    Right click the menubar item to open it
-    
-
-    <img src="assets/003.png" width=250> <img src="assets/004.png" width=250> 
-
-- Appearance Settings 
-
-    <img src="assets/004a.png" width=250> <img src="assets/004b.png" width=250> 
-
-- Menubar Style 
-
-    Drag and drop to edit `Date & Time Style`
-
-    <img src="assets/006a.png" width=250> <img src="assets/006b.png" width=250> 
-
-
-
-- Widget
-
-    <img src="assets/008.png" width=250> <img src="assets/009.png" width=250> 
-    
-- Interactive Widget ( **macOS 14.0 +** )
-
-    `<`: Last month
-    
-    `Month & Year`: Today
-    
-    `>`: Next month
-
-    <img src="assets/007.png" width=250>
-    
-
-
-
-
 ## FAQ
 
 1. **"CalendarX.dmg" can't be opened.**
@@ -92,7 +74,6 @@ A lightweight macOS app for displaying calendar and time
 ## Dependencies
 
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
-- [WrappingHStack](https://github.com/dkk/WrappingHStack)
 - [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
 - [Schedule](https://github.com/luoxiu/Schedule)  
 - [Swift Algorithms](https://github.com/apple/swift-algorithms)

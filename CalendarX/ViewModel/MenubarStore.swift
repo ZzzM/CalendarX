@@ -50,7 +50,7 @@ extension MenubarStore {
         case .sd: date.sd(locale: locale)
         case .e: date.e(locale: locale)
         case .a: date.a(locale: locale)
-        case .t: date.t(locale: locale, use24h: use24h, showSeconds: showSeconds)
+        case .t: date.t(use24h: use24h, showSeconds: showSeconds)
         }
     }
 

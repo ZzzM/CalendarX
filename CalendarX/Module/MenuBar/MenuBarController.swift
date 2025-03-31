@@ -27,6 +27,8 @@ class MenubarController {
 
     private var cancellables: Set<AnyCancellable> = []
 
+    private let emptyAttributedString = NSAttributedString()
+
     init(appStore: AppStore, menubarStore: MenubarStore, popover: MenubarPopover) {
         self.appStore = appStore
         self.menubarStore = menubarStore
@@ -63,29 +65,33 @@ extension MenubarController {
     }
 
     private var menubarButtonImage: NSImage? {
-        menubarStore.style != .icon ? .none : menubarStore.iconType.nsImage(locale: appStore.locale)
+        menubarStore.style != .icon
+            ? .none
+            : menubarStore.iconType.nsImage(locale: appStore.locale)
     }
 
     private var menubarButtonTitle: NSAttributedString {
-        let title =
-            switch menubarStore.style {
-            case .icon: menubarStore.iconType.title
-            case .date: menubarStore.dateItemTitle(locale: appStore.locale)
-            }
-
-        let font =
-            switch menubarStore.style {
-            case .icon: NSFont.statusIcon
-            case .date: NSFont.statusItem
-            }
-
-        return NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: font])
+        menubarStore.style != .date
+            ? emptyAttributedString
+            : .init(
+                string: menubarStore.dateItemTitle(locale: appStore.locale),
+                attributes: [.font: NSFont.statusItem]
+            )
     }
 }
 
 extension MenubarController {
 
     private func setupMenubarObservers() {
+
+        NotificationCenter.default
+            .publisher(for: .popoverWillCloseManually)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                popover.close()
+            }
+            .store(in: &cancellables)
+
         NotificationCenter.default
             .publisher(for: .titleStyleDidChanged)
             .sink { [weak self] _ in
@@ -95,13 +101,25 @@ extension MenubarController {
             }
             .store(in: &cancellables)
 
-        NSWorkspace.shared.notificationCenter
-            .publisher(for: .NSCalendarDayChanged)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                schedule.action?()
+        if #available(macOS 12.0, *) {
+            Task { [weak self] in
+                for await _ in NotificationCenter.default
+                    .notifications(named: .NSCalendarDayChanged)
+                    .compactMap({ _ in })
+                {
+                    guard let self else { return }
+                    schedule.action?()
+                }
             }
-            .store(in: &cancellables)
+        } else {
+            NotificationCenter.default
+                .publisher(for: .NSCalendarDayChanged)
+                .sink { [weak self] _ in
+                    guard let self else { return }
+                    schedule.action?()
+                }
+                .store(in: &cancellables)
+        }
 
         NotificationCenter.default
             .publisher(for: NSLocale.currentLocaleDidChangeNotification)

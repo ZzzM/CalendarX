@@ -10,7 +10,7 @@ import SwiftUI
 
 @MainActor
 class CalendarStore: ObservableObject {
-    
+
     @AppStorage(CalendarStorageKey.weekday, store: .group)
     var weekday: AppWeekday = .sunday
 
@@ -23,6 +23,10 @@ class CalendarStore: ObservableObject {
     @AppStorage(CalendarStorageKey.showHolidays, store: .group)
     var showHolidays: Bool = true
 
+    @AppStorage(CalendarStorageKey.showWeekNumbers, store: .group)
+    var showWeekNumbers: Bool = false
+
     @AppStorage(CalendarStorageKey.keyboardShortcut, store: .group)
     var keyboardShortcut: Bool = true
+
 }

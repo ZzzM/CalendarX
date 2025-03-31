@@ -17,15 +17,19 @@ extension WidgetConfigurationIntent {
     var accentColor: Color {
         let lightAccent = lightAccentColor?.identifier ?? Bundle.defaultLightAccent.hex
         let darkAccent = darkAccentColor?.identifier ?? Bundle.defaultDarkAccent.hex
-        guard let colorScheme else { return Color(light: lightAccent, dark: darkAccent) }
-        return colorScheme == .light ? Color(hex: lightAccent) : Color(hex: darkAccent)
+        guard let colorScheme else { return Color(lightHex: lightAccent, darkHex: darkAccent) }
+        return colorScheme == .light
+            ? Color(hex: lightAccent) ?? .black
+            : Color(hex: darkAccent) ?? .white
     }
 
     var backgroundColor: Color {
         let lightBackground = lightBackgroundColor?.identifier ?? Bundle.defaultLightBackground.hex
         let darkBackground = darkBackgroundColor?.identifier ?? Bundle.defaultDarkBackground.hex
-        guard let colorScheme else { return Color(light: lightBackground, dark: darkBackground) }
-        return colorScheme == .light ? Color(hex: lightBackground) : Color(hex: darkBackground)
+        guard let colorScheme else { return Color(lightHex: lightBackground, darkHex: darkBackground) }
+        return colorScheme == .light
+            ? Color(hex: lightBackground) ?? .white
+            : Color(hex: darkBackground) ?? .black
     }
 
     var colorScheme: ColorScheme? {

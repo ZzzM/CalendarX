@@ -38,20 +38,6 @@ struct ScacleImageButton: View {
     }
 }
 
-struct ScacleTagButton: View {
-    let title: LocalizedStringKey, action: VoidClosure
-    var body: some View {
-        ScacleButton(action: action) {
-            Text(title)
-                .padding(.horizontal, 5)
-                .padding(.vertical, 5)
-                .background(Color.tagBackground)
-                .appForeground(.white)
-                .clipShape(.rect(cornerRadius: 5))
-        }
-    }
-}
-
 struct ScacleCapsuleButton: View {
     let title: LocalizedStringKey,
         foregroundColor: Color,

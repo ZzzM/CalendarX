@@ -15,9 +15,8 @@ import SwiftUI
 extension LargeWidget {
 
     @MainActor
-    struct Storage {
+    enum Store {
 
-        @AppStorage("LargeWidget.dateKey")
         static var date: Date = .now
 
         static func lastMonth() {
@@ -31,13 +30,14 @@ extension LargeWidget {
         static func today() {
             date = .now
         }
+
     }
 
     @MainActor
     struct NextMonthIntent: AppIntent {
         nonisolated(unsafe) static var title: LocalizedStringResource = "Next Month"
         func perform() async throws -> some IntentResult {
-            Storage.nextMonth()
+            Store.nextMonth()
             return .result()
         }
     }
@@ -46,7 +46,7 @@ extension LargeWidget {
     struct LastMonthIntent: AppIntent {
         nonisolated(unsafe) static var title: LocalizedStringResource = "Last Month"
         func perform() async throws -> some IntentResult {
-            Storage.lastMonth()
+            Store.lastMonth()
             return .result()
         }
     }
@@ -55,7 +55,7 @@ extension LargeWidget {
     struct TodayIntent: AppIntent {
         nonisolated(unsafe) static var title: LocalizedStringResource = "Today"
         func perform() async throws -> some IntentResult {
-            Storage.today()
+            Store.today()
             return .result()
         }
     }

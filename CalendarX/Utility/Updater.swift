@@ -8,8 +8,8 @@
 import AppKit
 import CalendarXLib
 import Sparkle
+import SwiftUI
 @preconcurrency import UserNotifications
-
 
 @MainActor
 class Updater: NSObject {
@@ -18,11 +18,15 @@ class Updater: NSObject {
 
     private lazy var updaterController = SPUStandardUpdaterController(
         startingUpdater: false,
-        updaterDelegate: .none,
+        updaterDelegate: self,
         userDriverDelegate: self
     )
 
     private let appStore: AppStore
+
+    @AppStorage(AppStorageKey.includeBetaChannel, store: .group)
+    var includeBetaChannel = false
+
 
     var automaticallyChecksForUpdates: Bool {
         get {
@@ -45,6 +49,13 @@ class Updater: NSObject {
     }
 }
 
+extension Updater: @preconcurrency SPUUpdaterDelegate {
+    public func allowedChannels(for updater: SPUUpdater) -> Set<String> {
+        includeBetaChannel ? ["beta"]:[]
+    }
+}
+
+
 extension Updater: @preconcurrency SPUStandardUserDriverDelegate {
 
     var supportsGentleScheduledUpdateReminders: Bool { true }
@@ -63,8 +74,8 @@ extension Updater: @preconcurrency SPUStandardUserDriverDelegate {
     ) {
         if state.userInitiated { return }
         let version = "\(update.displayVersionString)(\(update.versionString))"
-        let title = L10n.Updater.available(locale: appStore.locale)
-        let body = L10n.Updater.update(locale: appStore.locale, version: version)
+        let title = L10n.Updater.title(locale: appStore.locale)
+        let body = L10n.Updater.body(locale: appStore.locale, version: version)
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body

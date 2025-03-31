@@ -5,23 +5,59 @@
 //  Created by zm on 2022/4/25.
 //
 
+import AppKit
 import SwiftUI
 
 extension Color {
-    public init(light: String, lightAlpha: CGFloat = 1, dark: String, darkAlpha: CGFloat = 1) {
+    public init(lightHex: String, darkHex: String) {
         self.init(
-            .init(
-                name: .none,
-                dynamicProvider: {
-                    $0.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua
-                        ? .init(hex: dark, alpha: darkAlpha) : .init(hex: light, alpha: lightAlpha)
+            ns: .init(name: .none) {
+                return switch $0.bestMatch(from: [.aqua, .darkAqua]) {
+                case .darkAqua: .init(hex: darkHex) ?? .white
+                default: .init(hex: lightHex) ?? .black
                 }
-            )
+            }
         )
     }
 
-    public init(hex: String, alpha: CGFloat = 1) {
-        self.init(ns: .init(hex: hex, alpha: alpha))
+    public init?(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if hexSanitized.hasPrefix("#") { hexSanitized.removeFirst() }
+
+        // Ensure valid length (3, 4, 6, or 8 characters)
+        guard [3, 4, 6, 8].contains(hexSanitized.count) else { return nil }
+
+        var hexValue: UInt64 = 0
+        guard Scanner(string: hexSanitized).scanHexInt64(&hexValue) else { return nil }
+
+        let (r, g, b, a): (Double, Double, Double, Double)
+
+        switch hexSanitized.count {
+        case 3:  // RGB (e.g. F60)
+            r = Double((hexValue >> 8) & 0xF) / 15.0
+            g = Double((hexValue >> 4) & 0xF) / 15.0
+            b = Double(hexValue & 0xF) / 15.0
+            a = 1.0
+        case 4:  // ARGB (e.g. FFF0)
+            a = Double((hexValue >> 12) & 0xF) / 15.0
+            r = Double((hexValue >> 8) & 0xF) / 15.0
+            g = Double((hexValue >> 4) & 0xF) / 15.0
+            b = Double(hexValue & 0xF) / 15.0
+        case 6:  // RRGGBB (e.g. FF6600)
+            r = Double((hexValue >> 16) & 0xFF) / 255.0
+            g = Double((hexValue >> 8) & 0xFF) / 255.0
+            b = Double(hexValue & 0xFF) / 255.0
+            a = 1.0
+        case 8:  // AARRGGBB (e.g. FFFF6600)
+            a = Double((hexValue >> 24) & 0xFF) / 255.0
+            r = Double((hexValue >> 16) & 0xFF) / 255.0
+            g = Double((hexValue >> 8) & 0xFF) / 255.0
+            b = Double(hexValue & 0xFF) / 255.0
+        default:
+            return nil
+        }
+
+        self.init(red: r, green: g, blue: b, opacity: a)
     }
 
     public init(ns color: NSColor) {
@@ -40,60 +76,45 @@ extension Color {
         }
     }
 
-    public func toHex(alpha: Bool = false) -> String? {
-        guard let components = cgColor?.components, components.count >= 3 else {
-            return nil
-        }
-
-        let r = Float(components[0])
-        let g = Float(components[1])
-        let b = Float(components[2])
-        var a = Float(1.0)
-
-        if components.count >= 4 {
-            a = Float(components[3])
-        }
-
-        if alpha {
-            return String(
-                format: "%02lX%02lX%02lX%02lX",
-                lroundf(r * 255),
-                lroundf(g * 255),
-                lroundf(b * 255),
-                lroundf(a * 255)
-            )
-        } else {
-            return String(format: "%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255))
-        }
-    }
 }
 
 extension NSColor {
-    convenience init(hex: Int, alpha: CGFloat = 1) {
-        self.init(
-            calibratedRed: CGFloat((hex & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((hex & 0xFF00) >> 8) / 255.0,
-            blue: CGFloat(hex & 0xFF) / 255.0,
-            alpha: alpha
-        )
-    }
+    convenience init?(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if hexSanitized.hasPrefix("#") { hexSanitized.removeFirst() }
 
-    convenience init(hex: String, alpha: CGFloat = 1) {
-        var hexString = hex
-        if hex.hasPrefix("0x") {
-            hexString = hex[hex.index(hexString.startIndex, offsetBy: 2)...] + ""
-        } else if hex.hasPrefix("#") {
-            hexString = hex[hex.index(hexString.startIndex, offsetBy: 1)...] + ""
+        guard [3, 4, 6, 8].contains(hexSanitized.count) else { return nil }
+
+        var hexValue: UInt64 = 0
+        guard Scanner(string: hexSanitized).scanHexInt64(&hexValue) else { return nil }
+
+        let (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat)
+
+        switch hexSanitized.count {
+        case 3:  // RGB (e.g. F60)
+            r = CGFloat((hexValue >> 8) & 0xF) / 15.0
+            g = CGFloat((hexValue >> 4) & 0xF) / 15.0
+            b = CGFloat(hexValue & 0xF) / 15.0
+            a = 1.0
+        case 4:  // ARGB (e.g. FFF0)
+            a = CGFloat((hexValue >> 12) & 0xF) / 15.0
+            r = CGFloat((hexValue >> 8) & 0xF) / 15.0
+            g = CGFloat((hexValue >> 4) & 0xF) / 15.0
+            b = CGFloat(hexValue & 0xF) / 15.0
+        case 6:  // RRGGBB (e.g. FF6600)
+            r = CGFloat((hexValue >> 16) & 0xFF) / 255.0
+            g = CGFloat((hexValue >> 8) & 0xFF) / 255.0
+            b = CGFloat(hexValue & 0xFF) / 255.0
+            a = 1.0
+        case 8:  // AARRGGBB (e.g. FFFF6600)
+            a = CGFloat((hexValue >> 24) & 0xFF) / 255.0
+            r = CGFloat((hexValue >> 16) & 0xFF) / 255.0
+            g = CGFloat((hexValue >> 8) & 0xFF) / 255.0
+            b = CGFloat(hexValue & 0xFF) / 255.0
+        default:
+            return nil
         }
 
-        let pattern = "[a-fA-F0-9]+"
-
-        if NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: hexString) {
-            var value: UInt64 = 0
-            Scanner(string: hexString).scanHexInt64(&value)
-            self.init(hex: Int(value), alpha: alpha)
-        } else {
-            self.init(.black)
-        }
+        self.init(red: r, green: g, blue: b, alpha: a)
     }
 }

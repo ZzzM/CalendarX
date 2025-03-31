@@ -2,16 +2,15 @@ name: Mars
 
 on:
   workflow_dispatch:
-  # push:
-    # tags:
-    #   - '*'
-
+  push:
+    tags:
+      - '*'
+      
 env:
   SPARKLE_KEY: ${{ secrets.SPARKLE_KEY }}
   PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
   BARK_KEY: ${{ secrets.BARK_KEY }}
   BARK_HOST: ${{ secrets.BARK_HOST }}
-  BARK_ICON: https://raw.githubusercontent.com/ZzzM/CalendarX/master/CalendarX/Assets.xcassets/AppIcon.appiconset/icon_128x128.png
 
 jobs:
 
@@ -19,29 +18,9 @@ jobs:
     runs-on: macos-15
     steps:
 
-    - name: Checkout
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
       with:
-          fetch-depth: 0
-          lfs: true
-
-    - name: Checkout base, head branches
-      run: |
-        git checkout ${{ env.BASE_REF }}
-        git checkout ${{ env.HEAD_REF }}
-      env:
-        BASE_REF: ${{ github.event.pull_request.base.ref }}
-        HEAD_REF: ${{ github.head_ref }}
-
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-    
-    - name: Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: latest-stable
+        fetch-depth: 0
 
     - name: Create DMG
       run: |
@@ -52,7 +31,10 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       with:
         body_path: ${{ env.LOG_PATH }}
-        files: ${{ env.APP_PATH }}
+        files: ${{ env.DMG_PATH }}
+        name: ${{ env.APP_RELEASE_NAME }}
+        tag_name: ${{ env.APP_TAG_NAME }}
+        prerelease: ${{ contains(env.APP_TAG_NAME, 'beta') }}
 
     - name: Deploy
       uses: actions/github-script@v7
@@ -64,15 +46,12 @@ jobs:
             owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            
+
     - name: Bark
-      uses: monlor/bark-action@v3
+      uses: shink/bark-action@v2
       if: success() || failure()
       with:
         key: ${{ env.BARK_KEY }}
-        host: ${{ env.BARK_HOST }}
-        title: ${{ env.APP_NAME }} v${{ env.APP_VERSION }} (${{ env.APP_BUILD }})
+        host: ${{ secrets.BARK_HOST }}
+        title: ${{ env.APP_NAME }} ${{ env.APP_TAG_NAME }}
         body: ${{ job.status }}
-        icon: ${{ env.BARK_ICON }}
-        sound: alarm
-        isArchive: 1

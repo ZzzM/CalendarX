@@ -11,9 +11,6 @@ import SwiftUI
 public enum Theme: Int, CaseIterable {
     case system, light, dark
 
-    public var isNotSystem: Bool { self != .system }
-    public var isSystem: Bool { self == .system }
-
     public var colorScheme: ColorScheme? {
         switch self {
         case .light: .light

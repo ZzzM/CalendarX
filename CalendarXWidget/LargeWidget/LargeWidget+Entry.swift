@@ -32,4 +32,8 @@ extension LargeWidget.Entry {
     var showHolidays: Bool {
         configuration.showHolidays?.boolValue ?? true
     }
+    
+    var showWeekNumbers: Bool {
+        configuration.showWeekNumbers?.boolValue ?? false
+    }
 }

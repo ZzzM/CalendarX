@@ -10,15 +10,15 @@ import SwiftUI
 
 @MainActor
 class MenubarPopover: NSPopover {
-    
+
     private let privateKey = "shouldHideAnchor"
-    
+
     private var eventMonitor: Any?
 
     private let router: Router
-    
-    
+
     init<Content>(_ router: Router, rootScreen: Content) where Content: View {
+
         self.router = router
         super.init()
         contentViewController = NSHostingController(rootView: rootScreen)
@@ -51,7 +51,7 @@ class MenubarPopover: NSPopover {
 extension MenubarPopover {
 
     func startEventMonitor() {
-        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown] ) { [weak self] _ in
+        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
             guard let self else { return }
             guard isShown else { return }
             close()
@@ -64,7 +64,6 @@ extension MenubarPopover {
         eventMonitor = .none
     }
 }
-
 
 extension MenubarPopover {
 

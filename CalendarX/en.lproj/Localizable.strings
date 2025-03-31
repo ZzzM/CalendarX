@@ -12,14 +12,13 @@
 "settings.recommendations" = "App Recommendations";
 "settings.menubarStyle" = "Menubar style";
 "settings.launchAtLogin" = "Launch at login";
-"settings.auto" = "Automatically checks for updates";
-"settings.version" = "Version";
-"settings.checkForUpdates" = "Check for updates";
+"settings.update" = "Update";
 "settings.about" = "About";
 
 "calendar.showLunar" = "Show lunar calendar";
 "calendar.showHolidays" = "Show Chinese statutory holidays";
 "calendar.showEvents" = "Show calendar events";
+"calendar.showWeekNumbers" = "Show Week Numbers";
 "calendar.startWeekOn" = "Start week on";
 "calendar.keyboardShortcut" = "Keyboard Shortcut";
 
@@ -33,7 +32,7 @@
 "alert.exitMessage" = "Are you sure you want to exit？";
 "alert.notificationsMessage" = "Allow notifications to enable automatic update checks.";
 "alert.calendarsMessage" = "Allow full access to calendars for displaying calendar events.";
-"alert.keyboardShortcutMessage" = "Using keyboard shortcut to control the calendar: \n\n⬅️: Last month   ➡️: Next month\n⬆️: Last year   ⬇️: Next year\nSpace: Today";
+"alert.keyboardShortcutMessage" = "Using keyboard shortcut to control the calendar: \n\n⬅️: Last month ➡️: Next month\n⬆️: Last year ⬇️: Next year\n \"Space\": Today\n\"Esc\": Back or Close";
 
 "alert.no" = "No";
 "alert.yes" = "Yes";
@@ -47,7 +46,7 @@
 "menubarStyle.showSeconds" = "Display the time with seconds";
 
 "theme.title" = "Theme";
-"theme.system" = "Follow system";
+"theme.system" = "System";
 "theme.dark" = "Dark";
 "theme.light" = "Light";
 
@@ -55,5 +54,10 @@
 "date.events" = "Calendar events";
 "date.noEvents" = "No calendar events";
 
-"updater.available" = "A new update is available 🎉";
-"updater.update" = "Version %@ is now available";
+"updater.title" = "A new update is available 🎉";
+"updater.body" = "Version %@ is now available";
+"updater.beta" = "Include Beta channel";
+"updater.checkForUpdates" = "Check for updates";
+"updater.auto" = "Automatically checks for updates";
+"updater.version" = "Version";
+"updater.build" = "Build";

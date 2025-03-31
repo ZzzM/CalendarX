@@ -1,3 +1,30 @@
+## 2.3.7 - 2025-03-31
+
+### Added
+- 快捷键(esc)，用于返回以及关闭窗口
+- 更新设置页面
+- 显示周数
+
+### Fixed
+- [无法设置开启启动](https://github.com/ZzzM/CalendarX/issues/24)
+- [无法设置自动检查更新](https://github.com/ZzzM/CalendarX/issues/20)
+- [菜单栏日期无法更新](https://github.com/ZzzM/CalendarX/issues/22)
+- [小组件不显示](https://github.com/ZzzM/CalendarX/issues/19)
+
+### Changed
+- 快捷键提示框
+- 菜单栏图标尺寸、字体大小
+- 重新设计外观设置页面
+- 重新设计菜单栏设置页面
+- 白色字体默认色值 `#EEEEEE`
+
+### Security
+- 避免在 SwiftUI 中使用 `Group`
+
+### Remove
+- `WrappingHStack`
+
+---
 ## 2.3.6 - 2024-12-31
 
 ### Added

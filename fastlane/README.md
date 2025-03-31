@@ -31,6 +31,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### mac release
+
+```sh
+[bundle exec] fastlane mac release
+```
+
+
+
 ### mac show
 
 ```sh

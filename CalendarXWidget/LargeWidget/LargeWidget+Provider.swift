@@ -18,40 +18,27 @@ extension LargeWidget {
             let date = Date()
 
             if #available(macOSApplicationExtension 14.0, *), date.canUpdateDate {
-                Storage.today()
+                Store.today()
             }
 
             let entry =
                 if #available(macOSApplicationExtension 14.0, *) {
-                    Entry(date: Storage.date, configuration: configuration)
+                    Entry(date: Store.date, configuration: configuration)
                 } else {
                     Entry(date: date, configuration: configuration)
                 }
-            let timeline = Timeline(entries: [entry], policy: .after(date.startOfTomorrow))
+            let timeline = Timeline(
+                entries: [entry],
+                policy: .after(date.startOfTomorrow)
+            )
             completion(timeline)
         }
     }
 }
 
+@MainActor
 extension Date {
     var canUpdateDate: Bool {
-        let calendar = Calendar.gregorian
-        let start = calendar.startOfDay(for: self)
-        let diff = calendar.dateComponents(
-            [.year, .month, .day, .hour, .minute],
-            from: start,
-            to: self
-        )
-
-        guard let year = diff.year, year == 0,
-            let month = diff.month, month == 0,
-            let day = diff.day, day == 0,
-            let hour = diff.hour, hour == 0,
-            let minute = diff.minute
-        else {
-            return false
-        }
-
-        return minute <= 1
+        t(use24h: true, showSeconds: false) == "00:00"
     }
 }

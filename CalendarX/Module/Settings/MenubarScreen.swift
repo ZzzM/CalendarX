@@ -56,15 +56,11 @@ struct MenubarScreen: View {
                     save()
                 }
             }
-
-            Picker(selection: $style) {
-                ForEach(MenubarStyle.allCases, id: \.self) {
-                    Text($0.title)
-                }
-            } label: {
-                EmptyView()
+            
+            SegmentedPicker(items: MenubarStyle.allCases,
+                            selection: $style) {
+                Text($0.title)
             }
-            .pickerStyle(.segmented)
 
             ZStack {
                 switch style {
@@ -96,8 +92,7 @@ extension MenubarScreen {
             menubarStore.iconType = iconType
         }
         menubarStore.style = style
-        NotificationCenter.default.post(name: .titleStyleDidChanged, object: .none)
-        router.pop()
+        router.popAndNofiy(.titleStyleDidChanged)
     }
 }
 
@@ -124,10 +119,10 @@ struct IconStyleView: View {
                                     RoundedRectangle(cornerRadius: 5)
                                         .stroke(Color.accentColor, lineWidth: 3)
                                 }
-
-                                Text(type.title)
-                                    .font(.caption2)
-                                    .offset(y: 1)
+//
+//                                Text(type.title)
+//                                    .font(.caption2)
+//                                    .offset(y: 1)
 
                                 Image(nsImage: type.nsImage(locale: locale))
                                     .resizable()
@@ -207,13 +202,13 @@ struct DateStyleView: View {
         LazyVGrid(columns: .init(repeating: .init(), count: 4)) {
             ForEach(types, id: \.self) { type in
                 if onDrop != nil {
-                    tagView(type, foregroundColor: .white, background: background, onTapGesture: onTapGesture)
+                    tagView(type, foregroundColor: .appWhite, background: background, onTapGesture: onTapGesture)
                         .onDrag { NSItemProvider(object: type.rawValue as NSString) }
                         .onDrop(of: [.text], isTargeted: .none) {
                             onDrop!($0.first, type)
                         }
                 } else {
-                    tagView(type, foregroundColor: .white, background: background, onTapGesture: onTapGesture)
+                    tagView(type, foregroundColor: .appWhite, background: background, onTapGesture: onTapGesture)
                         .onDrag { NSItemProvider(object: type.rawValue as NSString) }
                 }
             }

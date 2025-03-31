@@ -64,7 +64,7 @@ class Dialog: ObservableObject {
         case .exit: L10n.Alert.no
         case .notifications: L10n.Alert.no
         case .calendars: L10n.Alert.no
-        case .shortcut: L10n.Alert.no
+        case .shortcut: .none
         }
     }
 

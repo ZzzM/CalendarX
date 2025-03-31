@@ -28,8 +28,8 @@ extension Bundle {
         main.object(forInfoDictionaryKey: "CFBundleName") as! String
     }
 
-    public static var appDisplayVersion: String {
-        " \(appVersion) (\(appBuild))"
+    public static var appVersionName: String {
+        main.object(forInfoDictionaryKey: "AppVersionName") as? String ?? appVersion
     }
 
     public static var appVersion: String {
@@ -48,4 +48,28 @@ extension Bundle {
         main.object(forInfoDictionaryKey: "NSHumanReadableCopyright") as! String
     }
 
+}
+
+extension ProcessInfo {
+    public static var osVersionName: String {
+        
+        let os = processInfo.operatingSystemVersion
+        
+        
+        var version = "\(os.majorVersion).\(os.minorVersion)"
+        if !os.patchVersion.isMultiple(of: 0) {
+            version += ".\(os.patchVersion)"
+        }
+   
+        var osString = ProcessInfo.processInfo.operatingSystemVersionString.dropLast()
+        var value = osString.removeLast()
+        var build = ""
+       
+        while value.isNumber || value.isUppercase {
+            build = String(value) + build
+            value = osString.removeLast()
+        }
+        
+        return "\(version) (\(build))"
+    }
 }

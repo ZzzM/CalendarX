@@ -31,7 +31,7 @@ class MainViewModel: ObservableObject {
             Task { [weak self] in
                 for await value in NotificationCenter.default
                     .notifications(named: .NSCalendarDayChanged)
-                    .map({ _ in Date() })
+                    .compactMap({ _ in Date() })
                 {
                     guard let self else { return }
                     date = value

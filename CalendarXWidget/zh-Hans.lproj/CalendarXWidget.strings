@@ -1,3 +1,5 @@
+"1syZT5" = "显示周数";
+
 "23t8NN" = "周一";
 
 "2ZS03J" = "语言";
@@ -16,13 +18,15 @@
 
 "69LV8r" = "true";
 
-"8R2rKx" = "跟随系统";
+"8R2rKx" = "系统";
+
+"AWXQp5" = "true";
 
 "Bb99Yy" = "浅色 - 强调色";
 
 "BxmIDl-3h5WUz" = "Just to confirm, you wanted ‘Light’?";
 
-"BxmIDl-8R2rKx" = "Just to confirm, you wanted ‘Follow system’?";
+"BxmIDl-8R2rKx" = "Just to confirm, you wanted ‘System’?";
 
 "BxmIDl-ixslPm" = "Just to confirm, you wanted ‘Dark’?";
 
@@ -54,7 +58,7 @@
 
 "RRB5Nx-R74qr4" = "Just to confirm, you wanted ‘简体中文’?";
 
-"RRB5Nx-fxBCVh" = "Just to confirm, you wanted ‘Follow system’?";
+"RRB5Nx-fxBCVh" = "Just to confirm, you wanted ‘System’?";
 
 "RRB5Nx-w8fWt0" = "Just to confirm, you wanted ‘English’?";
 
@@ -64,7 +68,7 @@
 
 "Ur4lLP-3h5WUz" = "There are ${count} options matching ‘Light’.";
 
-"Ur4lLP-8R2rKx" = "There are ${count} options matching ‘Follow system’.";
+"Ur4lLP-8R2rKx" = "There are ${count} options matching ‘System’.";
 
 "Ur4lLP-ixslPm" = "There are ${count} options matching ‘Dark’.";
 
@@ -76,11 +80,11 @@
 
 "eStozH" = "周三";
 
-"fxBCVh" = "跟随系统";
+"fxBCVh" = "系统";
 
 "h7F9C9-R74qr4" = "There are ${count} options matching ‘简体中文’.";
 
-"h7F9C9-fxBCVh" = "There are ${count} options matching ‘Follow system’.";
+"h7F9C9-fxBCVh" = "There are ${count} options matching ‘System’.";
 
 "h7F9C9-w8fWt0" = "There are ${count} options matching ‘English’.";
 
@@ -95,6 +99,8 @@
 "oqNPaD" = "Widget Color";
 
 "pikPQm" = "true";
+
+"rWvfpy" = "false";
 
 "veSx01" = "false";
 

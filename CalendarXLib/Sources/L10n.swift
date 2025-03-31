@@ -16,13 +16,11 @@ public enum L10n {
         public static let title = "settings.title".l10nKey
         public static let appearance = "settings.appearance".l10nKey
         public static let calendar = "settings.calendar".l10nKey
-        public static let auto = "settings.auto".l10nKey
         public static let language = "settings.language".l10nKey
         public static let recommendations = "settings.recommendations".l10nKey
         public static let menubarStyle = "settings.menubarStyle".l10nKey
         public static let launchAtLogin = "settings.launchAtLogin".l10nKey
-        public static let version = "settings.version".l10nKey
-        public static let checkForUpdates = "settings.checkForUpdates".l10nKey
+        public static let update = "settings.update".l10nKey
         public static let about = "settings.about".l10nKey
     }
 
@@ -32,6 +30,7 @@ public enum L10n {
         public static let startWeekOn = "calendar.startWeekOn".l10nKey
         public static let showLunar = "calendar.showLunar".l10nKey
         public static let showHolidays = "calendar.showHolidays".l10nKey
+        public static let showWeekNumbers = "calendar.showWeekNumbers".l10nKey
         public static let keyboardShortcut = "calendar.keyboardShortcut".l10nKey
     }
 
@@ -92,10 +91,17 @@ public enum L10n {
     @MainActor
     public enum Updater {
 
-        public static func available(locale: Locale) -> String { "updater.available".localized(locale.bundle) }
-        public static func update(locale: Locale, version: String) -> String {
-            "updater.update".localized(locale.bundle, args: version)
+        public static func title(locale: Locale) -> String { "updater.title".localized(locale.bundle) }
+        public static func body(locale: Locale, version: String) -> String {
+            "updater.body".localized(locale.bundle, args: version)
         }
+        
+        public static let auto = "updater.auto".l10nKey
+        public static let checkForUpdates = "updater.checkForUpdates".l10nKey
+        public static let version = "updater.version".l10nKey
+        public static let build = "updater.build".l10nKey
+        public static let beta = "updater.beta".l10nKey
+        
     }
 }
 

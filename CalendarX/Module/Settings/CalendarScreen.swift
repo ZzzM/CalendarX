@@ -44,6 +44,7 @@ struct CalendarScreen: View {
                 eventsRow
                 lunarRow
                 holidaysRow
+                weekNumbersRow
                 keyboardShortcutRow
             }
         }
@@ -92,6 +93,11 @@ extension CalendarScreen {
             .checkboxStyle()
     }
 
+    private var weekNumbersRow: some View {
+        Toggle(isOn: calendarStore.$showWeekNumbers) { Text(L10n.Calendar.showWeekNumbers).font(.title3) }
+            .checkboxStyle()
+    }
+    
     private var keyboardShortcutRow: some View {
         Toggle(isOn: calendarStore.$keyboardShortcut) {
             HStack {

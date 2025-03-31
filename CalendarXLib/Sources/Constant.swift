@@ -13,7 +13,7 @@ public typealias FailureClosure = (Error) -> Void
 
 extension CGFloat {
     public static let mainHeight: CGFloat = 300
-    public static let mainWidth: CGFloat = 320
+    public static let mainWidth: CGFloat = 335
     public static let popoverWidth: CGFloat = 40
     public static let popoverHeight: CGFloat = 210
     public static let popoverRowHeight: CGFloat = 25
@@ -22,10 +22,9 @@ extension CGFloat {
 
 @MainActor
 extension Bundle {
-    
+
     public typealias TypeA = [AppInfo]
     public typealias TypeB = [ColorInfo]
-
 
     public static let apps = module.jsonModel(resource: "recommendation_app") ?? TypeA()
 
@@ -49,9 +48,9 @@ extension UserDefaults {
 
 public enum AppStorageKey {
     public static let theme = generate("theme")
-    public static let tint = generate("tint")
     public static let appearance = generate("appearance")
     public static let language = generate("language")
+    public static let includeBetaChannel = "\(Bundle.appName).update.includeBetaChannel"
     private static func generate(_ key: String) -> String { "\(Bundle.appName).app.\(key)" }
 }
 
@@ -68,6 +67,7 @@ public enum MenubarStorageKey {
 public enum CalendarStorageKey {
     public static let weekday = generate("weekday")
     public static let showEvents = generate("showEvents")
+    public static let showWeekNumbers = generate("showWeekNumbers")
     public static let showLunar = generate("showLunar")
     public static let showHolidays = generate("showHolidays")
     public static let keyboardShortcut = generate("keyboardShortcut")
@@ -77,7 +77,7 @@ public enum CalendarStorageKey {
 @MainActor
 extension NSFont {
     public static let statusItem = NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
-    public static let statusIcon = NSFont.monospacedDigitSystemFont(ofSize: 8.5, weight: .regular)
+    public static let statusIcon = NSFont.monospacedDigitSystemFont(ofSize: 9, weight: .bold)
 }
 
 extension Image {
@@ -91,11 +91,10 @@ extension Image {
     public static let leftArrow = Image(systemName: "chevron.left")
     public static let rightArrow = Image(systemName: "chevron.right")
     public static let circle = Image(systemName: "circle")
-    public static let recommend = Image(systemName: "hand.thumbsup.fill")
     public static let save = Image(systemName: "checkmark")
     public static let pin = Image(systemName: "paintbrush.pointed.fill")
-    public static let house = Image(systemName: "house.fill")
-    public static let trash = Image(systemName: "trash.fill")
+    public static let feedback = Image(systemName: "bubble.and.pencil")
+
 }
 
 extension Calendar {
@@ -111,10 +110,13 @@ extension Locale {
 
 extension Color {
     //    static let appBackground = Color(light: "FEF9EF", dark: "323232")
-    public static let appPrimary = Color(light: "555555", dark: "EEEEEE")
-    public static let appSecondary = Color(light: "8f8f8f", dark: "777777")
+    
+    public static let appWhite = Color(hex: "EEEEEE") ?? .white
+    
+    public static let appPrimary = Color(lightHex: "555555", darkHex: "EEEEEE")
+    public static let appSecondary = Color(lightHex: "8f8f8f", darkHex: "777777")
 
-    public static let card = Color(light: "F9F9F9", dark: "393939")
+    public static let card = Color(lightHex: "F9F9F9", darkHex: "393939")
 
     public static let workBackground = Color.secondary.opacity(0.16)
     public static let offBackground = Color.accentColor.opacity(0.12)
@@ -124,6 +126,7 @@ extension Color {
 }
 
 extension Notification.Name {
+    public static let popoverWillCloseManually = Notification.Name("popoverWillCloseManually")
     public static let titleStyleDidChanged = Notification.Name("titleStyleDidChanged")
 }
 

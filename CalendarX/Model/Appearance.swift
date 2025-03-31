@@ -41,8 +41,8 @@ struct Appearance: @preconcurrency Codable {
 }
 
 extension Appearance {
-    public var accentColor: Color { .init(light: lightAccent.hex, dark: darkAccent.hex) }
-    public var backgroundColor: Color { .init(light: lightBackground.hex, dark: darkBackground.hex) }
+    public var accentColor: Color { .init(lightHex: lightAccent.hex, darkHex: darkAccent.hex) }
+    public var backgroundColor: Color { .init(lightHex: lightBackground.hex, darkHex: darkBackground.hex) }
 }
 
 extension Appearance: @preconcurrency RawRepresentable {

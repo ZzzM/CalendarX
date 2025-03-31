@@ -9,28 +9,28 @@ import CalendarXLib
 import SwiftUI
 
 struct MainScreen: View {
-    
+
     @EnvironmentObject
     private var appStore: AppStore
-    
+
     @EnvironmentObject
     private var calendarStore: CalendarStore
-    
+
     @EnvironmentObject
     private var router: Router
 
     @ObservedObject
     var viewModel: MainViewModel
-    
+
     private var calendar: Calendar {
         viewModel.calendar.firstWeekday = calendarStore.weekday.rawValue
         return viewModel.calendar
     }
-    
+
     private let eventStore = AppEventStore()
 
     private let festivalStore = FestivalStore()
-    
+
     var body: some View {
 
         CalendarView(
@@ -38,16 +38,18 @@ struct MainScreen: View {
             calendar: calendar,
             eventStore: eventStore,
             interval: viewModel.interval,
-            header: header,
-            weekView: weekView,
-            dayView: dayView
+            showWeekNumbers: calendarStore.showWeekNumbers,
+            title: title,
+            subtitle: subtitle,
+            leading: leading,
+            element: element
         )
         .equatable()
-        .frame(height: .mainHeight)
+        .frame(height: .mainHeight, alignment: .top)
         .padding()
     }
 
-    private func header() -> some View {
+    private func title() -> some View {
         HStack {
             MonthYearPicker(date: $viewModel.date, tint: appStore.accentColor)
                 .focusDisabled()
@@ -55,34 +57,53 @@ struct MainScreen: View {
             Spacer()
 
             if calendarStore.keyboardShortcut {
-                Group {
-                    Button(action: viewModel.lastMonth) {}.keyboardShortcut(.leftArrow, modifiers: [])
-                    Button(action: viewModel.reset) {}.keyboardShortcut(.space, modifiers: [])
-                    Button(action: viewModel.nextMonth) {}.keyboardShortcut(.rightArrow, modifiers: [])
-                    Button(action: viewModel.lastYear) {}.keyboardShortcut(.upArrow, modifiers: [])
-                    Button(action: viewModel.nextYear) {}.keyboardShortcut(.downArrow, modifiers: [])
-                }
-                .buttonStyle(.borderless)
+
+                KeyboardShortcutButton(key: .leftArrow, action: viewModel.lastMonth)
+                KeyboardShortcutButton(key: .space, action: viewModel.reset)
+                KeyboardShortcutButton(key: .rightArrow, action: viewModel.nextMonth)
+                KeyboardShortcutButton(key: .upArrow, action: viewModel.lastYear)
+                KeyboardShortcutButton(key: .downArrow, action: viewModel.nextYear)
+
             }
 
-            Group {
+            HStack(spacing: calendarStore.showWeekNumbers ? 11.5 : 15.5) {
+
                 ScacleImageButton(image: .leftArrow, action: viewModel.lastMonth)
+                    .frame(width: 30)
                 ScacleImageButton(image: .circle, action: viewModel.reset)
+                    .frame(width: 30)
                 ScacleImageButton(image: .rightArrow, action: viewModel.nextMonth)
+                    .frame(width: 30)
+
             }
-            .frame(width: .buttonWidth)
         }
     }
 
-    private func weekView(_ appDate: AppDate) -> some View {
-        Text(appDate.shortWeekday(locale: appStore.locale))
-            .appForeground(appDate.inWeekend ? .appSecondary : .appPrimary)
-            .sideLength(30)
+    private func subtitle(_ dates: [AppDate]) -> some View {
+        ForEach(dates, id: \.self) {
+            Text($0.shortWeekday(locale: appStore.locale))
+                .appForeground($0.inWeekend ? .appSecondary : .appPrimary)
+                .sideLength(30)
+        }
+    }
+
+    private func leading(_ dates: [AppDate], spacing: CGFloat) -> some View {
+        VStack(spacing: spacing) {
+            Text("#")
+                .frame(width: 15, height: 30)
+                .appForeground(.accentColor)
+            ForEach(dates, id: \.self) {
+                Text("\(calendar.component(.weekOfYear, from: $0))")
+                    .font(.caption2.monospacedDigit())
+                    .frame(width: 15, height: 40)
+                    .appForeground(.accentColor)
+            }
+        }
     }
 
     @ViewBuilder
-    private func dayView(_ appDate: AppDate, events: [AppEvent]) -> some View {
-        
+    private func element(_ appDate: AppDate, events: [AppEvent]) -> some View {
+
         let tiaoxiu = festivalStore.tiaoxiu(date: appDate)
         let tiaoxiuColor: Color = tiaoxiu.isXiu ? .offBackground : .workBackground
         let subtitle = festivalStore.display(date: appDate)
@@ -91,8 +112,7 @@ struct MainScreen: View {
         let showLunar = calendarStore.showLunar
         let defaultColor: Color = appDate.inWeekend ? .appSecondary : .appPrimary
         let inSameMonth = viewModel.date.inSameMonth(as: appDate)
-        
-     
+
         ScacleButton {
             let festivals = festivalStore.all(date: appDate)
             router.push(.date(appDate, events, festivals))
@@ -136,15 +156,15 @@ struct MainScreen: View {
 }
 
 struct MonthYearPicker: View {
-    
+
     @Environment(\.locale)
     private var locale
-    
+
     @Binding
     var date: Date
 
     let tint: Color
-    
+
     @State
     private var isPresentedOfMonth = false
 
@@ -176,54 +196,83 @@ struct MonthYearPicker: View {
     }
 }
 
-struct CalendarView<Day: View, Header: View, Week: View>: View {
-    
-    private let date: Date, calendar: Calendar, eventStore: AppEventStore, interval: TimeInterval
+struct CalendarView<Title: View, Subtitle: View, Leading: View, Element: View>: View {
 
-    private let dayView: (AppDate, [AppEvent]) -> Day, header: () -> Header, weekView: (Date) -> Week
-    
+    private let date: AppDate, calendar: Calendar, eventStore: AppEventStore, interval: TimeInterval
+
+    private let showWeekNumbers: Bool
+
+    private let title: () -> Title
+    private let subtitle: ([AppDate]) -> Subtitle
+    private let leading: ([AppDate], CGFloat) -> Leading
+    private let element: (AppDate, [AppEvent]) -> Element
+
     init(
-        date: Date,
+        date: AppDate,
         calendar: Calendar,
         eventStore: AppEventStore,
         interval: TimeInterval,
-        @ViewBuilder header: @escaping () -> Header,
-        @ViewBuilder weekView: @escaping (Date) -> Week,
-        @ViewBuilder dayView: @escaping (AppDate, [AppEvent]) -> Day
+        showWeekNumbers: Bool,
+        @ViewBuilder title: @escaping () -> Title,
+        @ViewBuilder subtitle: @escaping ([AppDate]) -> Subtitle,
+        @ViewBuilder leading: @escaping ([AppDate], CGFloat) -> Leading,
+        @ViewBuilder element: @escaping (AppDate, [AppEvent]) -> Element
     ) {
         self.date = date
         self.calendar = calendar
         self.eventStore = eventStore
         self.interval = interval
-        self.dayView = dayView
-        self.header = header
-        self.weekView = weekView
+
+        self.showWeekNumbers = showWeekNumbers
+        self.title = title
+        self.subtitle = subtitle
+        self.leading = leading
+        self.element = element
     }
 
     var body: some View {
         let dates = calendar.generateDates(for: date)
-        let spacing: CGFloat? = dates.count > Solar.minDates ? 1.7 : .none
+        let spacing = dates.count > Solar.minDates ? 0.5 : 8.5
         let eventsMap = eventStore.generateEventsMap(dates)
 
-        LazyVGrid(columns: Solar.gridColumns, spacing: spacing) {
-            Section {
-                ForEach(0..<min(Solar.daysInWeek, dates.count), id: \.self) {
-                    weekView(dates[$0])
+        let leadingDates = dates.striding(by: Solar.daysInWeek).map(\.self)
+        let subtitleDates = dates.prefix(Solar.daysInWeek).map(\.self)
+        let columns = Array(repeating: GridItem(spacing: showWeekNumbers ? 11.5 : 15.5), count: Solar.daysInWeek)
+
+        VStack {
+
+            title()
+
+            LazyHStack {
+
+                if showWeekNumbers {
+                    leading(leadingDates, spacing)
                 }
-                ForEach(dates, id: \.self) { appDate in
-                    dayView(appDate, eventsMap[appDate.eventsKey] ?? [])
+
+                LazyVGrid(columns: columns, spacing: spacing) {
+
+                    subtitle(subtitleDates)
+
+                    ForEach(dates, id: \.self) { appDate in
+                        element(appDate, eventsMap[appDate.eventsKey] ?? [])
+                    }
                 }
-            } header: {
-                header()
+
             }
+
         }
+
     }
 }
 
 extension CalendarView: @preconcurrency Equatable {
 
-    static func == (lhs: CalendarView<Day, Header, Week>, rhs: CalendarView<Day, Header, Week>) -> Bool {
-        lhs.date.year == rhs.date.year && lhs.date.month == rhs.date.month && lhs.date.day == rhs.date.day
+    static func == (lhs: CalendarView<Title, Subtitle, Leading, Element>, rhs: CalendarView<Title, Subtitle, Leading, Element>)
+        -> Bool
+    {
+        lhs.date.year == rhs.date.year
+            && lhs.date.month == rhs.date.month
+            && lhs.date.day == rhs.date.day
             && lhs.interval == rhs.interval
     }
 }
