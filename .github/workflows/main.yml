@@ -2,9 +2,9 @@ name: Mars
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - '*'
+  # push:
+  #   tags:
+  #     - '*'
       
 env:
   SPARKLE_KEY: ${{ secrets.SPARKLE_KEY }}
