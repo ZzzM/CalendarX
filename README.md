@@ -42,8 +42,7 @@ A lightweight macOS app for displaying calendar and time
     
 <img src="assets/003.png" width=250> <img src="assets/003a.png" width=250> 
 
-<img src="assets/003b.png" width=250>
-    <img src="assets/003e.png" width=250> 
+<img src="assets/003b.png" width=250> <img src="assets/003e.png" width=250> 
 
 > [!TIP]
 > Drag and drop to edit `Date & Time Style`
