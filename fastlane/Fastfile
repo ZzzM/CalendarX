@@ -101,7 +101,7 @@ platform :mac do
 
 
   lane :xcode_build do
-    tag_name = 'v2.3.7'
+    tag_name = last_git_tag
     version_list = format_version(tag_name: tag_name)
     ENV["APP_TAG_NAME"] = tag_name
     ENV["APP_VERSION"] = version_list.first

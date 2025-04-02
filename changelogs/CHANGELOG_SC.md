@@ -17,12 +17,14 @@
 - 重新设计外观设置页面
 - 重新设计菜单栏设置页面
 - 白色字体默认色值 `#EEEEEE`
+- 设置`开机启动`，最低系统要求 *macOS 13.0*
 
 ### Security
 - 避免在 SwiftUI 中使用 `Group`
 
 ### Remove
-- `WrappingHStack`
+- [WrappingHStack](https://github.com/dkk/WrappingHStack)
+- [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
 
 ---
 ## 2.3.6 - 2024-12-31

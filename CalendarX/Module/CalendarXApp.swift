@@ -68,7 +68,6 @@ class CalendarXDelegate: NSObject & NSApplicationDelegate {
 extension CalendarXDelegate {
     
     private func bootstrap(calendarStore: CalendarStore, authorizer: Authorizer, updater: Updater) {
-        Launcher.migrateIfNeeded()
         resolveEventsAuthorization(authorizer: authorizer, calendarStore: calendarStore)
         resolveNotificationsAuthorization(authorizer: authorizer, updater: updater)
 

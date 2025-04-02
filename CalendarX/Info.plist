@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AppVersionName</key>
-	<string>2.3.7</string>
+	<string>2.3.6</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

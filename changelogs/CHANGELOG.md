@@ -16,12 +16,14 @@
 - Redesigned appearance settings screen
 - Redesigned menu bar settings screen
 - Default white font color set to `#EEEEEE`
+- Set up `Launch at login`, requires *macOS 13.0 +*
 
 ### Security
 - Avoided using `Group` in SwiftUI
 
 ### Removed
-- `WrappingHStack`
+- [WrappingHStack](https://github.com/dkk/WrappingHStack)
+- [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
 
 ---
 ## 2.3.6 - 2024-12-31

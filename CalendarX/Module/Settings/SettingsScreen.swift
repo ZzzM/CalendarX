@@ -24,7 +24,10 @@ struct SettingsScreen: View {
     private var menubarStore: MenubarStore
 
     var body: some View {
-        VStack(spacing: 15) {
+
+        let spacing: CGFloat = if #available(macOS 13.0, *) { 15 } else { 20 }
+
+        VStack(spacing: spacing) {
             TitleView {
                 Text(L10n.Settings.title).onTapGesture {
                     router.pop()
@@ -55,6 +58,7 @@ struct SettingsScreen: View {
         .padding()
 
     }
+
 }
 
 extension SettingsScreen {
@@ -88,9 +92,14 @@ extension SettingsScreen {
         }
     }
 
+    @ViewBuilder
     var launchRow: some View {
-        AppToggle { Text(L10n.Settings.launchAtLogin).font(.title3) }
-            .checkboxStyle()
+        if #available(macOS 13.0, *) {
+            Launcher.Toggle { Text(L10n.Settings.launchAtLogin).font(.title3) }
+                .checkboxStyle()
+        } else {
+            EmptyView()
+        }
     }
 
     var updateRow: some View {

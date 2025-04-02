@@ -39,7 +39,10 @@ A lightweight macOS app for displaying calendar and time
 
 > [!NOTE]
 > Right click the menubar item to open it
-    
+
+> [!TIP]
+> Set up `Launch at login`, requires *macOS 13.0 +*
+
 <img src="assets/003.png" width=250> <img src="assets/003a.png" width=250> 
 
 <img src="assets/003b.png" width=250> <img src="assets/003e.png" width=250> 
@@ -73,6 +76,5 @@ A lightweight macOS app for displaying calendar and time
 ## Dependencies
 
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
-- [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
 - [Schedule](https://github.com/luoxiu/Schedule)  
 - [Swift Algorithms](https://github.com/apple/swift-algorithms)
