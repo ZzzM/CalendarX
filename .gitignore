@@ -72,3 +72,4 @@ scripts/test.sh
 Step.md
 *.dmg
 Gemfile.lock
+fastlane/README.md

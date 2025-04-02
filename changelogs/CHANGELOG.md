@@ -23,6 +23,7 @@
 ### Removed
 - `WrappingHStack`
 
+---
 ## 2.3.6 - 2024-12-31
 
 ### Added

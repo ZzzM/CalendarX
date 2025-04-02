@@ -27,12 +27,13 @@ platform :mac do
 
   private_lane :setup do
 
-    path = ENV["APP_NAME"] + "/Info.plist"
-    ENV["APP_VERSION"] = format_version.first
-    ENV["APP_VERSION_NAME"] = format_version.join(' ')
+    info_plist_path = ENV["APP_NAME"] + "/Info.plist"
+    version_list = format_version(tag_name: last_git_tag)
+    ENV["APP_VERSION"] = version_list.first
+    ENV["APP_VERSION_NAME"] = version_list.join(' ')
     ENV["APP_RELEASE_NAME"] = "#{ENV["APP_NAME"]} #{ENV["APP_VERSION_NAME"]}"
 
-    set_info_plist_value(path: path, key: "AppVersionName", value: ENV["APP_VERSION_NAME"])
+    set_info_plist_value(path: info_plist_path, key: "AppVersionName", value: ENV["APP_VERSION_NAME"])
     increment_build_number_in_xcodeproj(build_number: ENV["APP_BUILD"])
     increment_version_number_in_xcodeproj(version_number: ENV["APP_VERSION"])
 
@@ -54,26 +55,7 @@ platform :mac do
   end
 
 
-  # TEST
-  lane :test do |options|
-    setup
-    build
-    clean
-
-    UI.header("#{ENV["APP_NAME"]} #{ENV["APP_TAG_NAME"]} build #{ENV["APP_BUILD"]}")
-
-    result = UI.select("Release the app now?", ["No", "Yes"])
-    case result
-    when "No"
-      UI.message("The app is debugging...")
-      sh "cd .. && zsh ./scripts/test.sh debug"
-    when "Yes"
-      UI.message("The app is Releasing...")
-      sh "cd .. && zsh ./scripts/test.sh release"
-    end
-  end
-  
-  lane :release do |options|
+  lane :github_release do |options|
 
     release_name = ENV["APP_RELEASE_NAME"]
     tag_name = ENV["APP_TAG_NAME"]
@@ -97,24 +79,78 @@ platform :mac do
       
   end
 
-  lane :show do
-    sh "cd .. && zsh ./scripts/test.sh t2"
+  # Local
+
+  lane :fast_build do |options|
+    setup
+    build
+    clean
+
+    UI.header("#{ENV["APP_NAME"]} #{ENV["APP_TAG_NAME"]} build #{ENV["APP_BUILD"]}")
+
+    result = UI.select("Release the app now?", ["No", "Yes"])
+    case result
+    when "No"
+      UI.message("The app is debugging...")
+      sh "cd .. && zsh ./scripts/test.sh debug"
+    when "Yes"
+      UI.message("The app is Releasing...")
+      sh "cd .. && zsh ./scripts/test.sh release"
+    end
   end
 
-  private_lane :format_version do
-    if last_git_tag =~ /^v?(\d+\.\d+\.\d+)-([\w\.]+)$/
+
+  lane :xcode_build do
+    tag_name = 'v2.3.7'
+    version_list = format_version(tag_name: tag_name)
+    ENV["APP_TAG_NAME"] = tag_name
+    ENV["APP_VERSION"] = version_list.first
+    ENV["APP_VERSION_NAME"] = version_list.join(' ')
+    ENV["APP_RELEASE_NAME"] = "#{ENV["APP_NAME"]} #{ENV["APP_VERSION_NAME"]}"
+    UI.header("#{ENV["APP_NAME"]} #{ENV["APP_TAG_NAME"]} build #{ENV["APP_BUILD"]}")
+    UI.important("APP_NAME = #{ENV["APP_NAME"]}\n
+                  APP_VERSION = #{ENV["APP_VERSION"]}\n
+                  APP_VERSION_NAME = #{ENV["APP_VERSION_NAME"]}\n
+                  APP_RELEASE_NAME = #{ENV["APP_RELEASE_NAME"]}\n
+                  APP_TAG_NAME = #{ENV["APP_TAG_NAME"]}\n
+                  APP_BUILD = #{ENV["APP_BUILD"]}\n
+                  SYS_MIN_VERSION = #{ENV["SYS_MIN_VERSION"]}\n
+                  BUILD_PATH = #{ENV["BUILD_PATH"]}\n
+                  LOG_PATH = #{ENV["LOG_PATH"]}\n
+                  DMG_PATH = #{ENV["DMG_PATH"]}")
+    
+    result = UI.select("Release the app now?", ["No", "Yes"])
+    case result
+    when "No"
+      UI.message("The app is debugging...")
+      sh "cd .. && zsh ./scripts/test.sh debug"
+    when "Yes"
+      UI.message("The app is Releasing...")
+      sh "cd .. && zsh ./scripts/test.sh release"
+    end
+  end
+
+  lane :test do 
+    UI.message(format_version(tag_name: last_git_tag))
+  end
+
+  private_lane :format_version do |options|
+
+    tag_name = options[:tag_name]
+
+    if tag_name =~ /^v?(\d+\.\d+\.\d+)-([\w\.]+)$/
       # 匹配带后缀的版本号，例如 1.0.0-beta.1 或 v1.0.0-beta.1
       main_version = $1
       suffix = $2.split('.').map do |part|
         part.downcase == "rc" ? part.upcase : part.capitalize
       end.join(' ') # 将 "." 替换为空格，特殊处理 RC
       [main_version, suffix]
-    elsif last_git_tag =~ /^v?(\d+\.\d+\.\d+)$/
+    elsif tag_name =~ /^v?(\d+\.\d+\.\d+)$/
       # 匹配纯版本号，例如 1.0.0 或 v1.0.0
       [$1]
     else
       # 不符合规则，返回原字符串的单元素数组
-      [last_git_tag]
+      [tag_name]
     end
   end
 

@@ -431,7 +431,7 @@
 				98712F9E2B2BB15E005163D4 /* Frameworks */,
 				98712F9F2B2BB15E005163D4 /* Resources */,
 				98712FCC2B2BB1B9005163D4 /* Embed Foundation Extensions */,
-				9886FD032B2D11DA00AE22DC /* ShellScript */,
+				9886FD032B2D11DA00AE22DC /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -509,7 +509,7 @@
 			packageReferences = (
 				9886FCAD2B2CE15600AE22DC /* XCRemoteSwiftPackageReference "Sparkle" */,
 				9886FCB32B2CE1B900AE22DC /* XCRemoteSwiftPackageReference "Schedule" */,
-				9886FCB62B2CE1F700AE22DC /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
+				9886FCB62B2CE1F700AE22DC /* XCRemoteSwiftPackageReference "LaunchAtLogin-Legacy" */,
 				981DB9242BFC98AB00AEFFA0 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				9840F8422C9BF1C400826945 /* XCLocalSwiftPackageReference "CalendarXLib" */,
 			);
@@ -555,16 +555,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9886FD032B2D11DA00AE22DC /* ShellScript */ = {
+		9886FD032B2D11DA00AE22DC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -702,7 +703,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CalendarXIntentExtension/CalendarXIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 62;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -730,7 +731,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CalendarXIntentExtension/CalendarXIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 62;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -889,7 +890,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 62;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CalendarX/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -924,7 +925,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 62;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CalendarX/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -956,7 +957,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = CalendarXWidget/CalendarXWidget.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 62;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -987,7 +988,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = CalendarXWidget/CalendarXWidget.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 62;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1084,9 +1085,9 @@
 				version = 2.1.1;
 			};
 		};
-		9886FCB62B2CE1F700AE22DC /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
+		9886FCB62B2CE1F700AE22DC /* XCRemoteSwiftPackageReference "LaunchAtLogin-Legacy" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin-Legacy";
 			requirement = {
 				kind = exactVersion;
 				version = 5.0.2;
@@ -1138,7 +1139,7 @@
 		};
 		9886FCB72B2CE1F700AE22DC /* LaunchAtLogin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9886FCB62B2CE1F700AE22DC /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
+			package = 9886FCB62B2CE1F700AE22DC /* XCRemoteSwiftPackageReference "LaunchAtLogin-Legacy" */;
 			productName = LaunchAtLogin;
 		};
 		98A374EA2D6842BF00FC7719 /* Algorithms */ = {
