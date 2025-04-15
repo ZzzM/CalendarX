@@ -94,7 +94,7 @@ struct MainScreen: View {
                 .appForeground(.accentColor)
             ForEach(dates, id: \.self) {
                 Text("\(calendar.component(.weekOfYear, from: $0))")
-                    .font(.caption2.monospacedDigit())
+                    .font(.system(size: 7, weight: .bold))
                     .frame(width: 15, height: 40)
                     .appForeground(.accentColor)
             }
@@ -237,7 +237,10 @@ struct CalendarView<Title: View, Subtitle: View, Leading: View, Element: View>: 
 
         let leadingDates = dates.striding(by: Solar.daysInWeek).map(\.self)
         let subtitleDates = dates.prefix(Solar.daysInWeek).map(\.self)
-        let columns = Array(repeating: GridItem(spacing: showWeekNumbers ? 11.5 : 15.5), count: Solar.daysInWeek)
+        let columns = Array(
+            repeating: GridItem(.fixed(30), spacing: showWeekNumbers ? 11.5 : 15.5),
+            count: Solar.daysInWeek
+        )
 
         VStack {
 

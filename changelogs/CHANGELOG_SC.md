@@ -1,3 +1,13 @@
+## 2.3.8 beta 1 - 2025-04-15
+
+### Fixed
+- [日历布局问题](https://github.com/ZzzM/CalendarX/issues/27)
+- 关于页面图标显示问题
+
+### Changed
+- 日历页面周数显示
+---
+
 ## 2.3.7 - 2025-03-31
 
 ### Added

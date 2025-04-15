@@ -93,7 +93,7 @@ extension Image {
     public static let circle = Image(systemName: "circle")
     public static let save = Image(systemName: "checkmark")
     public static let pin = Image(systemName: "paintbrush.pointed.fill")
-    public static let feedback = Image(systemName: "bubble.and.pencil")
+    public static let feedback = Image(systemName: "rectangle.and.pencil.and.ellipsis")
 
 }
 
@@ -195,7 +195,6 @@ public enum Lunar {
 }
 
 public enum Solar {
-    public static let gridColumns = Array(repeating: GridItem(), count: daysInWeek)
     public static let daysInWeek = 7
     public static let minYear = 1900, maxYear = 2100
     public static let minMonth = 1, maxMonth = 12

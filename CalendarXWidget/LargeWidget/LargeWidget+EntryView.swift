@@ -1,28 +1,28 @@
+import Algorithms
 import CalendarXLib
 import SwiftUI
-import Algorithms
 
 extension LargeWidget {
-    
+
     struct EntryView: View {
         let entry: Entry
         var calendar: Calendar
-        
+
         private let eventStore = AppEventStore()
         private let festivalStore = FestivalStore()
-        
+
         private var date: Date { entry.date }
         private var locale: Locale { entry.locale }
-        
+
         private var accentColor: Color { entry.accentColor }
         private var offBackground: Color { accentColor.opacity(0.12) }
-        
+
         init(entry: Entry, calendar: Calendar) {
             self.entry = entry
             self.calendar = calendar
             self.calendar.firstWeekday = entry.firstWeekday.rawValue
         }
-        
+
         var body: some View {
             if #available(macOSApplicationExtension 14.0, *) {
                 content.containerBackground(for: .widget) {
@@ -35,20 +35,22 @@ extension LargeWidget {
                 }
             }
         }
-        
+
         @ViewBuilder
         private var content: some View {
             let dates = calendar.generateDates(for: date)
-            
+
             let showWeekNumbers = entry.showWeekNumbers
-   
-            
+
             let spacing = dates.count > Solar.minDates ? 0.5 : 8.5
             let eventsMap = eventStore.generateEventsMap(dates)
 
             let leadingDates = dates.striding(by: Solar.daysInWeek).map(\.self)
             let subtitleDates = dates.prefix(Solar.daysInWeek).map(\.self)
-            let columns = Array(repeating: GridItem(spacing: showWeekNumbers ? 11.5 : 15.5), count: Solar.daysInWeek)
+            let columns = Array(
+                repeating: GridItem(.fixed(30), spacing: showWeekNumbers ? 11.5 : 15.5),
+                count: Solar.daysInWeek
+            )
 
             VStack {
 
@@ -73,7 +75,7 @@ extension LargeWidget {
 
             }
         }
-        
+
         private func subtitle(_ dates: [AppDate]) -> some View {
             ForEach(dates, id: \.self) {
                 Text($0.shortWeekday(locale: locale))
@@ -81,8 +83,7 @@ extension LargeWidget {
                     .sideLength(30)
             }
         }
-        
-        
+
         private func leading(_ dates: [AppDate], spacing: CGFloat) -> some View {
             VStack(spacing: spacing) {
                 Text("#")
@@ -90,16 +91,16 @@ extension LargeWidget {
                     .appForeground(accentColor)
                 ForEach(dates, id: \.self) {
                     Text("\(calendar.component(.weekOfYear, from: $0))")
-                        .font(.caption2.monospacedDigit())
+                        .font(.system(size: 7, weight: .bold))
                         .frame(width: 15, height: 40)
                         .appForeground(accentColor)
                 }
             }
         }
-        
+
         @ViewBuilder
         private func element(_ appDate: AppDate, events: [AppEvent]) -> some View {
-            
+
             let tiaoxiu = festivalStore.tiaoxiu(date: appDate)
             let tiaoxiuColor: Color = tiaoxiu.isXiu ? offBackground : .workBackground
             let subtitle = festivalStore.display(date: appDate)
@@ -108,7 +109,6 @@ extension LargeWidget {
             let showLunar = entry.showLunar
             let defaultColor: Color = appDate.inWeekend ? .appSecondary : .appPrimary
             let inSameMonth = date.inSameMonth(as: appDate)
-            
 
             ZStack {
                 if appDate.inToday {
@@ -180,7 +180,5 @@ extension LargeWidget {
             }
         }
     }
-    
-   
 
 }

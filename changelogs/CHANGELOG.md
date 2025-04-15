@@ -1,3 +1,12 @@
+## 2.3.8 beta 1 - 2025-04-15
+
+### Fixed
+- [Calendar layout issue](https://github.com/ZzzM/CalendarX/issues/27)
+- About screen icon display issue
+
+### Changed
+- Calendar screen week number display
+---
 ## 2.3.7 - 2025-03-31
 ### Added
 - ESC key shortcut (back/close window)
