@@ -1,3 +1,17 @@
+## 2.3.8 beta 2 - 2025-11-30
+
+### Added
+- Chinese statutory holidays in 2026 by @antergone in [#31](https://github.com/ZzzM/CalendarX/pull/31)
+- Visual badges for "Beta" and "Release" status on the about screen
+- Week number and weekday information on the detail screen
+
+### Fixed
+- Resolved a memory leak issue
+
+### Security
+- Bump [Sparkle](https://github.com/sparkle-project/Sparkle) from `2.7.0` to `2.8.1`
+---
+
 ## 2.3.8 beta 1 - 2025-04-15
 
 ### Fixed

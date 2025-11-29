@@ -9,8 +9,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Used to display calendar events</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>WidgetConfigurationIntent</string>

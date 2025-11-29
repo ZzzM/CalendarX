@@ -22,6 +22,11 @@ extension AppDateFormatter {
         return shared.shortWeekdaySymbols[index]
     }
 
+    static func weekday(index: Int, locale: Locale) -> String {
+        shared.locale = locale
+        return shared.weekdaySymbols[index]
+    }
+
     static func shortWeekday(index: Int, locale: Locale) -> String {
         shared.locale = locale
         return locale.inChinese
@@ -79,8 +84,11 @@ extension AppWeekday {
 extension AppDate {
 
     public var title: String { day.description }
-    public var lunarDate: String {
-        let lunarYear = lunarYear
+    public var lunarDateTitle: String {
+        (isLeapMonth ? "[润]" : "") + lunarMonthString + lunarDayString
+    }
+    public var lunarYearTitle: String {
+
         let shengxiao = Lunar.shengxiao
         let tiangan = Lunar.tiangan
         let dizhi = Lunar.dizhi
@@ -89,10 +97,8 @@ extension AppDate {
         let tIndex = (lunarYear - 1) % tiangan.count
         let dIndex = (lunarYear - 1) % dizhi.count
 
-        return tiangan[tIndex] + dizhi[dIndex] + shengxiao[sIndex] + "年 " + (isLeapMonth ? "[润]" : "")
-            + lunarMonthString + lunarDayString
+        return tiangan[tIndex] + dizhi[dIndex] + shengxiao[sIndex] + "年"
     }
-
     private var lunarMonthString: String { Lunar.months[lunarMonth - 1] }
     private var lunarDayString: String { Lunar.days[lunarDay - 1] }
 
@@ -110,6 +116,17 @@ extension AppDate {
 extension AppDate {
 
     public var eventTimeline: String { AppDateFormatter.eventTimeline(date: self) }
+
+    public func weekOfYearString(calendar: Calendar) -> String {
+        "\(calendar.component(.weekOfYear, from: self))"
+    }
+
+    public func weekOfYearTitle(calendar: Calendar, locale: Locale) -> String {
+        let weekday = AppDateFormatter.weekday(index: weekday - 1, locale: locale)
+        let weekOfYear = weekOfYearString(calendar: calendar)
+        return locale.inChinese
+            ? "第\(weekOfYear)周 \(weekday)" : "Week \(weekOfYear), \(weekday)"
+    }
 
     public func shortWeekday(locale: Locale) -> String { AppDateFormatter.shortWeekday(index: weekday - 1, locale: locale) }
 
@@ -138,4 +155,3 @@ extension AppDate {
         AppDateFormatter.t(date: self, use24h: use24h, showSeconds: showSeconds)
     }
 }
-

@@ -90,7 +90,7 @@ extension LargeWidget {
                     .frame(width: 15, height: 30)
                     .appForeground(accentColor)
                 ForEach(dates, id: \.self) {
-                    Text("\(calendar.component(.weekOfYear, from: $0))")
+                    Text($0.weekOfYearString(calendar: calendar))
                         .font(.system(size: 7, weight: .bold))
                         .frame(width: 15, height: 40)
                         .appForeground(accentColor)

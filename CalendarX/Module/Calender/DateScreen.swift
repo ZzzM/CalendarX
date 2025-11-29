@@ -11,6 +11,9 @@ import SwiftUI
 struct DateScreen: View {
 
     @EnvironmentObject
+    private var appStore: AppStore
+
+    @EnvironmentObject
     private var calendarStore: CalendarStore
 
     @EnvironmentObject
@@ -19,20 +22,35 @@ struct DateScreen: View {
     let appDate: AppDate
     let events: [AppEvent]
     let festivals: [String]
+    let calendar: Calendar
 
     var body: some View {
+
         VStack(spacing: 10) {
             TitleView {
-                Text(appDate, style: .date)
+                VStack {
+                    Text(appDate, style: .date)
+                    Text(
+                        appDate.weekOfYearTitle(
+                            calendar: calendar,
+                            locale: appStore.locale
+                        )
+                    )
+                    .font(.body)
+                }
+
             } leftItems: {
                 ScacleImageButton(image: .backward) {
                     router.pop()
                 }
             } rightItems: {
-                EmptyView()
+                VStack(alignment: .trailing) {
+                    Text(appDate.lunarYearTitle)
+                    Text(appDate.lunarDateTitle)
+                }
+                .font(.footnote)
             }
 
-            Text(appDate.lunarDate).font(.footnote)
             FestivalsView(festivals: festivals) { festival in
                 router.google(festival)
             }

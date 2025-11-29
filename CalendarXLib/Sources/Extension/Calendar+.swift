@@ -8,7 +8,7 @@
 import Foundation
 
 extension Calendar {
-
+    
     public func generateDates(for date: Date) -> [Date] {
         var dates: [Date] = []
 

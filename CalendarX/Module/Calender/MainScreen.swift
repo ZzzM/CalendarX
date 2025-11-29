@@ -93,7 +93,7 @@ struct MainScreen: View {
                 .frame(width: 15, height: 30)
                 .appForeground(.accentColor)
             ForEach(dates, id: \.self) {
-                Text("\(calendar.component(.weekOfYear, from: $0))")
+                Text($0.weekOfYearString(calendar: calendar))
                     .font(.system(size: 7, weight: .bold))
                     .frame(width: 15, height: 40)
                     .appForeground(.accentColor)
@@ -115,7 +115,7 @@ struct MainScreen: View {
 
         ScacleButton {
             let festivals = festivalStore.all(date: appDate)
-            router.push(.date(appDate, events, festivals))
+            router.push(.date(appDate, events, festivals, calendar))
         } label: {
             ZStack {
                 if appDate.inToday {

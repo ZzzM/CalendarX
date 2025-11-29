@@ -1,3 +1,17 @@
+## 2.3.8 beta 2 - 2025-11-30
+
+### Added
+- 2026 年中国法定节假日 by @antergone in [#31](https://github.com/ZzzM/CalendarX/pull/31)
+- 关于页面增加了 Beta 和 Release 版本的可视化标识
+- 详情页面现在显示周数和星期信息
+
+### Fixed
+- 修复了已知的内存泄漏问题
+
+### Security
+- 将 [Sparkle](https://github.com/sparkle-project/Sparkle) 从 `2.7.0` 升级至 `2.8.1`
+---
+
 ## 2.3.8 beta 1 - 2025-04-15
 
 ### Fixed

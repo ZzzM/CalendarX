@@ -12,9 +12,11 @@ struct AboutScreen: View {
 
     @EnvironmentObject
     private var router: Router
-    
 
     var body: some View {
+
+        let image = Bundle.isReleaseVersion ? Image.release : Image.beta
+
         VStack {
             TitleView {
                 Text(L10n.Settings.about)
@@ -37,6 +39,10 @@ struct AboutScreen: View {
             HStack {
                 Text(L10n.Updater.version)
                 Text(Bundle.appVersionName)
+
+                image
+                    .appForeground(.accentColor)
+
             }
             .appForeground(.appSecondary)
 

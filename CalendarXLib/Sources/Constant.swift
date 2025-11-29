@@ -94,6 +94,8 @@ extension Image {
     public static let save = Image(systemName: "checkmark")
     public static let pin = Image(systemName: "paintbrush.pointed.fill")
     public static let feedback = Image(systemName: "rectangle.and.pencil.and.ellipsis")
+    public static let beta = Image(systemName: "ladybug.fill")
+    public static let release = Image(systemName: "checkmark.seal.fill")
 
 }
 
@@ -128,6 +130,7 @@ extension Color {
 extension Notification.Name {
     public static let popoverWillCloseManually = Notification.Name("popoverWillCloseManually")
     public static let titleStyleDidChanged = Notification.Name("titleStyleDidChanged")
+    public static let calendarDayChanged = Notification.Name("calendarDayChanged")
 }
 
 public enum AppLink {

@@ -479,7 +479,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					981DB9352C08C4BE00AEFFA0 = {
 						CreatedOnToolsVersion = 15.4;
@@ -682,6 +682,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarXIntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CalendarXIntentExtension;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to display calendar events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -710,6 +711,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarXIntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CalendarXIntentExtension;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to display calendar events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -781,12 +783,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -842,11 +846,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
@@ -872,6 +878,7 @@
 				INFOPLIST_FILE = CalendarX/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to display calendar events";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Used to display calendar events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2020 ZzzM. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -907,6 +914,7 @@
 				INFOPLIST_FILE = CalendarX/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to display calendar events";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Used to display calendar events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2020 ZzzM. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -933,10 +941,13 @@
 				CURRENT_PROJECT_VERSION = 63;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarXWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CalendarXWidget;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to display calendar events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -964,10 +975,13 @@
 				CURRENT_PROJECT_VERSION = 63;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarXWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CalendarXWidget;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to display calendar events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1047,7 +1061,7 @@
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
 			requirement = {
 				kind = exactVersion;
-				version = 2.7.0;
+				version = 2.8.1;
 			};
 		};
 		9886FCB32B2CE1B900AE22DC /* XCRemoteSwiftPackageReference "Schedule" */ = {

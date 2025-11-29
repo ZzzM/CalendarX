@@ -27,22 +27,10 @@ class MainViewModel: ObservableObject {
             .map { _ in Date().timeIntervalSince1970 }
             .assign(to: &$interval)
 
-        if #available(macOS 12.0, *) {
-            Task { [weak self] in
-                for await value in NotificationCenter.default
-                    .notifications(named: .NSCalendarDayChanged)
-                    .compactMap({ _ in Date() })
-                {
-                    guard let self else { return }
-                    date = value
-                }
-            }
-        } else {
-            NotificationCenter.default
-                .publisher(for: .NSCalendarDayChanged)
-                .map { _ in Date() }
-                .assign(to: &$date)
-        }
+        NotificationCenter.default
+            .publisher(for: .calendarDayChanged)
+            .map { _ in Date() }
+            .assign(to: &$date)
 
     }
 

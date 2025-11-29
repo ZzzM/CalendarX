@@ -78,6 +78,7 @@ extension MenubarController {
                 attributes: [.font: NSFont.statusItem]
             )
     }
+
 }
 
 extension MenubarController {
@@ -101,25 +102,13 @@ extension MenubarController {
             }
             .store(in: &cancellables)
 
-        if #available(macOS 12.0, *) {
-            Task { [weak self] in
-                for await _ in NotificationCenter.default
-                    .notifications(named: .NSCalendarDayChanged)
-                    .compactMap({ _ in })
-                {
-                    guard let self else { return }
-                    schedule.action?()
-                }
+        NotificationCenter.default
+            .publisher(for: .calendarDayChanged)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                schedule.action?()
             }
-        } else {
-            NotificationCenter.default
-                .publisher(for: .NSCalendarDayChanged)
-                .sink { [weak self] _ in
-                    guard let self else { return }
-                    schedule.action?()
-                }
-                .store(in: &cancellables)
-        }
+            .store(in: &cancellables)
 
         NotificationCenter.default
             .publisher(for: NSLocale.currentLocaleDidChangeNotification)
@@ -149,7 +138,8 @@ extension MenubarController {
 
 extension MenubarController {
 
-    @objc private func togglePopover(_ sender: Any?) {
+    @objc
+    private func togglePopover(_ sender: Any?) {
         popover.isShown ? popover.close() : popover.show(sender)
     }
 
